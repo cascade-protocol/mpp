@@ -2,7 +2,6 @@ import { parseUnits } from 'viem'
 import { Actions, Addresses } from 'viem/tempo'
 import { beforeEach } from 'vitest'
 import { nodeEnv } from './config.js'
-import { rpcUrl } from './prool.js'
 import { accounts, asset, client, fundAccount } from './tempo/viem.js'
 
 beforeEach(async () => {
@@ -25,5 +24,3 @@ beforeEach(async () => {
 
   await fundAccount({ address: accounts[1].address, token: asset })
 })
-
-
