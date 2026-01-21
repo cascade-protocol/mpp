@@ -1,1 +1,1 @@
-export * as Intent from './Intent.js'
+export * as Intents from './Intents.js'

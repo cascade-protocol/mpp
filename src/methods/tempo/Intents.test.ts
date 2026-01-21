@@ -3,7 +3,7 @@ import { Actions } from 'viem/tempo'
 import { describe, expect, test } from 'vitest'
 import { accounts, asset, chain, client } from '~test/tempo/viem.js'
 import { VerificationError } from '../../Intent.js'
-import * as Tempo from './Intent.js'
+import * as Tempo from './Intents.js'
 
 const consumer = accounts[1]
 const destination = '0x70997970C51812dc3A010C7d01b50e0d17dc79C8' as const
