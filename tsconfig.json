@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "module": "nodenext",
-    "moduleResolution": "nodenext"
+    "moduleResolution": "nodenext",
+    "strict": true,
   },
   "files": [],
   "references": [{ "path": "./src" }, { "path": "./test" }]
