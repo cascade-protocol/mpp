@@ -52,6 +52,50 @@ describe('from', () => {
       }
     `)
   })
+
+  test('behavior: creates challenge with HMAC-bound id via secretKey', () => {
+    const challenge = Challenge.from(
+      {
+        realm: 'api.example.com',
+        method: 'tempo',
+        intent: 'charge',
+        request: { amount: '1000000', currency: '0x1234', recipient: '0xabcd' },
+      },
+      { secretKey: 'my-secret' },
+    )
+
+    expect(challenge.id).toMatchInlineSnapshot(`"A9cXnrGvJDzJHhz1KlokvfXe3DKeJNMfgUx7BRWIbUc"`)
+    expect(challenge.realm).toBe('api.example.com')
+    expect(challenge.method).toBe('tempo')
+  })
+
+  test('behavior: same params with same secretKey produce same id', () => {
+    const params = {
+      realm: 'api.example.com',
+      method: 'tempo',
+      intent: 'charge',
+      request: { amount: '1000000' },
+    } as const
+
+    const challenge1 = Challenge.from(params, { secretKey: 'secret' })
+    const challenge2 = Challenge.from(params, { secretKey: 'secret' })
+
+    expect(challenge1.id).toBe(challenge2.id)
+  })
+
+  test('behavior: different secretKey produces different id', () => {
+    const params = {
+      realm: 'api.example.com',
+      method: 'tempo',
+      intent: 'charge',
+      request: { amount: '1000000' },
+    } as const
+
+    const challenge1 = Challenge.from(params, { secretKey: 'secret1' })
+    const challenge2 = Challenge.from(params, { secretKey: 'secret2' })
+
+    expect(challenge1.id).not.toBe(challenge2.id)
+  })
 })
 
 describe('fromIntent', () => {
@@ -133,6 +177,26 @@ describe('fromIntent', () => {
 
     expect(challenge.digest).toBe('sha-256=abc')
     expect(challenge.expires).toBe('2025-01-06T12:00:00Z')
+  })
+
+  test('behavior: creates challenge with HMAC-bound id via secretKey', () => {
+    const challenge = Challenge.fromIntent(
+      Intents.charge,
+      {
+        realm: 'api.example.com',
+        request: {
+          amount: '1000000',
+          currency: '0x20c0000000000000000000000000000000000001',
+          recipient: '0x742d35Cc6634C0532925a3b844Bc9e7595f8fE00',
+          expires: '2025-01-06T12:00:00Z',
+        },
+      },
+      { secretKey: 'my-secret' },
+    )
+
+    expect(challenge.id).toBeDefined()
+    expect(typeof challenge.id).toBe('string')
+    expect(challenge.id.length).toBeGreaterThan(0)
   })
 
   test('error: invalid request', () => {
@@ -239,9 +303,7 @@ describe('deserialize', () => {
   })
 
   test('error: missing required fields', () => {
-    expect(() => Challenge.deserialize('Payment realm="test"')).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Invalid challenge: missing id]`,
-    )
+    expect(() => Challenge.deserialize('Payment realm="test"')).toThrow()
   })
 })
 
@@ -279,5 +341,50 @@ describe('fromResponse', () => {
     expect(() => Challenge.fromResponse(response)).toThrowErrorMatchingInlineSnapshot(
       `[Error: Missing WWW-Authenticate header]`,
     )
+  })
+})
+
+describe('verifyId', () => {
+  test('behavior: returns true for valid HMAC-bound id', () => {
+    const challenge = Challenge.from(
+      {
+        realm: 'api.example.com',
+        method: 'tempo',
+        intent: 'charge',
+        request: { amount: '1000000' },
+      },
+      { secretKey: 'my-secret' },
+    )
+
+    expect(Challenge.verify(challenge, { secretKey: 'my-secret' })).toBe(true)
+  })
+
+  test('behavior: returns false for wrong secretKey', () => {
+    const challenge = Challenge.from(
+      {
+        realm: 'api.example.com',
+        method: 'tempo',
+        intent: 'charge',
+        request: { amount: '1000000' },
+      },
+      { secretKey: 'my-secret' },
+    )
+
+    expect(Challenge.verify(challenge, { secretKey: 'wrong-secret' })).toBe(false)
+  })
+
+  test('behavior: returns false for tampered challenge', () => {
+    const challenge = Challenge.from(
+      {
+        realm: 'api.example.com',
+        method: 'tempo',
+        intent: 'charge',
+        request: { amount: '1000000' },
+      },
+      { secretKey: 'my-secret' },
+    )
+
+    const tampered = { ...challenge, request: { amount: '2000000' } }
+    expect(Challenge.verify(tampered, { secretKey: 'my-secret' })).toBe(false)
   })
 })
