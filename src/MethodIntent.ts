@@ -90,10 +90,8 @@ export function fromIntent<
 
   const requestInputShape: Record<string, z.ZodMiniType> = {}
   for (const [key, field] of Object.entries(requestShape)) {
-    if (requires.includes(key as never) && '_zod' in field) {
-      const def = (field._zod as { def?: { innerType?: z.ZodMiniType } }).def
-      requestInputShape[key] = def?.innerType ?? field
-    } else requestInputShape[key] = field
+    if (requires.includes(key as never)) requestInputShape[key] = z.unwrapOptional(field)
+    else requestInputShape[key] = field
   }
 
   const methodDetailsKeys: string[] = []

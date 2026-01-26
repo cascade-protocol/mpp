@@ -1,4 +1,4 @@
-import { z } from 'zod/mini'
+import { z, type ZodMiniOptional, type ZodMiniType } from 'zod/mini'
 
 export * from 'zod/mini'
 
@@ -32,4 +32,11 @@ export function period() {
 /** Hex-encoded signature string (0x-prefixed). */
 export function signature() {
   return z.string().check(z.regex(/^0x[0-9a-fA-F]+$/, 'Invalid signature'))
+}
+
+/** Checks if a schema is optional and returns the inner type if so. */
+export function unwrapOptional<T extends ZodMiniType>(schema: T): ZodMiniType {
+  if (schema._zod.def.type === 'optional')
+    return (schema as unknown as ZodMiniOptional)._zod.def.innerType as ZodMiniType
+  return schema
 }
