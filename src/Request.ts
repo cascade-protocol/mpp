@@ -19,6 +19,24 @@ import type * as MethodIntent from './MethodIntent.js'
 export type Request = Record<string, unknown>
 
 /**
+ * Deserializes a base64url string to a request.
+ *
+ * @param encoded - The base64url-encoded string.
+ * @returns The deserialized request.
+ *
+ * @example
+ * ```ts
+ * import { Request } from 'mpay'
+ *
+ * const request = Request.deserialize(serialized)
+ * ```
+ */
+export function deserialize(encoded: string): Request {
+  const json = Base64.toString(encoded)
+  return JSON.parse(json)
+}
+
+/**
  * Creates a request from the given parameters.
  *
  * @param request - Request parameters.
@@ -84,22 +102,4 @@ export function fromIntent<const intent extends MethodIntent.MethodIntent>(
 export function serialize(request: Request): string {
   const json = JSON.stringify(request)
   return Base64.fromString(json, { pad: false, url: true })
-}
-
-/**
- * Deserializes a base64url string to a request.
- *
- * @param encoded - The base64url-encoded string.
- * @returns The deserialized request.
- *
- * @example
- * ```ts
- * import { Request } from 'mpay'
- *
- * const request = Request.deserialize(serialized)
- * ```
- */
-export function deserialize(encoded: string): Request {
-  const json = Base64.toString(encoded)
-  return JSON.parse(json)
 }

@@ -90,41 +90,49 @@ export type Challenge<request = Record<string, unknown>> = Omit<
  * })
  * ```
  */
-export function from<
-  const parameters extends from.Parameters,
-  const options extends from.Options | undefined = undefined,
->(parameters: parameters, options?: options): from.ReturnType<parameters, options> {
-  const id = options?.secretKey ? computeId(parameters, options) : (parameters as { id: string }).id
+export function from<const parameters extends from.Parameters>(
+  parameters: parameters,
+): from.ReturnType<parameters> {
+  const { digest, expires, method, intent, realm, request, secretKey } = parameters
+  const id = secretKey ? computeId(parameters, { secretKey }) : (parameters as { id: string }).id
 
   return {
     id,
-    realm: parameters.realm,
-    method: parameters.method,
-    intent: parameters.intent,
-    request: parameters.request,
-    ...(parameters.digest !== undefined && { digest: parameters.digest }),
-    ...(parameters.expires !== undefined && { expires: parameters.expires }),
-  } as from.ReturnType<parameters, options>
+    realm,
+    method,
+    intent,
+    request,
+    ...(digest && { digest }),
+    ...(expires && { expires }),
+  } as from.ReturnType<parameters>
 }
 
 export declare namespace from {
-  type Parameters = OneOf<{ id: string } | {}> & {
+  type Parameters = OneOf<
+    | {
+        /** Explicit challenge ID. */
+        id: string
+      }
+    | {
+        /** Secret key for HMAC-bound challenge ID. */
+        secretKey: string
+      }
+  > & {
+    /** Optional digest of the request body. */
     digest?: string | undefined
+    /** Optional expiration timestamp (ISO 8601). */
     expires?: string | undefined
+    /** Intent type (e.g., "charge", "authorize"). */
     intent: string
+    /** Payment method (e.g., "tempo", "stripe"). */
     method: string
+    /** Server realm (e.g., hostname). */
     realm: string
+    /** Method-specific request data. */
     request: Request.Request
   }
 
-  type Options = {
-    /** Secret key for HMAC-bound challenge ID. */
-    secretKey: string
-  }
-
-  type ReturnType<parameters extends Parameters, _options extends Options | undefined> = Challenge<
-    parameters['request']
-  >
+  type ReturnType<parameters extends Parameters> = Challenge<parameters['request']>
 }
 
 /**
@@ -162,26 +170,34 @@ export declare namespace from {
 export function fromIntent<const intent extends MethodIntent.MethodIntent>(
   intent: intent,
   parameters: fromIntent.Parameters<intent>,
-  options?: fromIntent.Options,
-): Challenge<z.output<intent['schema']['request']>> {
+): fromIntent.ReturnType<intent> {
+  const { method, name } = intent
+  const { digest, expires, id, realm, secretKey } = parameters
+
   const request = Request.fromIntent(intent, parameters.request)
 
-  return from(
-    {
-      ...('id' in parameters && parameters.id ? { id: parameters.id } : {}),
-      realm: parameters.realm,
-      method: intent.method,
-      intent: intent.name,
-      request,
-      digest: parameters.digest,
-      expires: parameters.expires,
-    } as from.Parameters,
-    options,
-  ) as Challenge<z.output<intent['schema']['request']>>
+  return from({
+    ...(id ? { id } : { secretKey }),
+    realm,
+    method,
+    intent: name,
+    request,
+    digest,
+    expires,
+  } as from.Parameters) as fromIntent.ReturnType<intent>
 }
 
 export declare namespace fromIntent {
-  type Parameters<intent extends MethodIntent.MethodIntent> = OneOf<{ id: string } | {}> & {
+  type Parameters<intent extends MethodIntent.MethodIntent> = OneOf<
+    | {
+        /** Explicit challenge ID. */
+        id: string
+      }
+    | {
+        /** Secret key for HMAC-bound challenge ID. */
+        secretKey: string
+      }
+  > & {
     /** Optional digest of the request body. */
     digest?: string | undefined
     /** Optional expiration timestamp (ISO 8601). */
@@ -192,10 +208,9 @@ export declare namespace fromIntent {
     request: z.input<intent['schema']['request']>
   }
 
-  type Options = {
-    /** Secret key for HMAC-bound challenge ID. */
-    secretKey: string
-  }
+  type ReturnType<intent extends MethodIntent.MethodIntent> = Challenge<
+    z.output<intent['schema']['request']>
+  >
 }
 
 /**

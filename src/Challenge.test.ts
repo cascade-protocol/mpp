@@ -60,9 +60,8 @@ describe('from', () => {
         method: 'tempo',
         intent: 'charge',
         request: { amount: '1000000', currency: '0x1234', recipient: '0xabcd' },
-      },
-      { secretKey: 'my-secret' },
-    )
+        secretKey: 'my-secret',
+      })
 
     expect(challenge.id).toMatchInlineSnapshot(`"A9cXnrGvJDzJHhz1KlokvfXe3DKeJNMfgUx7BRWIbUc"`)
     expect(challenge.realm).toBe('api.example.com')
@@ -70,29 +69,39 @@ describe('from', () => {
   })
 
   test('behavior: same params with same secretKey produce same id', () => {
-    const params = {
+    const challenge1 = Challenge.from({
       realm: 'api.example.com',
       method: 'tempo',
       intent: 'charge',
       request: { amount: '1000000' },
-    } as const
-
-    const challenge1 = Challenge.from(params, { secretKey: 'secret' })
-    const challenge2 = Challenge.from(params, { secretKey: 'secret' })
+      secretKey: 'secret',
+    })
+    const challenge2 = Challenge.from({
+      realm: 'api.example.com',
+      method: 'tempo',
+      intent: 'charge',
+      request: { amount: '1000000' },
+      secretKey: 'secret',
+    })
 
     expect(challenge1.id).toBe(challenge2.id)
   })
 
   test('behavior: different secretKey produces different id', () => {
-    const params = {
+    const challenge1 = Challenge.from({
       realm: 'api.example.com',
       method: 'tempo',
       intent: 'charge',
       request: { amount: '1000000' },
-    } as const
-
-    const challenge1 = Challenge.from(params, { secretKey: 'secret1' })
-    const challenge2 = Challenge.from(params, { secretKey: 'secret2' })
+      secretKey: 'secret1',
+    })
+    const challenge2 = Challenge.from({
+      realm: 'api.example.com',
+      method: 'tempo',
+      intent: 'charge',
+      request: { amount: '1000000' },
+      secretKey: 'secret2',
+    })
 
     expect(challenge1.id).not.toBe(challenge2.id)
   })
@@ -180,19 +189,16 @@ describe('fromIntent', () => {
   })
 
   test('behavior: creates challenge with HMAC-bound id via secretKey', () => {
-    const challenge = Challenge.fromIntent(
-      Intents.charge,
-      {
-        realm: 'api.example.com',
-        request: {
-          amount: '1000000',
-          currency: '0x20c0000000000000000000000000000000000001',
-          recipient: '0x742d35Cc6634C0532925a3b844Bc9e7595f8fE00',
-          expires: '2025-01-06T12:00:00Z',
-        },
+    const challenge = Challenge.fromIntent(Intents.charge, {
+      realm: 'api.example.com',
+      request: {
+        amount: '1000000',
+        currency: '0x20c0000000000000000000000000000000000001',
+        recipient: '0x742d35Cc6634C0532925a3b844Bc9e7595f8fE00',
+        expires: '2025-01-06T12:00:00Z',
       },
-      { secretKey: 'my-secret' },
-    )
+      secretKey: 'my-secret',
+    })
 
     expect(challenge.id).toBeDefined()
     expect(typeof challenge.id).toBe('string')
@@ -346,43 +352,37 @@ describe('fromResponse', () => {
 
 describe('verifyId', () => {
   test('behavior: returns true for valid HMAC-bound id', () => {
-    const challenge = Challenge.from(
-      {
-        realm: 'api.example.com',
-        method: 'tempo',
-        intent: 'charge',
-        request: { amount: '1000000' },
-      },
-      { secretKey: 'my-secret' },
-    )
+    const challenge = Challenge.from({
+      realm: 'api.example.com',
+      method: 'tempo',
+      intent: 'charge',
+      request: { amount: '1000000' },
+      secretKey: 'my-secret',
+    })
 
     expect(Challenge.verify(challenge, { secretKey: 'my-secret' })).toBe(true)
   })
 
   test('behavior: returns false for wrong secretKey', () => {
-    const challenge = Challenge.from(
-      {
-        realm: 'api.example.com',
-        method: 'tempo',
-        intent: 'charge',
-        request: { amount: '1000000' },
-      },
-      { secretKey: 'my-secret' },
-    )
+    const challenge = Challenge.from({
+      realm: 'api.example.com',
+      method: 'tempo',
+      intent: 'charge',
+      request: { amount: '1000000' },
+      secretKey: 'my-secret',
+    })
 
     expect(Challenge.verify(challenge, { secretKey: 'wrong-secret' })).toBe(false)
   })
 
   test('behavior: returns false for tampered challenge', () => {
-    const challenge = Challenge.from(
-      {
-        realm: 'api.example.com',
-        method: 'tempo',
-        intent: 'charge',
-        request: { amount: '1000000' },
-      },
-      { secretKey: 'my-secret' },
-    )
+    const challenge = Challenge.from({
+      realm: 'api.example.com',
+      method: 'tempo',
+      intent: 'charge',
+      request: { amount: '1000000' },
+      secretKey: 'my-secret',
+    })
 
     const tampered = { ...challenge, request: { amount: '2000000' } }
     expect(Challenge.verify(tampered, { secretKey: 'my-secret' })).toBe(false)

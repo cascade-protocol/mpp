@@ -24,6 +24,24 @@ export type Receipt = {
 }
 
 /**
+ * Deserializes a Payment-Receipt header value to a receipt.
+ *
+ * @param encoded - The base64url-encoded header value.
+ * @returns The deserialized receipt.
+ *
+ * @example
+ * ```ts
+ * import { Receipt } from 'mpay'
+ *
+ * const receipt = Receipt.deserialize(encoded)
+ * ```
+ */
+export function deserialize(encoded: string): Receipt {
+  const json = Base64.toString(encoded)
+  return JSON.parse(json)
+}
+
+/**
  * Creates a receipt from the given parameters.
  *
  * @param parameters - Receipt parameters.
@@ -75,22 +93,4 @@ export declare namespace from {
 export function serialize(receipt: Receipt): string {
   const json = JSON.stringify(receipt)
   return Base64.fromString(json, { pad: false, url: true })
-}
-
-/**
- * Deserializes a Payment-Receipt header value to a receipt.
- *
- * @param encoded - The base64url-encoded header value.
- * @returns The deserialized receipt.
- *
- * @example
- * ```ts
- * import { Receipt } from 'mpay'
- *
- * const receipt = Receipt.deserialize(encoded)
- * ```
- */
-export function deserialize(encoded: string): Receipt {
-  const json = Base64.toString(encoded)
-  return JSON.parse(json)
 }
