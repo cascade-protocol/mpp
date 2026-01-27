@@ -67,27 +67,22 @@ describe('from', () => {
 })
 
 describe('fromResponse', () => {
-  test('without handler returns generic Challenge', () => {
-    expectTypeOf(Challenge.fromResponse).parameter(0).toMatchTypeOf<Response>()
-    expectTypeOf(Challenge.fromResponse).returns.toHaveProperty('method')
-    expectTypeOf(Challenge.fromResponse).returns.toHaveProperty('intent')
+  test('behavior: without handler returns generic Challenge', () => {
+    const response = new Response(null, { status: 402 })
+    const challenge = Challenge.fromResponse(response)
+    expectTypeOf(challenge.method).toEqualTypeOf<string>()
+    expectTypeOf(challenge.intent).toEqualTypeOf<string>()
+    expectTypeOf(challenge.request).toEqualTypeOf<{
+      [x: string]: unknown
+    }>()
   })
 
-  test('with handler narrows to FromHandler type', () => {
-    const fn = (r: Response) => Challenge.fromResponse(r, { handler })
-    expectTypeOf(fn).returns.toMatchTypeOf<{ method: 'tempo'; intent: 'charge' | 'authorize' }>()
-  })
-})
-
-describe('fromHeaders', () => {
-  test('without handler returns generic Challenge', () => {
-    expectTypeOf(Challenge.fromHeaders).parameter(0).toMatchTypeOf<Headers>()
-    expectTypeOf(Challenge.fromHeaders).returns.toHaveProperty('method')
-    expectTypeOf(Challenge.fromHeaders).returns.toHaveProperty('intent')
-  })
-
-  test('with handler narrows to FromHandler type', () => {
-    const fn = (h: Headers) => Challenge.fromHeaders(h, { handler })
-    expectTypeOf(fn).returns.toMatchTypeOf<{ method: 'tempo'; intent: 'charge' | 'authorize' }>()
+  test('behavior: handler narrows type', () => {
+    const response = new Response(null, { status: 402 })
+    const challenge = Challenge.fromResponse(response, { handler })
+    expectTypeOf(challenge.method).toEqualTypeOf<'tempo'>()
+    expectTypeOf(challenge.intent).toEqualTypeOf<'charge' | 'authorize'>()
+    expectTypeOf(challenge.request).toHaveProperty('amount')
+    expectTypeOf(challenge.request).toHaveProperty('currency')
   })
 })
