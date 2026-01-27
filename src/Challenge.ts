@@ -1,6 +1,4 @@
-import { hmac } from '@noble/hashes/hmac.js'
-import { sha256 } from '@noble/hashes/sha2.js'
-import { Base64, Bytes } from 'ox'
+import { Base64, Bytes, Hash } from 'ox'
 import type { OneOf } from './internal/types.js'
 import type * as Method from './Method.js'
 import type * as MethodIntent from './MethodIntent.js'
@@ -428,7 +426,7 @@ function computeId(challenge: Omit<Challenge, 'id'>, options: { secretKey: strin
 
   const key = Bytes.fromString(options.secretKey)
   const data = Bytes.fromString(input)
-  const mac = hmac(sha256, key, data)
+  const mac = Hash.hmac256(key, data, { as: 'Bytes' })
   return Base64.fromBytes(mac, { url: true, pad: false })
 }
 

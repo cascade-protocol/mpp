@@ -23,6 +23,11 @@
     "zod": "^4.3.5"
   },
   "packageManager": "pnpm@10.28.0",
+  "pnpm": {
+    "overrides": {
+      "ox": "^0.12.0"
+    }
+  },
   "[!start-pkg]": "",
   "name": "mpay",
   "type": "module",
@@ -78,8 +83,7 @@
     }
   },
   "dependencies": {
-    "@noble/hashes": "^2.0.1",
-    "ox": "^0.11.3"
+    "ox": "^0.12.0"
   },
   "sideEffects": false,
   "module": "./dist/index.js",
