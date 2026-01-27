@@ -1,3 +1,4 @@
+import type { Account } from 'viem'
 import { describe, expect, test } from 'vitest'
 import * as Challenge from '../Challenge.js'
 import * as Credential from '../Credential.js'
@@ -220,5 +221,95 @@ describe('createCredential', () => {
 
     expect(parsed.payload).toEqual({ token: 'bar-token' })
     expect(parsed.challenge.method).toBe('bar')
+  })
+
+  test('behavior: passes context to createCredential', async () => {
+    const contextCharge = MethodIntent.fromIntent(Intent.charge, {
+      method: 'context-test',
+      schema: {
+        credential: {
+          payload: z.object({ signer: z.string() }),
+        },
+        request: {
+          requires: ['recipient'],
+        },
+      },
+    })
+
+    const contextMethod = Method.from({
+      name: 'context-test',
+      intents: { charge: contextCharge },
+    })
+
+    const clientWithContext = Method.toClient(contextMethod, {
+      context: z.object({
+        account: z.custom<Account>(),
+      }),
+      async createCredential({ challenge, context }) {
+        return Credential.serialize({
+          challenge,
+          payload: { signer: context.account.address },
+        })
+      },
+    })
+
+    const mpay = Mpay.create({ methods: [clientWithContext] })
+
+    const challenge = Challenge.fromIntent(contextCharge, {
+      realm,
+      secretKey,
+      request: {
+        amount: '1000',
+        currency: '0x1234',
+        recipient: '0x5678',
+      },
+    })
+
+    const response = new Response(null, {
+      status: 402,
+      headers: {
+        'WWW-Authenticate': Challenge.serialize(challenge),
+      },
+    })
+
+    const mockAccount = { address: '0xMockAddress' } as unknown as Account
+    const credential = await mpay.createCredential(response, { account: mockAccount })
+
+    const parsed = Credential.deserialize(credential)
+    expect(parsed.payload).toEqual({ signer: '0xMockAddress' })
+  })
+
+  test('behavior: works without context when method has no context schema', async () => {
+    const noContextMethod = Method.toClient(fooMethod, {
+      async createCredential({ challenge }) {
+        return Credential.serialize({
+          challenge,
+          payload: { signature: '0xno-context' },
+        })
+      },
+    })
+
+    const mpay = Mpay.create({ methods: [noContextMethod] })
+
+    const challenge = Challenge.fromIntent(fooCharge, {
+      realm,
+      secretKey,
+      request: {
+        amount: '1000',
+        currency: '0x1234',
+        recipient: '0x5678',
+      },
+    })
+
+    const response = new Response(null, {
+      status: 402,
+      headers: {
+        'WWW-Authenticate': Challenge.serialize(challenge),
+      },
+    })
+
+    const credential = await mpay.createCredential(response)
+    const parsed = Credential.deserialize(credential)
+    expect(parsed.payload).toEqual({ signature: '0xno-context' })
   })
 })

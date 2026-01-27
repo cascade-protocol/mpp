@@ -21,7 +21,7 @@ const server = Mpay_server.create({
 })
 
 describe('Fetch.from', () => {
-  test('default', async () => {
+  test('default: account at creation', async () => {
     const fetch = Fetch.from({
       methods: [
         Methods_client.tempo({
@@ -61,6 +61,102 @@ describe('Fetch.from', () => {
         "timestamp": "[timestamp]",
       }
     `)
+
+    httpServer.close()
+  })
+
+  test('default: account via context', async () => {
+    const fetch = Fetch.from({
+      methods: [
+        Methods_client.tempo({
+          chainId: chain.id,
+          rpcUrl,
+        }),
+      ],
+    })
+
+    const httpServer = await Http.createServer(async (req, res) => {
+      const result = await server.charge({
+        request: {
+          amount: '1000000',
+          currency: asset,
+          expires: new Date(Date.now() + 60_000).toISOString(),
+          recipient: accounts[0].address,
+        },
+      })(req, res)
+      if (result.status === 402) return
+      res.end('OK')
+    })
+
+    const response = await fetch(httpServer.url, {
+      context: { account: accounts[1] },
+    })
+    expect(response.status).toBe(200)
+
+    const receipt = Receipt.fromResponse(response)
+    expect(receipt.status).toBe('success')
+
+    httpServer.close()
+  })
+
+  test('behavior: context overrides account at creation', async () => {
+    const fetch = Fetch.from({
+      methods: [
+        Methods_client.tempo({
+          account: accounts[0],
+          chainId: chain.id,
+          rpcUrl,
+        }),
+      ],
+    })
+
+    const httpServer = await Http.createServer(async (req, res) => {
+      const result = await server.charge({
+        request: {
+          amount: '1000000',
+          currency: asset,
+          expires: new Date(Date.now() + 60_000).toISOString(),
+          recipient: accounts[0].address,
+        },
+      })(req, res)
+      if (result.status === 402) return
+      res.end('OK')
+    })
+
+    const response = await fetch(httpServer.url, {
+      context: { account: accounts[1] },
+    })
+    expect(response.status).toBe(200)
+
+    httpServer.close()
+  })
+
+  test('behavior: throws when no account provided', async () => {
+    const fetch = Fetch.from({
+      methods: [
+        Methods_client.tempo({
+          chainId: chain.id,
+          rpcUrl,
+        }),
+      ],
+    })
+
+    const httpServer = await Http.createServer(async (req, res) => {
+      const result = await server.charge({
+        request: {
+          amount: '1000000',
+          currency: asset,
+          expires: new Date(Date.now() + 60_000).toISOString(),
+          recipient: accounts[0].address,
+        },
+      })(req, res)
+      if (result.status === 402) return
+      res.end('OK')
+    })
+
+    await expect(fetch(httpServer.url)).rejects.toThrow(
+      'No `account` provided. Pass `account` to parameters or context.',
+    )
 
     httpServer.close()
   })

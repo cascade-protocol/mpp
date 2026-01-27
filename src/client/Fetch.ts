@@ -1,5 +1,8 @@
+import type * as z from '../zod.js'
 import * as Challenge from '../Challenge.js'
 import type * as Method from '../Method.js'
+
+type AnyClient = Method.Client<any, any, any>
 
 let originalFetch: typeof globalThis.fetch | undefined
 
@@ -26,15 +29,16 @@ let originalFetch: typeof globalThis.fetch | undefined
  */
 export function from<const methods extends readonly Method.AnyClient[]>(
   config: from.Config<methods>,
-): typeof globalThis.fetch {
+): from.Fetch<methods> {
   const { fetch = globalThis.fetch, methods } = config
 
   return async (input, init) => {
+    const context = init?.context
     const response = await fetch(input, init)
 
     if (response.status !== 402) return response
 
-    const credential = await createCredential(response, { methods })
+    const credential = await createCredential(response, { context, methods })
 
     return fetch(input, {
       ...init,
@@ -46,13 +50,33 @@ export function from<const methods extends readonly Method.AnyClient[]>(
   }
 }
 
+/** Union of all context types from all methods that have context schemas. */
+type AnyContextFor<methods extends readonly Method.AnyClient[]> = {
+  [K in keyof methods]: methods[K] extends Method.Client<any, any, infer C>
+    ? C extends z.ZodMiniType
+      ? z.input<C>
+      : undefined
+    : undefined
+}[number]
+
 export declare namespace from {
-  type Config<methods extends readonly Method.AnyClient[] = readonly Method.AnyClient[]> = {
+  type Config<methods extends readonly Method.AnyClient[] = readonly AnyClient[]> = {
     /** Custom fetch function to wrap. Defaults to `globalThis.fetch`. */
     fetch?: typeof globalThis.fetch
     /** Array of payment methods to use. */
     methods: methods
   }
+
+  type Fetch<methods extends readonly Method.AnyClient[] = readonly AnyClient[]> = (
+    input: RequestInfo | URL,
+    init?: RequestInit<methods>,
+  ) => Promise<Response>
+
+  type RequestInit<methods extends readonly Method.AnyClient[] = readonly AnyClient[]> =
+    globalThis.RequestInit & {
+      /** Context to pass to the payment method's createCredential. */
+      context?: AnyContextFor<methods>
+    }
 }
 
 /**
@@ -76,15 +100,15 @@ export declare namespace from {
  * const res = await fetch('https://api.example.com/resource')
  * ```
  */
-export function polyfill<const methods extends readonly Method.AnyClient[]>(
+export function polyfill<const methods extends readonly AnyClient[]>(
   config: polyfill.Config<methods>,
 ): void {
   originalFetch = globalThis.fetch
-  globalThis.fetch = from(config)
+  globalThis.fetch = from(config) as typeof globalThis.fetch
 }
 
 export declare namespace polyfill {
-  type Config<methods extends readonly Method.AnyClient[] = readonly Method.AnyClient[]> = {
+  type Config<methods extends readonly Method.AnyClient[] = readonly AnyClient[]> = {
     /** Array of payment methods to use. */
     methods: methods
   }
@@ -114,9 +138,12 @@ export function restore(): void {
 /** @internal */
 async function createCredential<methods extends readonly Method.AnyClient[]>(
   response: Response,
-  config: { methods: methods },
+  config: {
+    context?: unknown
+    methods: methods
+  },
 ): Promise<string> {
-  const { methods } = config
+  const { context, methods } = config
   const challenge = Challenge.fromResponse(response)
 
   const method = methods.find((m) => m.name === challenge.method)
@@ -125,5 +152,9 @@ async function createCredential<methods extends readonly Method.AnyClient[]>(
       `No method found for "${challenge.method}". Available: ${methods.map((m) => m.name).join(', ')}`,
     )
 
-  return method.createCredential({ challenge } as never)
+  const parsedContext =
+    method.context && context !== undefined ? method.context.parse(context) : undefined
+  return method.createCredential(
+    parsedContext !== undefined ? { challenge, context: parsedContext } : ({ challenge } as never),
+  )
 }

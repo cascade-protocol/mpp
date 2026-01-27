@@ -1,4 +1,4 @@
-import type { z } from 'zod/mini'
+import type * as z from './zod.js'
 import type * as Challenge from './Challenge.js'
 import type * as Credential from './Credential.js'
 import type * as MethodIntent from './MethodIntent.js'
@@ -28,6 +28,7 @@ export type Method<
  * A client-side payment method with credential creation logic.
  *
  * Extends the base Method with:
+ * - Optional per-request context schema
  * - Credential creation logic
  */
 export type Client<
@@ -36,9 +37,15 @@ export type Client<
     string,
     MethodIntent.MethodIntent
   >,
+  context extends z.ZodMiniType | undefined = z.ZodMiniType | undefined,
 > = Method<name, intents> & {
+  /** Schema for per-request context passed to `createCredential`. */
+  context?: context
   /** Create a credential from a challenge. */
-  createCredential: CreateCredentialFn<intents>
+  createCredential: CreateCredentialFn<
+    intents,
+    context extends z.ZodMiniType ? z.output<context> : Record<never, never>
+  >
 }
 
 /**
@@ -70,23 +77,24 @@ export type Server<
   >
 }
 
-export type AnyClient = Client<any, any>
+export type AnyClient = Client<any, any, any>
 export type AnyMethod = Method<any, any>
 export type AnyServer = Server<any, any, any>
 
 /** Credential creation function that produces a serialized credential from a challenge. */
-export type CreateCredentialFn<intents extends Record<string, MethodIntent.MethodIntent>> = (
-  parameters: CreateCredentialFn.Parameters<intents>,
-) => Promise<string>
+export type CreateCredentialFn<
+  intents extends Record<string, MethodIntent.MethodIntent>,
+  context = unknown,
+> = (parameters: CreateCredentialFn.Parameters<intents, context>) => Promise<string>
 
 export declare namespace CreateCredentialFn {
-  type Parameters<intents extends Record<string, MethodIntent.MethodIntent>> = {
+  type Parameters<intents extends Record<string, MethodIntent.MethodIntent>, context = unknown> = {
     [key in keyof intents]: {
       challenge: Challenge.Challenge<
         z.output<intents[key]['schema']['request']>,
         intents[key]['name']
       >
-    }
+    } & ([keyof context] extends [never] ? unknown : { context: context })
   }[keyof intents]
 }
 
@@ -126,6 +134,12 @@ export declare namespace VerifyFn {
     }
   }[keyof intents]
 }
+
+/** Extract context input type from a Client Method (for createCredential options). */
+export type ClientContextOf<method extends AnyClient> =
+  NonNullable<method['context']> extends never
+    ? Record<never, never>
+    : NonNullable<z.input<NonNullable<method['context']>>>
 
 /** Extract context input type from a Server Method (for IntentFn options). */
 export type ContextOf<method extends AnyServer> =
@@ -244,22 +258,34 @@ export declare namespace toServer {
  * })
  * ```
  */
-export function toClient<const method extends Method>(
+export function toClient<
+  const method extends Method,
+  const context extends z.ZodMiniType | undefined = undefined,
+>(
   method: method,
-  options: toClient.Options<method['intents']>,
-): Client<method['name'], method['intents']> {
-  const { createCredential } = options
+  options: toClient.Options<method['intents'], context>,
+): Client<method['name'], method['intents'], context> {
+  const { context, createCredential } = options
   const { intents, name } = method
   return {
+    context,
     createCredential,
     intents,
     name,
-  } as Client<method['name'], method['intents']>
+  } as Client<method['name'], method['intents'], context>
 }
 
 export declare namespace toClient {
-  type Options<intents extends Record<string, MethodIntent.MethodIntent>> = {
+  type Options<
+    intents extends Record<string, MethodIntent.MethodIntent>,
+    context extends z.ZodMiniType | undefined = undefined,
+  > = {
+    /** Schema for per-request context passed to `createCredential`. */
+    context?: context
     /** Create a credential from a challenge. */
-    createCredential: CreateCredentialFn<intents>
+    createCredential: CreateCredentialFn<
+      intents,
+      context extends z.ZodMiniType ? z.output<context> : Record<never, never>
+    >
   }
 }

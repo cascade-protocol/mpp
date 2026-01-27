@@ -1,7 +1,8 @@
+import type * as z from '../zod.js'
 import * as Challenge from '../Challenge.js'
 import type * as Method from '../Method.js'
 
-type AnyClient = Method.Client<any, any>
+type AnyClient = Method.Client<any, any, any>
 
 /**
  * Client-side payment handler.
@@ -10,7 +11,10 @@ export type Mpay<methods extends readonly AnyClient[] = readonly AnyClient[]> = 
   /** The configured payment methods. */
   methods: methods
   /** Creates a credential from a 402 response by routing to the correct method. */
-  createCredential: (response: Response) => Promise<string>
+  createCredential: (
+    response: Response,
+    context?: AnyContextFor<methods> | undefined,
+  ) => Promise<string>
 }
 
 /**
@@ -24,7 +28,6 @@ export type Mpay<methods extends readonly AnyClient[] = readonly AnyClient[]> = 
  * const mpay = Mpay.create({
  *   methods: [
  *     tempo({
- *       account: privateKeyToAccount('0x...'),
  *       rpcUrl: 'https://rpc.tempo.xyz',
  *     }),
  *   ],
@@ -32,7 +35,9 @@ export type Mpay<methods extends readonly AnyClient[] = readonly AnyClient[]> = 
  *
  * const response = await fetch('/resource')
  * if (response.status === 402) {
- *   const credential = await mpay.createCredential(response)
+ *   const credential = await mpay.createCredential(response, {
+ *     account: privateKeyToAccount('0x...'),
+ *   })
  *   // Retry with credential
  *   await fetch('/resource', {
  *     headers: { Authorization: credential },
@@ -47,7 +52,7 @@ export function create<const methods extends readonly AnyClient[]>(
 
   return {
     methods,
-    async createCredential(response: Response) {
+    async createCredential(response: Response, context?: unknown) {
       const challenge = Challenge.fromResponse(response)
 
       const method = methods.find((m) => m.name === challenge.method)
@@ -56,7 +61,13 @@ export function create<const methods extends readonly AnyClient[]>(
           `No method found for "${challenge.method}". Available: ${methods.map((m) => m.name).join(', ')}`,
         )
 
-      return method.createCredential({ challenge } as never)
+      const parsedContext =
+        method.context && context !== undefined ? method.context.parse(context) : undefined
+      return method.createCredential(
+        parsedContext !== undefined
+          ? { challenge, context: parsedContext }
+          : ({ challenge } as never),
+      )
     },
   }
 }
@@ -67,3 +78,15 @@ export declare namespace create {
     methods: methods
   }
 }
+
+/**
+ * Union of all context types from all methods that have context schemas.
+ * @internal
+ */
+type AnyContextFor<methods extends readonly AnyClient[]> = {
+  [method in keyof methods]: methods[method] extends Method.Client<any, any, infer context>
+    ? context extends z.ZodMiniType
+      ? z.input<context>
+      : undefined
+    : undefined
+}[number]

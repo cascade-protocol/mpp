@@ -10,7 +10,7 @@ import {
 import { getTransactionReceipt, sendRawTransactionSync, signTransaction } from 'viem/actions'
 import { tempo as tempo_chain } from 'viem/chains'
 import { Abis, Transaction } from 'viem/tempo'
-import { z } from 'zod/mini'
+import * as z from '../../zod.js'
 import type { OneOf } from '../../internal/types.js'
 import * as Method from '../../Method.js'
 import * as Methods from './../Method.js'

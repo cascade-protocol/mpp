@@ -3,6 +3,7 @@ import { type Account, type Client, createClient, http } from 'viem'
 import { prepareTransactionRequest, signTransaction } from 'viem/actions'
 import { tempo as tempo_chain } from 'viem/chains'
 import { Actions } from 'viem/tempo'
+import * as z from '../../zod.js'
 import * as Credential from '../../Credential.js'
 import type { OneOf } from '../../internal/types.js'
 import * as Method from '../../Method.js'
@@ -23,8 +24,6 @@ import * as Methods from '../Method.js'
  * ```
  */
 export function tempo(parameters: tempo.Parameters) {
-  const { account } = parameters
-
   const client = (() => {
     if (parameters.client) return parameters.client
     return createClient({
@@ -37,7 +36,14 @@ export function tempo(parameters: tempo.Parameters) {
   })()
 
   return Method.toClient(Methods.tempo, {
-    async createCredential({ challenge }) {
+    context: z.object({
+      account: z.optional(z.custom<Account>()),
+    }),
+    async createCredential({ challenge, context }) {
+      const account = context?.account ?? parameters.account
+      if (!account)
+        throw new Error('No `account` provided. Pass `account` to parameters or context.')
+
       switch (challenge.intent) {
         case 'charge': {
           const { request } = challenge
@@ -72,8 +78,8 @@ export function tempo(parameters: tempo.Parameters) {
 
 export declare namespace tempo {
   type Parameters = {
-    /** Account to sign transactions with. */
-    account: Account
+    /** Account to sign transactions with. Can be overridden per-call via context. */
+    account?: Account | undefined
   } & OneOf<
     | {
         /** Viem Client. */

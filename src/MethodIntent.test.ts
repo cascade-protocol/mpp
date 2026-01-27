@@ -1,5 +1,5 @@
 import { describe, expect, expectTypeOf, test } from 'vitest'
-import { z } from 'zod/mini'
+import * as z from './zod.js'
 import * as Intent from './Intent.js'
 import * as MethodIntent from './MethodIntent.js'
 

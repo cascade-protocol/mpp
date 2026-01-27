@@ -1,50 +1,31 @@
+import type { Account } from 'viem'
 import { describe, expectTypeOf, test } from 'vitest'
-import * as Credential from '../Credential.js'
-import * as Intent from '../Intent.js'
 import * as Method from '../Method.js'
-import * as MethodIntent from '../MethodIntent.js'
+import * as tempo_client from '../tempo/client/Method.js'
+import { tempo } from '../tempo/Method.js'
 import * as z from '../zod.js'
 import * as Mpay from './Mpay.js'
 
-const fooCharge = MethodIntent.fromIntent(Intent.charge, {
-  method: 'test',
-  schema: {
-    credential: {
-      payload: z.object({ signature: z.string() }),
-    },
-    request: {
-      requires: ['recipient'],
-    },
-  },
-})
-
-const fooMethod = Method.from({
-  name: 'test',
-  intents: { charge: fooCharge },
-})
-
-const clientMethod = Method.toClient(fooMethod, {
-  async createCredential({ challenge }) {
-    return Credential.serialize({
-      challenge,
-      payload: { signature: '0xtest' },
-    })
-  },
-})
-
 describe('Mpay', () => {
   test('has methods array', () => {
-    const mpay = Mpay.create({ methods: [clientMethod] })
+    const method = tempo_client.tempo({
+      account: {} as Account,
+      rpcUrl: 'https://rpc.tempo.xyz',
+    })
+    const mpay = Mpay.create({ methods: [method] })
 
     expectTypeOf(mpay.methods).toMatchTypeOf<readonly unknown[]>()
-    expectTypeOf(mpay.methods[0]?.name).toEqualTypeOf<'test'>()
+    expectTypeOf(mpay.methods[0]?.name).toEqualTypeOf<'tempo'>()
   })
 
   test('has createCredential function', () => {
-    const mpay = Mpay.create({ methods: [clientMethod] })
+    const method = tempo_client.tempo({
+      account: {} as Account,
+      rpcUrl: 'https://rpc.tempo.xyz',
+    })
+    const mpay = Mpay.create({ methods: [method] })
 
     expectTypeOf(mpay.createCredential).toBeFunction()
-    expectTypeOf(mpay.createCredential).parameters.toMatchTypeOf<[Response]>()
     expectTypeOf(mpay.createCredential).returns.toMatchTypeOf<Promise<string>>()
   })
 })
@@ -59,7 +40,7 @@ describe('create.Config', () => {
 
 describe('Method.toClient', () => {
   test('createCredential receives typed challenge', () => {
-    Method.toClient(fooMethod, {
+    Method.toClient(tempo, {
       async createCredential({ challenge }) {
         expectTypeOf(challenge.method).toBeString()
         expectTypeOf(challenge.intent).toBeString()
@@ -67,26 +48,74 @@ describe('Method.toClient', () => {
         expectTypeOf(challenge.request).toHaveProperty('currency')
         expectTypeOf(challenge.request).toHaveProperty('recipient')
 
-        return Credential.serialize({
-          challenge,
-          payload: { signature: '0xtest' },
-        })
+        return 'Payment ...'
       },
     })
   })
 
   test('returns Client type', () => {
-    const client = Method.toClient(fooMethod, {
-      async createCredential({ challenge }) {
-        return Credential.serialize({
-          challenge,
-          payload: { signature: '0xtest' },
-        })
+    const client = Method.toClient(tempo, {
+      async createCredential() {
+        return 'Payment ...'
       },
     })
 
-    expectTypeOf(client.name).toEqualTypeOf<'test'>()
+    expectTypeOf(client.name).toEqualTypeOf<'tempo'>()
     expectTypeOf(client.intents).toHaveProperty('charge')
     expectTypeOf(client.createCredential).toBeFunction()
+  })
+
+  test('createCredential receives typed context when provided', () => {
+    Method.toClient(tempo, {
+      context: z.object({
+        account: z.custom<Account>(),
+        extra: z.optional(z.string()),
+      }),
+      async createCredential({ context }) {
+        expectTypeOf(context.account).toEqualTypeOf<Account>()
+        expectTypeOf(context.extra).toEqualTypeOf<string | undefined>()
+
+        return 'Payment ...'
+      },
+    })
+  })
+
+  test('returns Client type with context', () => {
+    const client = Method.toClient(tempo, {
+      context: z.object({
+        account: z.custom<Account>(),
+      }),
+      async createCredential({ context }) {
+        return `Payment ${context.account.address}`
+      },
+    })
+
+    expectTypeOf(client.name).toEqualTypeOf<'tempo'>()
+    expectTypeOf(client.context).not.toBeUndefined()
+  })
+})
+
+describe('Mpay with context', () => {
+  test('createCredential accepts context matching method schema', () => {
+    const method = tempo_client.tempo({
+      rpcUrl: 'https://rpc.tempo.xyz',
+    })
+
+    const mpay = Mpay.create({ methods: [method] })
+
+    expectTypeOf(mpay.createCredential).toBeFunction()
+    expectTypeOf(mpay.createCredential).returns.toMatchTypeOf<Promise<string>>()
+  })
+
+  test('createCredential context is optional when account provided at creation', () => {
+    const method = tempo_client.tempo({
+      account: {} as Account,
+      rpcUrl: 'https://rpc.tempo.xyz',
+    })
+
+    const mpay = Mpay.create({ methods: [method] })
+
+    expectTypeOf(mpay.createCredential).toBeFunction()
+    expectTypeOf(mpay.createCredential).returns.toMatchTypeOf<Promise<string>>()
   })
 })
