@@ -107,7 +107,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const url = '${{ steps.deploy.outputs["deployment-url"] }}'
+            const url = "${{ steps.deploy.outputs['deployment-url'] }}"
             const body = url
               ? `MPP Docs preview: ${url}`
               : 'MPP Docs preview failed to deploy.'
