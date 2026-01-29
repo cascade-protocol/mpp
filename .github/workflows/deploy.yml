@@ -3,11 +3,7 @@ name: Deploy
 on:
   push:
     branches: [main]
-    paths:
-      - "mpp/**"
   pull_request:
-    paths:
-      - "mpp/**"
   workflow_dispatch:
 
 permissions:
@@ -39,8 +35,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: pnpm
-          cache-dependency-path: mpp/pnpm-lock.yaml
 
       - name: Install dependencies
         working-directory: mpp
@@ -78,8 +72,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: pnpm
-          cache-dependency-path: mpp/pnpm-lock.yaml
 
       - name: Install dependencies
         working-directory: mpp
