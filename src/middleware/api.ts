@@ -3,7 +3,7 @@ import { Mpay, tempo } from "mpay/server";
 
 /* 
 This middleware provides a basic implementation of the payment middleware for examples.
-*/ 
+*/
 
 const PATHUSD = "0x20c0000000000000000000000000000000000000";
 const RECIPIENT = "0xa726a1CD723409074DF9108A2187cfA19899aCF8";

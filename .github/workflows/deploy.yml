@@ -1,0 +1,51 @@
+name: Deploy MPP Docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "mpp/**"
+  pull_request:
+    paths:
+      - "mpp/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mpp-docs-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: mpp/pnpm-lock.yaml
+
+      - name: Install dependencies
+        working-directory: mpp
+        run: pnpm install
+
+      - name: Build site
+        working-directory: mpp
+        run: pnpm run build
+
+      - name: Deploy to Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: mpp
+          command: deploy

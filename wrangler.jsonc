@@ -1,0 +1,25 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "mpp-docs",
+	"main": "worker/src/index.ts",
+	"compatibility_date": "2025-01-15",
+	"compatibility_flags": ["nodejs_compat"],
+	"observability": { "enabled": true },
+	"workers_dev": true,
+	"preview_urls": true,
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+		"run_worker_first": true
+	},
+	"vars": {
+		"AUTH_USER": "eng"
+	},
+	"routes": [
+		{
+			"pattern": "docs.mpp.tempo.xyz",
+			"zone_name": "tempo.xyz",
+			"custom_domain": true
+		}
+	]
+}
