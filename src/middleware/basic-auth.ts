@@ -5,6 +5,11 @@ const [AUTH_USER, AUTH_PASS] = env.AUTH_CREDENTIALS!.split(":");
 
 export function middleware(): MiddlewareHandler {
 	return async (context, next) => {
+		const url = new URL(context.req.url);
+		if (url.hostname === "localhost" || url.hostname === "127.0.0.1") {
+			return next();
+		}
+
 		if (!AUTH_PASS) {
 			return next();
 		}

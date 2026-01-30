@@ -62,8 +62,11 @@ export default defineConfig({
 			},
 			{
 				text: "SDKs",
-				link: "/sdk",
 				items: [
+					{
+						text: "Overview",
+						link: "/sdk",
+					},
 					{
 						text: "TypeScript",
 						collapsed: true,
