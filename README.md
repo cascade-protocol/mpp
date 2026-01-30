@@ -1,22 +1,21 @@
 # MPP Website
 
+Website for the Machine Payments Protocol (MPP).
+
+## Development
+
 ```bash
-npm install      # Install
-npm run dev      # Start development server
-npm run build    # Build 
-npm run preview  # Preview build
+pnpm install      # Install
+pnpm run dev      # Start development server
+pnpm run build    # Build 
+pnpm run preview  # Preview build
 ```
 
-## Cloudflare Workers Deploy
+## Deployment
 
 ```bash
-pnpm install
-pnpm run build
-pnpm run deploy
-```
+pnpx wrangler secret put AUTH_CREDENTIALS  # Set basic auth credentials
+pnpx wrangler secret put SECRET_KEY        # Set secret key
 
-Set secrets before deploying:
-
-```bash
-pnpm exec wrangler secret put AUTH_PASS
+pnpm run deploy                            # Deploy to Cloudflare Workers
 ```
