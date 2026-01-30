@@ -5,6 +5,7 @@ export default defineConfig({
 	titleTemplate: "%s | MPP",
 	description:
 		"Machine Payments Protocol - Internet-native payments for machine-to-machine transactions",
+	renderStrategy: "full-static",
 	ogImageUrl:
 		"https://vocs.dev/api/og?logo=%logo&title=%title&description=%description",
 
