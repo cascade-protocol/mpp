@@ -4,17 +4,17 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"check": "biome check --write",
-		"check:types": "tsc --noEmit",
-		"check:sdk-drift": "npx tsx .github/actions/sdk-drift-check/check-sdk-drift.ts",
-		"test": "vitest run",
-		"test:watch": "vitest",
-		"dev": "vite dev",
 		"build": "vite build && node scripts/patch-cf.ts",
+		"check": "biome check --write",
+		"check:sdk-drift": "npx tsx .github/actions/sdk-drift-check/check-sdk-drift.ts",
+		"check:types": "tsc --noEmit",
 		"deploy": "wrangler deploy",
+		"dev": "vite dev",
 		"gen:types": "wrangler types",
 		"postinstall": "pnpm gen:types",
 		"preview": "vite preview",
+		"test": "vitest run",
+		"test:watch": "vitest",
 		"wrangler:dev": "wrangler dev"
 	},
 	"dependencies": {

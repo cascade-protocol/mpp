@@ -10,16 +10,9 @@ const baseUrl = (() => {
 })();
 
 export default defineConfig({
-	rootDir: "src",
 	accentColor: "light-dark(#0066FF, #3B82F6)",
-	checkDeadlinks: false,
-	description:
-		"Machine Payments Protocol - Internet-native payments for machine-to-machine transactions",
-	baseUrl: baseUrl || undefined,
-	ogImageUrl: (path, { baseUrl: base } = { baseUrl: "" }) =>
-		path === "/"
-			? `${base}/og.png`
-			: `${base}/api/og?title=%title&description=%description`,
+	baseUrl,
+	description: "Internet-native payments for machine-to-machine transactions",
 	iconUrl: {
 		light: "/icon-light.png",
 		dark: "/icon-dark.png",
@@ -38,6 +31,10 @@ export default defineConfig({
 			McpSource.github({ name: "tempo", repo: "tempoxyz/tempo" }),
 		],
 	},
+	ogImageUrl: (path, { baseUrl: base } = { baseUrl: "" }) =>
+		path === "/"
+			? `${base}/og.png`
+			: `${base}/api/og?title=%title&description=%description`,
 	sidebar: {
 		"/": [
 			{
