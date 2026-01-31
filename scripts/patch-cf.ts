@@ -16,7 +16,11 @@ if (!fs.existsSync(ssrAssetsDir)) {
 
 // Create a minimal vocs.config.js that just exports the config object directly
 // (vocs/config exports defineConfig which is just an identity function)
-const vocsConfigSrc = path.resolve(process.cwd(), "vocs.config.ts");
+const vocsConfigSrc = (() => {
+	const tsx = path.resolve(process.cwd(), "vocs.config.tsx");
+	if (fs.existsSync(tsx)) return tsx;
+	return path.resolve(process.cwd(), "vocs.config.ts");
+})();
 const vocsConfigDest = path.join(serverDir, "vocs.config.js");
 if (fs.existsSync(vocsConfigSrc)) {
 	const configContent = fs.readFileSync(vocsConfigSrc, "utf-8");
@@ -305,6 +309,23 @@ data: \${endpointUrl}
         const wasmUrl = new URL(wasm, url.origin);
         module = await fetch(wasmUrl).then((r) => r.arrayBuffer());
       }`,
+			);
+			patched = true;
+		}
+
+		// Patch CodeToHtml to avoid Shiki WASM on Workers
+		if (content.includes("async function CodeToHtml(props) {")) {
+			content = content.replace(
+				"async function CodeToHtml(props) {",
+				`async function CodeToHtml(props) {
+  // CF Workers: avoid Shiki WASM (WebAssembly.instantiate blocked)
+  if (typeof globalThis.caches !== "undefined") {
+    const { code: code2 } = props;
+    return jsxRuntime_reactServerExports.jsx("pre", {
+      className: "shiki",
+      children: jsxRuntime_reactServerExports.jsx("code", { children: code2 })
+    });
+  }`,
 			);
 			patched = true;
 		}
