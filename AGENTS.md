@@ -1,6 +1,16 @@
-# Agent Notes: mpay TypeScript Reference Docs
+# Agent Notes: MPP Documentation Site
 
-Use this guidance when creating or updating TypeScript SDK reference pages for mpay.
+Use this guidance when creating or updating documentation for MPP.
+
+## Reference Sites
+
+When writing docs, reference these sites for patterns and APIs:
+
+- **MPP Spec**: <https://paymentauth.tempo.xyz> — Normative Payment Auth specs
+- **Vocs**: <https://vocs.dev> — Documentation framework (MDX, callouts, Cards)
+- **Viem**: <https://viem.sh> — Ethereum library used in examples
+- **Wagmi**: <https://wagmi.sh> — React hooks for Ethereum (style reference)
+- **Tempo**: <https://tempo.xyz> — Tempo blockchain and TIP-20 tokens
 
 ## Source of Truth
 
@@ -161,6 +171,43 @@ Custom fetch function to wrap. Defaults to `globalThis.fetch`.
 
 ```
 
+## Writing Style
+
+Follow [Stripe's documentation style](https://stripe.com/docs). Key rules:
+
+**Voice**: Active, present tense, second person ("you"). Use contractions.
+- ✅ "The server returns a challenge"
+- ❌ "A challenge will be returned by the server"
+
+**Be concise**: Cut filler words (just, simply, easily, obviously). Don't claim things are "easy" or "fast."
+
+**Formatting**:
+- Sentence case for headings (not Title Case)
+- Bold for UI elements and list labels
+- Code font for parameters, commands, status codes, object names
+- Em dashes with no spaces: "payments immediately—you don't need to"
+
+**Avoid**:
+- Latin abbreviations (use "for example" not "e.g.")
+- Future tense ("will") and conditional ("should")
+- "Once" to mean "after"
+- Exclamation points, humor, rhetorical questions
+
+**Structure**: Never skip heading levels. Keep headings under 12 words. Use imperative mood for procedures.
+
+## Badge Usage in Tables
+
+Use `<Badge variant="...">` in tables to indicate status or maturity. Import from `vocs`.
+
+| Variant | Use For | Example |
+|---------|---------|---------|
+| `success` | Production-ready, stable, success states | `<Badge variant="success">Stable</Badge>` |
+| `info` | Beta, preview, standard/recommended | `<Badge variant="info">Beta</Badge>` |
+| `warning` | Coming soon, deprecated, caution states | `<Badge variant="warning">Coming Soon</Badge>` |
+| `danger` | Error states, 4xx/5xx codes | `<Badge variant="danger">402</Badge>` |
+| `note` | Custom/advanced options | `<Badge variant="note">Custom</Badge>` |
+| `gray` | Neutral metadata | `<Badge variant="gray">any time</Badge>` |
+
 ## Rules
 
 1. **Alphabetize everything** - Object properties in code examples and ### parameter headings must be alphabetically ordered
@@ -170,3 +217,52 @@ Custom fetch function to wrap. Defaults to `globalThis.fetch`.
 5. **Use `// @log:` comments** - Show expected output inline
 6. **Document all parameters** - Mark optional ones with "(optional)"
 7. **Include type information** - Always show the Type for each parameter
+
+## Vocs & MDX Conventions
+
+**Adding pages**:
+- Create `.mdx` file matching route (`/foo/bar` → `src/pages/foo/bar.mdx`)
+- Add to `sidebar.ts` in the correct section
+- Build checks for deadlinks (`checkDeadlinks: true`)
+
+**Imports**: Put at top of MDX file
+```mdx
+import { Badge } from 'vocs'
+import { Card, Cards } from 'vocs'
+```
+
+**Callouts**: Use triple-colon syntax
+```mdx
+:::info[Title here]
+Content goes here.
+:::
+```
+Variants: `:::info`, `:::warning`, `:::note`
+
+**Cards**: For navigation grids
+```mdx
+<Cards>
+  <Card title="Title" description="..." icon="lucide:icon-name" to="/path" />
+</Cards>
+```
+
+**Code blocks**:
+- Add filename labels: ` ```ts [client.ts] `
+- Highlight key lines: `// [!code hl]`
+- Focus regions: `// [!code focus:10]` (next 10 lines)
+- Twoslash for type inference: ` ```ts twoslash `
+
+**Mermaid**: Supported for diagrams
+```mdx
+```mermaid
+sequenceDiagram
+    Client->>Server: Request
+```
+```
+
+## Build Commands
+
+- `pnpm dev` — Local development
+- `pnpm build` — Production build
+- `pnpm check` — Biome format/lint
+- `pnpm check:types` — TypeScript check
