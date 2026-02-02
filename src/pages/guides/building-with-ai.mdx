@@ -1,0 +1,158 @@
+---
+title: Building with AI
+description: AI-first features in MPP docs including llms.txt, MCP server, Markdown rendering for agents, and custom agent skills.
+---
+
+import { Card, Cards } from 'vocs'
+
+# Building with AI [Features for LLMs and AI assistants]
+
+MPP documentation is built with AI-first principles, providing multiple features to make documentation accessible to LLMs and AI assistants.
+
+## Agent skills
+
+Get up and running by using your coding agent (Claude Code, Cursor, Amp, and similar tools) with [Agent Skills](https://skills.sh). After you install it, your agent has context on how to properly integrate `mpay` with your chosen framework.
+
+Use the [`skills` CLI](https://github.com/vercel-labs/skills) to install skills for your coding agent:
+
+```bash
+npx skills install wevm/mpay -g
+```
+
+:::info[Try it out]
+After installing, ask your agent something like:
+```
+Add mpay to my Next.js app.
+Create a /api/checkout route that handles payments.
+```
+:::
+
+## llms.txt
+
+The docs automatically generate [`llms.txt`](https://llmstxt.org/) files for LLM consumption. These files are generated at build time and served at the root of the site.
+
+<Cards>
+  <Card
+    icon="lucide:file-text"
+    title="llms.txt"
+    description="A concise index of all pages with titles and descriptions"
+    to="/llms.txt"
+  />
+  <Card
+    icon="lucide:files"
+    title="llms-full.txt"
+    description="Complete documentation content in a single file for comprehensive context"
+    to="/llms-full.txt"
+  />
+</Cards>
+
+:::info[Try it out]
+Paste the URL into your agent and ask:
+```
+Use mpp.tempo.xyz as reference.
+I'm integrating mpay with Fastify—what are the key steps?
+```
+:::
+
+## Markdown rendering for AI agents
+
+AI user agents are automatically detected and served raw Markdown instead of rendered HTML. This provides better token efficiency and easier parsing for LLMs.
+
+:::info[Try it out]
+Copy any page link and ask your agent:
+```
+Based on mpp.tempo.xyz/quickstart/client, produce a minimal
+client example and explain what environment variables I need.
+```
+:::
+
+:::note[Supported AI agents]
+Popular user agents that are automatically detected: `GPTBot`, `ChatGPT-User`, `ClaudeBot`, `claude-web`, `Googlebot`. See the [full list](https://github.com/wevm/vocs/blob/next/src/waku/internal/middleware/md-router.ts).
+:::
+
+## Ask AI menu
+
+The docs include a built-in "Ask AI" menu (`⌘I` / `Ctrl+I`) that provides:
+
+- **Open in ChatGPT/Claude**: Opens the current page context in popular AI assistants
+- **Copy page for AI**: Copies the page content as Markdown to your clipboard
+- **View as Markdown**: Opens the raw Markdown version of the current page
+- **Copy MCP URL**: Copies the MCP server URL for AI assistant configuration
+
+## MCP server
+
+The docs include a built-in [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that allows AI assistants to navigate documentation and source code programmatically.
+
+::::code-group
+
+```bash [Claude Code]
+claude mcp add --transport http mpp https://mpp.tempo.xyz/api/mcp
+```
+
+```bash [Amp]
+amp mcp add --transport http mpp https://mpp.tempo.xyz/api/mcp
+```
+
+```bash [Cursor]
+# Open Command Palette → "MCP: Open User Configuration"
+# Or edit ~/.cursor/mcp.json directly
+```
+
+```bash [VS Code]
+# Open Command Palette → "MCP: Open User Configuration"
+# Or edit .vscode/mcp.json in your workspace
+```
+
+```json [Manual]
+// Claude Code: .mcp.json | Cursor: ~/.cursor/mcp.json
+// Windsurf: ~/.codeium/windsurf/mcp_config.json
+{
+  "mcpServers": {
+    "mpp": {
+      "url": "https://mpp.tempo.xyz/api/mcp"
+    }
+  }
+}
+```
+
+::::
+
+:::info[Try it out]
+Once connected, ask your agent:
+```
+Search the docs for payment verification.
+Summarize the approach, then find the corresponding
+helper in the TypeScript SDK and show how to use it.
+```
+:::
+
+### Available tools
+
+The MCP server exposes these tools to AI assistants:
+
+| Tool | Description |
+| --- | --- |
+| `list_pages` | List all documentation pages with their paths |
+| `read_page` | Read the content of a specific documentation page |
+| `search_docs` | Search documentation for a query string |
+
+### Source code navigation
+
+The MCP server also provides access to source code repositories:
+
+| Tool | Description |
+| --- | --- |
+| `list_sources` | List available source code repositories |
+| `list_source_files` | List files in a directory |
+| `read_source_file` | Read a source code file |
+| `get_file_tree` | Get a recursive file tree |
+| `search_source` | Search source code for a pattern |
+
+Available source repositories:
+
+- [`wevm/mpay`](https://github.com/wevm/mpay) – TypeScript SDK
+- [`tempoxyz/mpay-rs`](https://github.com/tempoxyz/mpay-rs) – Rust SDK
+- [`tempoxyz/mpay-sdks`](https://github.com/tempoxyz/mpay-sdks) – Multi-language SDKs
+- [`tempoxyz/pympay`](https://github.com/tempoxyz/pympay) – Python SDK
+- [`tempoxyz/payment-auth-spec`](https://github.com/tempoxyz/payment-auth-spec) – Protocol specification
+- [`tempoxyz/tempo`](https://github.com/tempoxyz/tempo) – Tempo node implementation

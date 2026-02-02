@@ -101,7 +101,7 @@ type Page =
 | { path: '/payment-methods'; render: 'static' }
 | { path: '/payment-methods/stripe'; render: 'static' }
 | { path: '/payment-methods/tempo'; render: 'static' }
-| { path: '/guide/building-with-ai'; render: 'static' }
+| { path: '/guides/building-with-ai'; render: 'static' }
 | { path: '/_api/api/og'; render: 'static' };
 
 // prettier-ignore

@@ -1,47 +1,35 @@
-import { Badge } from 'vocs'
+import { Badge, Card, Cards } from 'vocs'
 
-# SDKs [Official implementations in TypeScript, Python, and Rust]
+# SDKs & Tools [Official implementations in TypeScript, Python, and Rust]
 
 The Machine Payments Protocol (MPP) has official SDKs in multiple languages. At launch, all SDKs implement the core protocol. The TypeScript SDK is the flagship implementation—new features are added to it first.
 
-## Available SDKs
-
-| Language | Package | GitHub | Status |
-|----------|---------|--------|--------|
-| [TypeScript](/sdk/typescript) | [`mpay`](https://www.npmjs.com/package/mpay) | [wevm/mpay](https://github.com/wevm/mpay) | <Badge variant="success">Reference</Badge> |
-| [Python](/sdk/python) | [`pympay`](https://pypi.org/project/pympay/) | [tempoxyz/pympay](https://github.com/tempoxyz/pympay) | <Badge variant="info">Beta</Badge> |
-| [Rust](/sdk/rust) | [`mpay`](https://crates.io/crates/mpay) | [tempoxyz/mpay-rs](https://github.com/tempoxyz/mpay-rs) | <Badge variant="info">Beta</Badge> |
-
-## Quick install
-
-:::code-group
-
-```bash [npm]
-npm install mpay
-```
-
-```bash [pnpm]
-pnpm add mpay
-```
-
-```bash [pip]
-pip install pympay
-```
-
-```bash [cargo]
-cargo add mpay
-```
-
-:::
-
-## Feature comparison
-
-Choose based on your stack—all SDKs provide the same protocol support and are fully interoperable. 
-
-The TypeScript SDK is the reference implementation with the most complete documentation.
-
-| Feature | TypeScript | Python | Rust |
-|---------|------------|--------|------|
-| HTTP Client | `fetch` wrapper | `httpx` transport | `reqwest` middleware |
-| HTTP Server | Fetch API / Node.js | FastAPI / Starlette | Axum / Tower |
-| MCP Support | ✅ Native | ✅ Native | ❌ |
+<Cards>
+  <Card
+    topRight={<Badge variant="info">Reference</Badge>}
+    description="Get started with `mpay`, the reference implementation of the MPP SDKs"
+    icon="simple-icons:typescript"
+    title="TypeScript"
+    to="/sdk/typescript"
+  />
+  <Card
+    topRight={<Badge variant="warning">Beta</Badge>}
+    description="Get started with `pympay`, the official MPP SDK for Python"
+    icon="simple-icons:python"
+    title="Python"
+    to="/sdk/python"
+  />
+  <Card
+    topRight={<Badge variant="warning">Beta</Badge>}
+    description="Get started with `mpay-rs`, the official MPP SDK for Rust"
+    icon="simple-icons:rust"
+    title="Rust"
+    to="/sdk/rust"
+  />
+  <Card
+    description="A command-line tool for making paid HTTP requests"
+    icon="lucide:terminal"
+    title="pget CLI"
+    to="/tools/pget"
+  />
+</Cards>

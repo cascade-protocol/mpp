@@ -2,6 +2,14 @@
 
 The mpay SDK is designed for extensibility. You can implement custom payment methods to integrate any payment rails—Lightning Network, other blockchains, card processors, or proprietary systems.
 
+:::info[Try it out]
+This guide uses Lightning Network as an example. Adapt the patterns for your payment rail:
+```
+I want to build a custom mpay payment method for [Stripe/PayPal/Bitcoin].
+Walk me through the intent and method definitions I need.
+```
+:::
+
 ## Overview
 
 A custom payment method requires:
@@ -230,6 +238,14 @@ const serverMethod = Method.toServer(lightningMethod, {
 
 ## Use in your app
 
+:::info[Try it out]
+Once you've defined your method, integrate it with your app:
+```
+Show me how to wire up my custom Lightning payment method
+with a Next.js API route on the server side.
+```
+:::
+
 ### Client
 
 Pass the client method to `Fetch.from`:
@@ -364,6 +380,14 @@ const mpay = Mpay.create({
 ```
 
 ## SDK references
+
+:::info[Try it out]
+Dive deeper into the primitives:
+```
+Explain the difference between Intent.from and MethodIntent.fromIntent.
+When would I use each?
+```
+:::
 
 - [`Intent.from`](/sdk/typescript/Intent.from) — Create a custom intent
 - [`MethodIntent.fromIntent`](/sdk/typescript/MethodIntent.fromIntent) — Attach method-specific schemas
