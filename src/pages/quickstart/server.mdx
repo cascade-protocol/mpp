@@ -121,7 +121,7 @@ export async function handler(req: IncomingMessage, res: ServerResponse) {
 
 ### Plug into your framework
 
-Plug the handler into your framework of choice, like [Hono](#TODO).
+Plug the handler into your framework of choice, like [Hono](https://hono.dev).
 
 ```ts [example.ts]
 import { Hono } from 'hono' // [!code focus]
@@ -153,13 +153,13 @@ app.get('/resource', async (c) => { // [!code focus:99]
 
 ### (Optional) Use agent skills
 
-Use your coding agent (Claude Code, Cursor, Amp, and similar tools) with [Agent Skills](https://skills.sh) to easily integrate `mpay` with your framework.
+Use your coding agent (Claude Code, Cursor, or Amp) with [Agent Skills](https://skills.sh) to integrate `mpay` with your framework.
 
 ```bash [Terminal]
 npx skills install wevm/mpay --skill mpay-hono
 ```
 
-And then ask your agent something like:
+Then ask your agent:
 
 ```
 Add an `mpay` middleware to my Hono server.
