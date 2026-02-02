@@ -15,7 +15,7 @@ You can pay for services programmatically using the `mpay` client SDK. The SDK p
 
 To pay with MPP, use `mpay`'s fetch wrapper. When the server returns `402`, the wrapped fetch automatically creates a payment credential and retries.
 
-```ts [client.ts]
+```ts twoslash [client.ts]
 import { Fetch, tempo } from 'mpay/client'
 import { privateKeyToAccount } from 'viem/accounts'
 
@@ -41,7 +41,7 @@ const data = await response.json()
 
 Replace the global `fetch` with a payment-aware version:
 
-```ts [polyfill.ts]
+```ts twoslash [polyfill.ts]
 import { Fetch, tempo } from 'mpay/client'
 import { privateKeyToAccount } from 'viem/accounts'
 
@@ -76,7 +76,7 @@ This is useful in the following scenarios:
 - Implement custom retry logic
 
 
-```ts [manual.ts]
+```ts twoslash [manual.ts]
 import { Mpay, tempo } from 'mpay/client'
 import { privateKeyToAccount } from 'viem/accounts'
 
