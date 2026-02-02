@@ -27,7 +27,7 @@ const fetch = Fetch.from({
 const res = await fetch('https://mpp.dev/ping/paid')
 ```
 
-### Per-Call Accounts
+### Per-call accounts
 
 Instead of defining an `account` at instantiation, you can pass it on a per-request basis via the `context` option. 
 
@@ -54,9 +54,9 @@ const res = await fetch('https://mpp.dev/ping/paid', {
 })
 ```
 
-## Return Type
+## Return type
 
-```ts
+```ts twoslash
 type Fetch = (
   input: RequestInfo | URL,
   init?: RequestInit,

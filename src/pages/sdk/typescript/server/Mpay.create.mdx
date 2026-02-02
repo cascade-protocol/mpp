@@ -37,8 +37,9 @@ const payment = Mpay.create({
 
 ## Return Type
 
-```ts
-import type { Mpay, Method, Transport } from 'mpay/server'
+```ts twoslash
+import type { Method } from 'mpay'
+import type { Mpay, Transport } from 'mpay/server'
 
 type ReturnType = Mpay<Method.Server, Transport.Http>
 ```

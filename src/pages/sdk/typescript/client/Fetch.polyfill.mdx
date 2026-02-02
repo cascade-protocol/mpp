@@ -25,7 +25,7 @@ const res = await fetch('https://mpp.dev/ping/paid')
 
 Instead of defining an account at instantiation, you can pass it on a per-request basis via the `context` option. This is useful when you need to use different accounts for different requests.
 
-```ts
+```ts twoslash
 import { Fetch, tempo } from 'mpay/client'
 import { privateKeyToAccount } from 'viem/accounts'
 
@@ -46,7 +46,7 @@ const res = await fetch('https://mpp.dev/ping/paid', {
 
 ## Return Type
 
-```ts
+```ts twoslash
 void
 ```
 
