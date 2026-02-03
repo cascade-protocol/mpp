@@ -15,7 +15,7 @@ sequenceDiagram
 
     Client->>Server: (1) GET /resource
     Server-->>Client: (2) 402 Payment Required<br/>WWW-Authenticate: Payment <challenge>
-    Note over Client: (3) Client fulfills payment challenge<br/>(signs transaction, pays invoice, etc.)
+    Note over Client: (3) Client fulfills payment challenge<br/>(signs transaction, pays invoice, or similar)
     Client->>Server: (4) GET /resource<br/>Authorization: Payment <credential>
     Note over Server: (5) Server verifies and settles
     Server-->>Client: (6) 200 OK<br/>Payment-Receipt: <receipt>

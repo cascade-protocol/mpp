@@ -55,6 +55,26 @@ When editing Python or Rust pages, keep the structure aligned with the existing 
 - Python: <https://github.com/tempoxyz/pympay>
 - Rust: <<https://github.com/tempoxyz/mpay-rs>
 
+## Be Opinionated
+
+When multiple approaches exist, recommend one as the default. Don't present options equally—pick the best path for most users and lead with it.
+
+**Structure for pages with alternatives:**
+
+1. **Lead with the recommended approach**—Show the single best option first, with a complete example
+2. **Move alternatives to "Advanced options"**—Group other approaches under a secondary heading below the main content
+
+**Examples:**
+
+- Client SDK: Lead with `Fetch.polyfill`, move `Fetch.from` and `Mpay.create` to Advanced options
+- Building with AI: Lead with `llms-full.txt`, move MCP/skills/markdown to Advanced options
+- Installation: Show npm first in a code-group, not a table of choices
+
+If you're unsure which option to recommend, prefer:
+- The approach with fewer steps
+- The approach that modifies less existing code
+- The approach labeled "Reference" or "Stable" over "Beta" or "Custom"
+
 ## Page Structure
 
 Every reference page follows this structure:
@@ -180,6 +200,8 @@ Follow [Stripe's documentation style](https://stripe.com/docs). Key rules:
 - Code font for parameters, commands, status codes, object names
 - Em dashes with no spaces: "payments immediately—you don't need to"
 - When discussing command names like `pget` or HTTP status code specifics like `402` you should always use code blocks ``
+
+**MPP core concepts as proper nouns**: Capitalize Challenge, Credential, and Receipt when referring to these as MPP protocol concepts or SDK types. For example: "Parse a Challenge", "Verify a Credential", "Return a Receipt". These are proper nouns within the MPP domain.
 
 **Avoid**:
 - Latin abbreviations (use "for example" not "e.g.")

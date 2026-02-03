@@ -2,7 +2,7 @@
 
 Protect endpoints with payment requirements.
 
-## Quick Start
+## Quick start
 
 ```python
 from fastapi import FastAPI, Request
@@ -40,7 +40,7 @@ async def get_resource(request: Request, credential: Credential, receipt: Receip
 
 ## Reuse Configuration
 
-Bind method, realm, and secret_key once.
+Bind method, realm, and secret_key at initialization.
 
 ```python
 from mpay import Challenge
