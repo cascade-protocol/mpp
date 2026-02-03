@@ -14,7 +14,7 @@ const payment = Mpay.create({
     chainId: 42431,
   }),
   realm: 'mpp.dev',
-  secretKey: process.env.PAYMENT_SECRET_KEY!,
+  secretKey: process.env.MPAY_SECRET_KEY!,
   transport: Transport.mcpSdk(),
 })
 

@@ -62,13 +62,13 @@ const mpay = Mpay.create({
 })
 
 export async function handler(request: Request) { 
-  const response = await mpay.charge({ 
-    request: { 
-      amount: '1000000', 
-      currency: '0x20c0000000000000000000000000000000000001', 
-      recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8', 
-    }, 
-  })(request) 
+  const response = await mpay.charge({ // [!code hl]
+    request: { // [!code hl]
+      amount: '1000000', // [!code hl]
+      currency: '0x20c0000000000000000000000000000000000001', // [!code hl]
+      recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8', // [!code hl]
+    }, // [!code hl]
+  })(request) // [!code hl]
 
   // Payment required: send 402 response with challenge 
   if (response.status === 402) return response.challenge 
@@ -83,8 +83,9 @@ If your framework doesn't support the Fetch API (for example, Express or Node.js
 
 Use the `Mpay.toNodeListener` helper to transform the handler into a Node.js-compatible listener.
 
-```ts  twoslash
-import { Mpay, tempo } from 'mpay/server' // [!code collapse:8]
+```ts twoslash
+// @noErrors
+import { Mpay, tempo } from 'mpay/server'
 
 const mpay = Mpay.create({
   method: tempo({

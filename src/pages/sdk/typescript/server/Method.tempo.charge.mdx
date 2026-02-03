@@ -32,6 +32,39 @@ export async function handler(request: Request) {
 }
 ```
 
+### With Expiry
+
+Set a custom expiration time for the charge using the `expires` option.
+
+```ts twoslash
+import { Mpay, tempo } from 'mpay/server'
+
+const mpay = Mpay.create({
+  method: tempo({
+    chainId: 42431,
+    rpcUrl: 'https://rpc.tempo.xyz',
+  }),
+  realm: 'api.example.com',
+  secretKey: process.env.MPAY_SECRET_KEY!,
+})
+// ---cut---
+import { Expires } from 'mpay'
+
+export async function handler(request: Request) {
+  const response = await mpay.charge({
+    request: {
+      amount: '1000000',
+      currency: '0x20c0000000000000000000000000000000000001',
+      expires: Expires.minutes(10), // [!code focus]
+      recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8',
+    },
+  })(request)
+
+  if (response.status === 402) return response.challenge
+  return response.withReceipt(Response.json({ data: '...' }))
+}
+```
+
 ### With Description
 
 Add a human-readable description for the payment request.
