@@ -15,7 +15,7 @@ Deno uses native Web Standard `Request`/`Response`, making it straightforward.
 import { Expires, Mpay, tempo } from 'npm:mpay/server'
 
 const mpay = Mpay.create({
-  method: tempo({ chainId: 42431, rpcUrl: 'https://rpc.tempo.xyz' }),
+  method: tempo(),
   realm: 'api.example.com',
   secretKey: Deno.env.get('MPAY_SECRET_KEY')!,
 })
@@ -52,7 +52,7 @@ Deno.serve(async (req: Request) => {
 import { Expires, Mpay, tempo } from 'npm:mpay/server'
 
 const mpay = Mpay.create({
-  method: tempo({ chainId: 42431, rpcUrl: 'https://rpc.tempo.xyz' }),
+  method: tempo(),
   realm: 'api.example.com',
   secretKey: Deno.env.get('MPAY_SECRET_KEY')!,
 })

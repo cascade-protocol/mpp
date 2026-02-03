@@ -39,10 +39,7 @@ export type Mpay<
  * import { Mpay, tempo } from 'mpay/server'
  *
  * const payment = Mpay.create({
- *   method: tempo({
- *     rpcUrl: 'https://rpc.tempo.xyz',
- *     chainId: 42431,
- *   }),
+ *   method: tempo(),
  *   realm: 'api.example.com',
  *   secretKey: process.env.PAYMENT_SECRET_KEY,
  * })
@@ -52,7 +49,12 @@ export function create<
   const method extends Method.AnyServer,
   const transport extends Transport.AnyTransport = Transport.Http,
 >(config: create.Config<method, transport>): Mpay<method, transport> {
-  const { method, realm, secretKey, transport = Transport.http() as transport } = config
+  const {
+    method,
+    realm = 'MPP Payment',
+    secretKey,
+    transport = Transport.http() as transport,
+  } = config
   const { intents, request, verify } = method
 
   const intentFns: Record<
@@ -69,7 +71,7 @@ export function create<
       verify: verify as never,
     })
 
-  return { method, realm, transport, ...intentFns } as never
+  return { method, realm: realm as string, transport, ...intentFns } as never
 }
 
 export declare namespace create {
@@ -79,11 +81,11 @@ export declare namespace create {
   > = {
     /** Payment method (e.g., tempo({ ... })). */
     method: method
-    /** Server realm (e.g., hostname). */
-    realm: string
+    /** Server realm (e.g., hostname). @default "MPP Payment". */
+    realm?: string | undefined
     /** Secret key for HMAC-bound challenge IDs (required for stateless verification). */
     secretKey: string
-    /** Transport to use (defaults to HTTP). */
+    /** Transport to use. @default Transport.http() */
     transport?: transport | undefined
   }
 }

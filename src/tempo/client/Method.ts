@@ -24,10 +24,7 @@ import * as Methods from '../Method.js'
  * ```
  */
 export function tempo(parameters: tempo.Parameters = {}) {
-  const {
-    chainId = defaults.chainId,
-    rpcUrl = defaults.rpcUrl,
-  } = parameters
+  const { chainId = defaults.chainId, rpcUrl = defaults.rpcUrl } = parameters
 
   const client = (() => {
     if (parameters.client) return parameters.client
@@ -44,6 +41,7 @@ export function tempo(parameters: tempo.Parameters = {}) {
     context: z.object({
       account: z.optional(z.custom<Account>()),
     }),
+
     async createCredential({ challenge, context }) {
       const account = context?.account ?? parameters.account
       if (!account)

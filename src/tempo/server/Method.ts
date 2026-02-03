@@ -37,11 +37,7 @@ const transferWithMemoSelector = /*#__PURE__*/ AbiFunction.getSelector(transferW
  * ```
  */
 export function tempo(parameters: tempo.Parameters = {}) {
-  const {
-    chainId = defaults.chainId,
-    feePayer,
-    rpcUrl = defaults.rpcUrl,
-  } = parameters
+  const { chainId = defaults.chainId, feePayer, rpcUrl = defaults.rpcUrl } = parameters
 
   const client = (() => {
     if (parameters.client) return parameters.client
@@ -62,10 +58,12 @@ export function tempo(parameters: tempo.Parameters = {}) {
       }),
       { feePayer },
     ),
+
     request({ feePayer, ...request }) {
       if (feePayer) return { feePayer: true, ...request }
       return request
     },
+
     async verify({ context, credential }) {
       const { feePayer } = context
       const { challenge } = credential

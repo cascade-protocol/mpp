@@ -15,7 +15,7 @@ Bun.serve uses native Web Standard `Request`/`Response`, making it straightforwa
 import { Expires, Mpay, tempo } from 'mpay/server'
 
 const mpay = Mpay.create({
-  method: tempo({ chainId: 42431, rpcUrl: 'https://rpc.tempo.xyz' }),
+  method: tempo(),
   realm: 'api.example.com',
   secretKey: process.env.MPAY_SECRET_KEY!,
 })
@@ -55,7 +55,7 @@ Bun.serve({
 import { Expires, Mpay, tempo } from 'mpay/server'
 
 const mpay = Mpay.create({
-  method: tempo({ chainId: 42431, rpcUrl: 'https://rpc.tempo.xyz' }),
+  method: tempo(),
   realm: 'api.example.com',
   secretKey: process.env.MPAY_SECRET_KEY!,
 })
