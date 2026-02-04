@@ -388,7 +388,10 @@ export function LandingPage() {
 		<div className="not-prose">
 			{/* Hero Section */}
 			<section className="relative py-12 md:py-24 border-b border-white/[0.06]">
-				<div className="mx-auto px-4 sm:px-6 lg:px-20">
+				<div
+					className="mx-auto"
+					style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
+				>
 					<div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-center">
 						{/* Left side - Copy */}
 						<div className="flex-1 space-y-6 md:space-y-8">
