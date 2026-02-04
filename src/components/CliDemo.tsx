@@ -761,6 +761,9 @@ export function CliDemo() {
 		if (line.type === "menu" && line.menuIndex !== undefined) {
 			const isHighlighted =
 				status === "selecting" && line.menuIndex === highlightedIndex;
+			// Extract just the prompt text (after "[N] ")
+			const promptText = line.content.replace(/^\s*\[\d+\]\s*/, "");
+			const menuNum = (line.menuIndex ?? 0) + 1;
 			return (
 				<button
 					type="button"
@@ -769,15 +772,17 @@ export function CliDemo() {
 						setHighlightedIndex(line.menuIndex!);
 						runQuery(line.menuIndex!);
 					}}
-					className={`block w-full text-left leading-relaxed whitespace-pre transition-colors ${
+					className={`flex w-full text-left leading-relaxed transition-colors ${
 						isHighlighted
 							? "bg-[var(--vocs-color-accent)]/20 text-[var(--vocs-color-accent)]"
 							: "text-[var(--vocs-color-text-2)] hover:bg-[rgba(255,255,255,0.05)]"
 					}`}
 					disabled={status !== "selecting"}
 				>
-					{isHighlighted ? "▸" : " "}
-					{line.content.slice(1)}
+					<span className="shrink-0 w-[6ch]">
+						{isHighlighted ? "▸" : " "}[{menuNum}]{" "}
+					</span>
+					<span style={{ wordBreak: "break-word" }}>{promptText}</span>
 				</button>
 			);
 		}
@@ -785,7 +790,8 @@ export function CliDemo() {
 		return (
 			<div
 				key={index}
-				className={`${typeStyles[line.type] || ""} leading-relaxed whitespace-pre`}
+				className={`${typeStyles[line.type] || ""} leading-relaxed`}
+				style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
 			>
 				{line.content}
 			</div>
@@ -805,39 +811,54 @@ export function CliDemo() {
 					background: "rgba(255,255,255,0.02)",
 				}}
 			>
-				<div className="flex items-center gap-2">
-					<div className="flex gap-1.5">
-						<span className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-						<span className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-						<span className="w-3 h-3 rounded-full bg-[#27c93f]" />
-					</div>
-					<span className="text-[var(--vocs-color-text-3)] text-xs ml-2">
-						agent-demo
-					</span>
+				<div className="flex items-center gap-1.5">
+					<span className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+					<span className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+					<span className="w-3 h-3 rounded-full bg-[#27c93f]" />
 				</div>
-				<div className="flex items-center gap-3 text-xs">
+				<div className="flex items-center gap-2 text-xs">
 					{balance !== null && (
-						<span className="text-[var(--vocs-color-text-2)]">
-							Balance:{" "}
-							<span className="text-[#98c379]">${formatBalance(balance)}</span>
+						<span
+							className="px-2 py-1 rounded-md text-[11px]"
+							style={{ background: "rgba(255,255,255,0.06)" }}
+						>
+							<span className="text-[var(--vocs-color-text-3)]">Balance </span>
+							<span className="text-[#98c379] font-medium">
+								${formatBalance(balance)}
+							</span>
 						</span>
 					)}
 					{totalSpent > 0 && (
-						<span className="text-[var(--vocs-color-text-3)]">
-							Spent:{" "}
-							<span className="text-[#e5c07b]">${totalSpent.toFixed(3)}</span>
+						<span
+							className="px-2 py-1 rounded-md text-[11px]"
+							style={{ background: "rgba(255,255,255,0.06)" }}
+						>
+							<span className="text-[var(--vocs-color-text-3)]">Spent </span>
+							<span className="text-[#e5c07b] font-medium">
+								${totalSpent.toFixed(3)}
+							</span>
 						</span>
 					)}
 					<span
-						className={`px-2 py-0.5 rounded text-[10px] uppercase tracking-wider ${
-							status === "running"
-								? "bg-[#e5c07b]/20 text-[#e5c07b]"
-								: status === "complete"
-									? "bg-[#98c379]/20 text-[#98c379]"
-									: status === "error"
-										? "bg-[var(--vocs-color-destructive)]/20 text-[var(--vocs-color-destructive)]"
-										: "bg-[var(--vocs-color-text-3)]/20 text-[var(--vocs-color-text-3)]"
-						}`}
+						className="px-2 py-1 rounded-md text-[10px] uppercase tracking-wider font-medium"
+						style={{
+							background:
+								status === "running"
+									? "rgba(229, 192, 123, 0.15)"
+									: status === "complete"
+										? "rgba(152, 195, 121, 0.15)"
+										: status === "error"
+											? "rgba(255, 100, 100, 0.15)"
+											: "rgba(255,255,255,0.06)",
+							color:
+								status === "running"
+									? "#e5c07b"
+									: status === "complete"
+										? "#98c379"
+										: status === "error"
+											? "#ff6464"
+											: "var(--vocs-color-text-3)",
+						}}
 					>
 						{status === "funding"
 							? "funding..."
