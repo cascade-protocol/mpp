@@ -401,7 +401,10 @@ export function LandingPage() {
 				className="vocs:w-screen vocs:relative vocs:py-12 md:vocs:py-24 vocs:border-b vocs:border-white/[0.06]"
 				style={{ marginLeft: "calc(-50vw + 50%)" }}
 			>
-				<div className="vocs:max-w-[1600px] vocs:mx-auto vocs:px-4 sm:vocs:px-6 lg:vocs:px-20">
+				<div
+					className="vocs:max-w-[1600px] vocs:mx-auto"
+					style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
+				>
 					<div className="vocs:flex vocs:flex-col lg:vocs:flex-row vocs:gap-8 lg:vocs:gap-20 vocs:items-center">
 						{/* Left side - Copy */}
 						<div className="vocs:flex-1 vocs:space-y-6 md:vocs:space-y-8">
