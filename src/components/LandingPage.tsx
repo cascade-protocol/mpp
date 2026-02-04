@@ -419,10 +419,7 @@ function CodeTabs() {
 							<span style={{ color: "#98c379" }}> 'mpay/server'</span>
 							{"\n\n"}
 							<span style={{ color: "#c678dd" }}>const</span>
-							<span style={{ color: "var(--vocs-color-text)" }}>
-								{" "}
-								mpay ={" "}
-							</span>
+							<span style={{ color: "var(--vocs-color-text)" }}> mpay = </span>
 							<span style={{ color: "#e5c07b" }}>Mpay</span>
 							<span style={{ color: "var(--vocs-color-text)" }}>
 								.create({"{"}
@@ -445,21 +442,14 @@ function CodeTabs() {
 							<span style={{ color: "#c678dd" }}>return</span>
 							<span style={{ color: "var(--vocs-color-text)" }}> mpay.</span>
 							<span style={{ color: "#61afef" }}>challenge</span>
-							<span style={{ color: "var(--vocs-color-text)" }}>
-								({"{"}{" "}
-							</span>
-							<span style={{ color: "var(--vocs-color-text)" }}>
-								amount:{" "}
-							</span>
+							<span style={{ color: "var(--vocs-color-text)" }}>({"{"} </span>
+							<span style={{ color: "var(--vocs-color-text)" }}>amount: </span>
 							<span style={{ color: "#d19a66" }}>0.01</span>
 							<span style={{ color: "var(--vocs-color-text)" }}>
 								, currency:{" "}
 							</span>
 							<span style={{ color: "#98c379" }}>'USD'</span>
-							<span style={{ color: "var(--vocs-color-text)" }}>
-								{" "}
-								{"}"})
-							</span>
+							<span style={{ color: "var(--vocs-color-text)" }}> {"}"})</span>
 						</code>
 					</pre>
 				)}
@@ -812,7 +802,9 @@ export function LandingPage() {
 									style={{ width: "24px", height: "24px", color: "#0166FF" }}
 								/>
 							</div>
-							<h2 className="landing-h2">Open standard built for the internet</h2>
+							<h2 className="landing-h2">
+								Open standard built for the internet
+							</h2>
 							<p className="landing-p">
 								MPP standardizes HTTP 402 "Payment Required" with an IETF-track
 								specification. No proprietary APIs or vendor lock-in—just HTTP
@@ -891,7 +883,8 @@ export function LandingPage() {
 										content: (
 											<>
 												<div>
-													<span style={{ color: "#0166FF" }}>GET</span> /resource
+													<span style={{ color: "#0166FF" }}>GET</span>{" "}
+													/resource
 												</div>
 												<div style={{ color: "var(--vocs-color-text-3)" }}>
 													Authorization: Payment {"<credential>"}
@@ -1025,8 +1018,8 @@ export function LandingPage() {
 									</div>
 									<p className="landing-card-text">
 										Build your own payment method. MPP's extensible architecture
-										lets you integrate any payment rail—internal credits, loyalty
-										points, or custom currencies.
+										lets you integrate any payment rail—internal credits,
+										loyalty points, or custom currencies.
 									</p>
 								</div>
 
@@ -1214,10 +1207,7 @@ export function LandingPage() {
 						Add payments to your API in minutes. No signup required—just install
 						the SDK and start charging for your resources.
 					</p>
-					<div
-						className="landing-cta-row"
-						style={{ justifyContent: "center" }}
-					>
+					<div className="landing-cta-row" style={{ justifyContent: "center" }}>
 						<a
 							href="/quickstart/server"
 							style={{
