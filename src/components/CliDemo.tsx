@@ -330,8 +330,8 @@ export function CliDemo() {
 				]);
 
 				// Check for cached wallet in sessionStorage
-				let acc: ReturnType<typeof privateKeyToAccount>;
-				let privateKey: `0x${string}`;
+				let acc!: ReturnType<typeof privateKeyToAccount>;
+				let privateKey!: `0x${string}`;
 				let needsFunding = true;
 
 				const cached = sessionStorage.getItem(WALLET_STORAGE_KEY);
@@ -349,7 +349,9 @@ export function CliDemo() {
 						});
 
 						if (balRes.ok) {
-							const { balance: bal } = await balRes.json();
+							const { balance: bal } = (await balRes.json()) as {
+								balance: string;
+							};
 							if (bal && bal !== "0") {
 								const balNum = Number(bal) / 1e6;
 								setBalance(balNum);
@@ -400,7 +402,7 @@ export function CliDemo() {
 					});
 
 					if (!fundRes.ok) {
-						const err = await fundRes.json();
+						const err = (await fundRes.json()) as { error?: string };
 						throw new Error(err.error || "Faucet request failed");
 					}
 
@@ -419,7 +421,9 @@ export function CliDemo() {
 						});
 
 						if (balRes.ok) {
-							const { balance: bal } = await balRes.json();
+							const { balance: bal } = (await balRes.json()) as {
+								balance: string;
+							};
 							if (bal && bal !== "0") {
 								const balNum = Number(bal) / 1e6;
 								setBalance(balNum);
@@ -535,7 +539,15 @@ export function CliDemo() {
 						throw new Error(`API returned ${res.status}`);
 					}
 
-					const data = await res.json();
+					const data = (await res.json()) as {
+						location?: { city: string; region: string };
+						results?: { name: string }[];
+						summary?: string;
+						sentiment?: string;
+						steps?: unknown;
+						duration?: string;
+						distance?: string;
+					};
 					spent += call.priceNum;
 
 					// Show receipt info if available
@@ -699,7 +711,7 @@ export function CliDemo() {
 					body: JSON.stringify({ action: "balance", address: account.address }),
 				});
 				if (res.ok) {
-					const { balance: bal } = await res.json();
+					const { balance: bal } = (await res.json()) as { balance: string };
 					if (bal) {
 						setBalance(Number(bal) / 1e6);
 					}

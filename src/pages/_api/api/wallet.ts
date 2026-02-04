@@ -3,8 +3,13 @@ const RPC_URL = "https://rpc.moderato.tempo.xyz";
 // alphaUSD on Moderato
 const DEFAULT_CURRENCY = "0x20c0000000000000000000000000000000000001";
 
+interface RpcResult {
+	result?: string;
+	error?: { message?: string };
+}
+
 // Helper to make RPC calls
-async function rpcCall(method: string, params: unknown[]) {
+async function rpcCall(method: string, params: unknown[]): Promise<RpcResult> {
 	const response = await fetch(RPC_URL, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -15,12 +20,12 @@ async function rpcCall(method: string, params: unknown[]) {
 			id: 1,
 		}),
 	});
-	return response.json();
+	return response.json() as Promise<RpcResult>;
 }
 
 export async function POST(request: Request) {
 	try {
-		const body = await request.json();
+		const body = (await request.json()) as { action: string; address: string };
 		const { action, address } = body;
 
 		if (action === "fund") {

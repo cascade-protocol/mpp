@@ -218,42 +218,46 @@ export function AsciiLogo() {
 				onMouseEnter={() => startMorph(1)}
 				onMouseLeave={() => startMorph(0)}
 				onContextMenu={handleContextMenu}
+				className="vocs:overflow-x-auto vocs:max-w-full vocs:-mx-4 vocs:px-4 sm:vocs:mx-0 sm:vocs:px-0"
 				style={{
 					fontFamily: "monospace",
-					fontSize: "6px",
 					lineHeight: 1.15,
 					whiteSpace: "pre",
 					letterSpacing: "1px",
 					color: "#0166FF",
 					opacity: 0.85,
-					overflow: "hidden",
 					textShadow: "0 0 20px rgba(1, 102, 255, 0.3)",
 					cursor: "pointer",
 				}}
 			>
-				{mppLines.map((mppLine, lineIdx) => {
-					const line402 = lines402[lineIdx] || "";
-					const lineLen = Math.max(mppLine.length, line402.length);
-					return (
-						// biome-ignore lint/suspicious/noArrayIndexKey: static ASCII art lines don't reorder
-						<div key={lineIdx}>
-							{Array.from({ length: lineLen }, (_, charIdx) => {
-								const baseChar = getCharAt(lineIdx, charIdx);
-								// Keep spaces as spaces
-								if (baseChar === " ") {
+				<div
+					className="vocs:text-[4px] sm:vocs:text-[5px] md:vocs:text-[6px]"
+					style={{ minWidth: "fit-content" }}
+				>
+					{mppLines.map((mppLine, lineIdx) => {
+						const line402 = lines402[lineIdx] || "";
+						const lineLen = Math.max(mppLine.length, line402.length);
+						return (
+							// biome-ignore lint/suspicious/noArrayIndexKey: static ASCII art lines don't reorder
+							<div key={lineIdx}>
+								{Array.from({ length: lineLen }, (_, charIdx) => {
+									const baseChar = getCharAt(lineIdx, charIdx);
+									// Keep spaces as spaces
+									if (baseChar === " ") {
+										// biome-ignore lint/suspicious/noArrayIndexKey: static chars don't reorder
+										return <span key={charIdx}>{baseChar}</span>;
+									}
+									const state = charStates[lineIdx]?.[charIdx];
+									const displayChar = state
+										? FILL_CHARS[state.charIndex]
+										: baseChar;
 									// biome-ignore lint/suspicious/noArrayIndexKey: static chars don't reorder
-									return <span key={charIdx}>{baseChar}</span>;
-								}
-								const state = charStates[lineIdx]?.[charIdx];
-								const displayChar = state
-									? FILL_CHARS[state.charIndex]
-									: baseChar;
-								// biome-ignore lint/suspicious/noArrayIndexKey: static chars don't reorder
-								return <span key={charIdx}>{displayChar}</span>;
-							})}
-						</div>
-					);
-				})}
+									return <span key={charIdx}>{displayChar}</span>;
+								})}
+							</div>
+						);
+					})}
+				</div>
 			</div>
 
 			{/* Context Menu */}
