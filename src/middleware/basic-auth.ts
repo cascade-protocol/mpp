@@ -8,9 +8,9 @@ export function middleware(): MiddlewareHandler {
 			return next();
 		}
 
-		const [AUTH_USER, AUTH_PASS] = (env.AUTH_CREDENTIALS ?? "user:pass").split(
-			":",
-		);
+		const credentials = env.AUTH_CREDENTIALS ?? "user:pass";
+		const [AUTH_USER, AUTH_PASS_FROM_CREDS] = credentials.split(":");
+		const AUTH_PASS = AUTH_PASS_FROM_CREDS ?? env.AUTH_PASS;
 
 		if (!AUTH_PASS) {
 			return next();
