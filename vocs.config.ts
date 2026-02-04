@@ -10,7 +10,12 @@ const baseUrl = (() => {
 })();
 
 export default defineConfig({
-	accentColor: "light-dark(#2563eb, #60a5fa)",
+	accentColor: "#0166FF",
+	colorScheme: "dark",
+	logoUrl: {
+		light: "/mpp-logo-dark.svg",
+		dark: "/mpp-logo-light.svg",
+	},
 	baseUrl,
 	description:
 		"Machine Payments Protocol - Internet-native payments for machine-to-machine transactions",
@@ -45,6 +50,7 @@ export default defineConfig({
 					{ text: "Overview", link: "/" },
 					{ text: "Specifications", link: "https://paymentauth.tempo.xyz/" },
 					{ text: "FAQ", link: "/faq" },
+					{ text: "Brand", link: "/brand" },
 				],
 			},
 			{
