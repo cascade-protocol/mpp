@@ -155,7 +155,7 @@ function PaymentDemoInner() {
 			const challenge = Challenge.fromResponse(res1, { method });
 			const credential = await method.createCredential({
 				challenge,
-				context: {}
+				context: {},
 			});
 
 			if (seq !== requestSeqRef.current) return;
