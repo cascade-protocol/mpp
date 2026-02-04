@@ -13,13 +13,13 @@ The `mpay` Python library provides a typed interface over the Machine Payments P
 
 ## Install
 
-```bash [test.sh]
+```bash
 $ pip install pympay
 ```
 
 With Tempo blockchain support:
 
-```bash [test.sh]
+```bash
 $ pip install "pympay[tempo]"
 ```
 
@@ -33,7 +33,7 @@ $ pip install "pympay[tempo]"
 
 ### Server
 
-```python [server.py]
+```python
 from datetime import datetime, timedelta, UTC
 from fastapi import FastAPI, Request
 from mpay import Credential, Receipt
@@ -61,7 +61,7 @@ async def get_resource(request: Request, credential: Credential, receipt: Receip
 
 ### Client
 
-```python [client.py]
+```python
 import asyncio
 from mpay.client import Client
 from mpay.methods.tempo import tempo, TempoAccount
