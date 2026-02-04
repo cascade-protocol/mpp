@@ -208,10 +208,13 @@ function CodeTabs() {
 
 	return (
 		<div
-			style={{ flex: 1 }}
-			className="vocs:bg-[var(--vocs-color-background-2)] vocs:rounded-xl vocs:overflow-hidden vocs:border vocs:border-[var(--vocs-color-border-2)]"
+			style={{ flex: 1, border: "1px solid rgba(255,255,255,0.2)" }}
+			className="vocs:bg-[var(--vocs-color-background-2)] vocs:rounded-xl vocs:overflow-hidden"
 		>
-			<div className="vocs:flex vocs:items-center vocs:gap-0 vocs:border-b vocs:border-[var(--vocs-color-border-2)]">
+			<div
+				className="vocs:flex vocs:items-center vocs:gap-0"
+				style={{ borderBottom: "1px solid rgba(255,255,255,0.2)" }}
+			>
 				<button
 					type="button"
 					onClick={() => setActiveTab("client")}
@@ -642,7 +645,10 @@ export function LandingPage() {
 						<div style={{ flex: 1 }}>
 							<div className="vocs:grid vocs:grid-cols-2 vocs:gap-4">
 								{/* Tempo Card */}
-								<div className="vocs:bg-[var(--vocs-color-background-2)] vocs:rounded-xl vocs:p-5 vocs:space-y-3 vocs:border vocs:border-[var(--vocs-color-border-2)]">
+								<div
+									className="vocs:bg-[var(--vocs-color-background-2)] vocs:rounded-xl vocs:p-5 vocs:space-y-3"
+									style={{ border: "1px solid rgba(255,255,255,0.2)" }}
+								>
 									<div className="vocs:flex vocs:items-center vocs:justify-between">
 										<TempoLogo
 											className="vocs:text-[var(--vocs-color-text)]"
@@ -658,7 +664,10 @@ export function LandingPage() {
 								</div>
 
 								{/* Stripe Card */}
-								<div className="vocs:bg-[var(--vocs-color-background-2)] vocs:rounded-xl vocs:p-5 vocs:space-y-3 vocs:border vocs:border-[var(--vocs-color-border-2)]">
+								<div
+									className="vocs:bg-[var(--vocs-color-background-2)] vocs:rounded-xl vocs:p-5 vocs:space-y-3"
+									style={{ border: "1px solid rgba(255,255,255,0.2)" }}
+								>
 									<div className="vocs:flex vocs:items-center vocs:justify-between">
 										<StripeLogo
 											className="vocs:text-[var(--vocs-color-text)]"
@@ -674,7 +683,10 @@ export function LandingPage() {
 								</div>
 
 								{/* Custom Card */}
-								<div className="vocs:bg-[var(--vocs-color-background-2)] vocs:rounded-xl vocs:p-5 vocs:space-y-3 vocs:border vocs:border-[var(--vocs-color-border-2)]">
+								<div
+									className="vocs:bg-[var(--vocs-color-background-2)] vocs:rounded-xl vocs:p-5 vocs:space-y-3"
+									style={{ border: "1px solid rgba(255,255,255,0.2)" }}
+								>
 									<div className="vocs:flex vocs:items-center vocs:justify-between">
 										<span className="vocs:font-semibold vocs:text-[var(--vocs-color-text)]">
 											Custom
@@ -689,7 +701,10 @@ export function LandingPage() {
 								</div>
 
 								{/* More Coming Card */}
-								<div className="vocs:bg-[var(--vocs-color-background-2)] vocs:rounded-xl vocs:p-5 vocs:space-y-3 vocs:border vocs:border-[var(--vocs-color-border-2)]">
+								<div
+									className="vocs:bg-[var(--vocs-color-background-2)] vocs:rounded-xl vocs:p-5 vocs:space-y-3"
+									style={{ border: "1px solid rgba(255,255,255,0.2)" }}
+								>
 									<div className="vocs:flex vocs:items-center vocs:justify-between">
 										<span className="vocs:font-semibold vocs:text-[var(--vocs-color-text)]">
 											More coming
