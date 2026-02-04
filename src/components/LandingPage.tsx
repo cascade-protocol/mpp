@@ -167,35 +167,44 @@ function StatusBadge({
 }) {
 	const styles: Record<
 		typeof status,
-		{ bg: string; text: string; label: string }
+		{ bg: string; border: string; text: string; label: string }
 	> = {
 		production: {
-			bg: "vocs:bg-[#dcfce7] dark:vocs:bg-[#14532d]",
-			text: "vocs:text-[#166534] dark:vocs:text-[#86efac]",
+			bg: "rgba(34, 197, 94, 0.1)",
+			border: "rgba(34, 197, 94, 0.3)",
+			text: "#4ade80",
 			label: "Production",
 		},
 		beta: {
-			bg: "vocs:bg-[#dbeafe] dark:vocs:bg-[#1e3a5f]",
-			text: "vocs:text-[#1d4ed8] dark:vocs:text-[#60a5fa]",
+			bg: "rgba(59, 130, 246, 0.1)",
+			border: "rgba(59, 130, 246, 0.3)",
+			text: "#60a5fa",
 			label: "Beta",
 		},
 		available: {
-			bg: "vocs:bg-[var(--vocs-color-background-3)]",
-			text: "vocs:text-[var(--vocs-color-text-2)]",
+			bg: "rgba(255, 255, 255, 0.05)",
+			border: "rgba(255, 255, 255, 0.1)",
+			text: "var(--vocs-color-text-2)",
 			label: "Available",
 		},
 		planned: {
-			bg: "vocs:bg-[var(--vocs-color-background-3)]",
-			text: "vocs:text-[var(--vocs-color-text-2)]",
+			bg: "rgba(255, 255, 255, 0.05)",
+			border: "rgba(255, 255, 255, 0.1)",
+			text: "var(--vocs-color-text-3)",
 			label: "Planned",
 		},
 	};
 
-	const { bg, text, label } = styles[status];
+	const { bg, border, text, label } = styles[status];
 
 	return (
 		<span
-			className={`vocs:text-[10px] vocs:font-medium vocs:uppercase vocs:tracking-wider vocs:px-2.5 vocs:py-1 vocs:rounded-full ${bg} ${text}`}
+			className="vocs:text-[10px] vocs:font-medium vocs:uppercase vocs:tracking-wider vocs:px-2.5 vocs:py-1 vocs:rounded-full"
+			style={{
+				backgroundColor: bg,
+				border: `1px solid ${border}`,
+				color: text,
+			}}
 		>
 			{label}
 		</span>
