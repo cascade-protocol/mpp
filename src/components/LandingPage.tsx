@@ -494,7 +494,7 @@ export function LandingPage() {
 									>
 										<ViemLogo
 											className="vocs:text-[var(--vocs-color-text-2)]"
-											style={{ width: "72px" }}
+											style={{ width: "56px", position: "relative", top: "-2px" }}
 										/>
 									</a>
 									<a
