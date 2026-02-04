@@ -904,12 +904,12 @@ export function CliDemo() {
 				</div>
 			)}
 
-			{/* Interactive prompt */}
+			{/* Interactive prompt - hidden on mobile, users can use buttons */}
 			{/* biome-ignore lint/a11y/useKeyWithClickEvents: click to focus input */}
 			{/* biome-ignore lint/a11y/noStaticElementInteractions: click to focus input */}
 			<div
 				onClick={() => inputRef.current?.focus()}
-				className={`vocs:flex vocs:items-center vocs:px-4 vocs:py-2.5 vocs:gap-2 vocs:cursor-text ${
+				className={`vocs:hidden lg:vocs:flex vocs:items-center vocs:px-4 vocs:py-2.5 vocs:gap-2 vocs:cursor-text ${
 					status === "selecting" ? "vocs:bg-[rgba(152,195,121,0.05)]" : ""
 				}`}
 				style={{
