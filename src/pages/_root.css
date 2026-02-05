@@ -52,8 +52,7 @@
 	max-width: 1400px;
 }
 
-/* Landing page layout - inherit theme from root */
+/* Landing page layout */
 [data-layout="minimal"] {
-	color-scheme: inherit;
-	background-color: var(--vocs-background-color-primary);
+	background-color: var(--background-color-primary);
 }
