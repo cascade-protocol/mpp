@@ -2,7 +2,9 @@
 
 import { Radio } from "@base-ui/react/radio";
 import { RadioGroup } from "@base-ui/react/radio-group";
+import { useMutation } from "@tanstack/react-query";
 import { cva, cx } from "class-variance-authority";
+
 import {
 	Children,
 	createContext,
@@ -17,15 +19,22 @@ import {
 } from "react";
 import type { Address } from "viem";
 import { formatUnits } from "viem";
-import { useConnect, useConnection, useConnectors, useDisconnect } from "wagmi";
+import {
+	useConnect,
+	useConnection,
+	useConnectorClient,
+	useConnectors,
+	useDisconnect,
+} from "wagmi";
 import { Hooks } from "wagmi/tempo";
+import IconLogOut from "~icons/lucide/log-out";
+import IconRefresh from "~icons/lucide/refresh-cw";
+import { fetch } from "../mpay.client";
 
 export const Context = createContext<Context.Value>({
-	balance: {
-		address: undefined,
-		balance: undefined,
-		initial: undefined,
-		token: undefined,
+	initialBalance: {
+		reset: () => {},
+		value: undefined,
 	},
 	interaction: {
 		active: null,
@@ -37,16 +46,15 @@ export const Context = createContext<Context.Value>({
 		prev: () => {},
 		reset: () => {},
 	},
+	token: undefined,
 });
 
 export namespace Context {
 	export type InteractionType = "select" | "toggle" | null;
 
-	export type Balance = {
-		address: Address | undefined;
-		balance: bigint | undefined;
-		initial: bigint | undefined;
-		token: Address | undefined;
+	export type InitialBalance = {
+		reset: () => void;
+		value: bigint | undefined;
 	};
 
 	export type Interaction = {
@@ -62,9 +70,10 @@ export namespace Context {
 	};
 
 	export type Value = {
-		balance: Balance;
+		initialBalance: InitialBalance;
 		interaction: Interaction;
 		steps: Steps;
+		token: Address | undefined;
 	};
 }
 
@@ -78,10 +87,7 @@ export function Window({ children, className, token }: Window.Props) {
 	const { data: balance } = Hooks.token.useGetBalance({
 		account: address,
 		token,
-		query: {
-			enabled: !!address && !!token,
-			refetchInterval: 1_000,
-		},
+		blockTag: "latest",
 	});
 
 	useEffect(() => {
@@ -91,6 +97,8 @@ export function Window({ children, className, token }: Window.Props) {
 		}
 		if (balance !== undefined && initial === undefined) setInitial(balance);
 	}, [address, balance, initial]);
+
+	const resetInitialBalance = useCallback(() => setInitial(balance), [balance]);
 
 	const next = useCallback(() => setStepIndex((i) => i + 1), []);
 	const prev = useCallback(() => setStepIndex((i) => Math.max(i - 1, 0)), []);
@@ -104,7 +112,8 @@ export function Window({ children, className, token }: Window.Props) {
 	return (
 		<Context.Provider
 			value={{
-				balance: { address, balance, initial, token },
+				initialBalance: { reset: resetInitialBalance, value: initial },
+				token,
 				interaction: { active, setActive },
 				steps,
 			}}
@@ -295,132 +304,6 @@ export namespace Block {
 		children: ReactNode;
 		className?: string;
 	};
-
-	export function Startup() {
-		const { steps } = useContext(Context);
-		const [phase, setPhase] = useState<"init" | "ready">("init");
-
-		useEffect(() => {
-			if (steps.index !== 0) return;
-
-			setPhase("init");
-
-			const initTimer = setTimeout(() => setPhase("ready"), 1000);
-			const nextTimer = setTimeout(() => steps.next(), 2000);
-
-			return () => {
-				clearTimeout(initTimer);
-				clearTimeout(nextTimer);
-			};
-		}, [steps]);
-
-		return (
-			<Block>
-				<Line>MPP Agent Demo v0.1.0</Line>
-				{phase === "init" ? (
-					<Line variant="loading">Initializing...</Line>
-				) : (
-					<Line variant="success" prefix="✓">
-						Agent ready
-					</Line>
-				)}
-			</Block>
-		);
-	}
-
-	export function ConnectWallet() {
-		const { steps } = useContext(Context);
-		const { address } = useConnection();
-		const connectors = useConnectors();
-		const { connect, isPending } = useConnect();
-
-		const connector = connectors[0];
-
-		useEffect(() => {
-			if (address) {
-				const timer = setTimeout(() => steps.next(), 500);
-				return () => clearTimeout(timer);
-			}
-		}, [address, steps]);
-
-		return (
-			<Block>
-				<Line variant="info">
-					Create a Tempo Wallet, or use your existing one:
-				</Line>
-				{address ? (
-					<Line variant="success" prefix="✓">
-						Connected: {address.slice(0, 10)}…{address.slice(-8)}
-					</Line>
-				) : isPending ? (
-					<Line variant="loading">Connecting...</Line>
-				) : (
-					<Toggle
-						autoFocus
-						onSubmit={(type) => {
-							if (connector) {
-								connect(
-									{
-										connector,
-										capabilities: { type: type as "sign-in" | "sign-up" },
-									},
-									{ onSuccess: () => steps.next() },
-								);
-							}
-						}}
-					>
-						<Toggle.Option value="sign-in">Sign In</Toggle.Option>
-						<Toggle.Option value="sign-up">Sign Up</Toggle.Option>
-					</Toggle>
-				)}
-			</Block>
-		);
-	}
-
-	export function Faucet() {
-		const { steps, balance: ctx } = useContext(Context);
-		const { address } = useConnection();
-		const { mutate, isPending, isSuccess } = Hooks.faucet.useFundSync();
-		const [alreadyFunded, setAlreadyFunded] = useState(false);
-
-		useEffect(() => {
-			if (!address) return;
-			if (isPending) return;
-			if (isSuccess) return;
-			if (alreadyFunded) return;
-			if (ctx.initial === undefined) return;
-			if (ctx.initial > 0n) {
-				setAlreadyFunded(true);
-				return;
-			}
-
-			mutate({ account: address });
-		}, [address, alreadyFunded, ctx.initial, isPending, isSuccess, mutate]);
-
-		useEffect(() => {
-			if (isSuccess || alreadyFunded) {
-				const timer = setTimeout(() => steps.next(), 1000);
-				return () => clearTimeout(timer);
-			}
-		}, [alreadyFunded, isSuccess, steps]);
-
-		if (!address) return null;
-
-		const funded = isSuccess || alreadyFunded;
-
-		return (
-			<Block>
-				{isPending && (
-					<Line variant="loading">Requesting testnet funds...</Line>
-				)}
-				{funded && (
-					<Line variant="success" prefix="✓">
-						Wallet funded
-					</Line>
-				)}
-			</Block>
-		);
-	}
 }
 
 export function Link({ href, children, className }: Link.Props) {
@@ -480,9 +363,17 @@ export namespace CtaBar {
 }
 
 export function Balance({ className, label = "Balance" }: Balance.Props) {
-	const {
-		balance: { balance },
-	} = useContext(Context);
+	const { token } = useContext(Context);
+	const { address } = useConnection();
+
+	const { data: balance } = Hooks.token.useGetBalance({
+		account: address,
+		token,
+		query: {
+			enabled: !!address && !!token,
+			refetchInterval: 1_000,
+		},
+	});
 
 	if (balance === undefined) return null;
 
@@ -508,8 +399,15 @@ export namespace Balance {
 
 export function Spent({ className, label = "Spent" }: Spent.Props) {
 	const {
-		balance: { address, balance, initial },
+		initialBalance: { value: initial },
+		token,
 	} = useContext(Context);
+	const { address } = useConnection();
+
+	const { data: balance } = Hooks.token.useGetBalance({
+		account: address,
+		token,
+	});
 
 	if (!address) return null;
 
@@ -873,22 +771,27 @@ export namespace Hint {
 }
 
 export function Account({ className }: Account.Props) {
+	const { steps } = useContext(Context);
 	const { address } = useConnection();
 	const { disconnect } = useDisconnect();
 
 	if (!address) return null;
 
 	return (
-		<span className={cx("flex items-center gap-2", className)}>
+		<span className={cx("flex items-center gap-3", className)}>
 			<span className="text-primary">
 				{address.slice(0, 6)}…{address.slice(-4)}
 			</span>
 			<button
 				type="button"
-				onClick={() => disconnect()}
-				className="text-secondary hover:text-primary transition-colors tracking-tight"
+				onClick={() => {
+					disconnect();
+					steps.reset();
+				}}
+				className="text-secondary hover:text-primary transition-colors"
+				aria-label="Log out"
 			>
-				Log out
+				<IconLogOut className="w-3.5 h-3.5" />
 			</button>
 		</span>
 	);
@@ -902,20 +805,18 @@ export namespace Account {
 
 export function Refresh({ className }: Refresh.Props) {
 	const { steps } = useContext(Context);
-	const { address } = useConnection();
-
-	if (address) return null;
 
 	return (
 		<button
 			type="button"
 			onClick={() => steps.reset()}
 			className={cx(
-				"text-secondary hover:text-primary transition-colors tracking-tight",
+				"text-secondary hover:text-primary transition-colors",
 				className,
 			)}
+			aria-label="Refresh"
 		>
-			Refresh
+			<IconRefresh className="w-3.5 h-3.5" />
 		</button>
 	);
 }
@@ -947,4 +848,242 @@ export namespace Step {
 	export type Props = {
 		children: ReactNode;
 	};
+}
+
+export function Demo({
+	className,
+	height = 200,
+	steps,
+	title,
+	token,
+}: Demo.Props) {
+	return (
+		<Window className={className} token={token}>
+			<TitleBar title={title}>
+				<Account />
+				<Refresh />
+			</TitleBar>
+
+			<Panel height={height}>
+				<Steps>
+					{steps.map((StepComponent, i) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: stable array
+						<Step key={i}>
+							<StepComponent />
+						</Step>
+					))}
+				</Steps>
+			</Panel>
+
+			<CtaBar
+				left={<Hint />}
+				right={
+					<>
+						<Balance />
+						<Spent />
+					</>
+				}
+			/>
+		</Window>
+	);
+}
+
+export namespace Demo {
+	export type Props = {
+		className?: string;
+		height?: number;
+		steps: Array<() => ReactNode>;
+		title?: string;
+		token?: Address;
+	};
+}
+
+export function Startup() {
+	const { steps } = useContext(Context);
+	const [phase, setPhase] = useState<"init" | "ready">("init");
+
+	useEffect(() => {
+		if (steps.index !== 0) return;
+
+		setPhase("init");
+
+		const initTimer = setTimeout(() => setPhase("ready"), 1000);
+		const nextTimer = setTimeout(() => steps.next(), 2000);
+
+		return () => {
+			clearTimeout(initTimer);
+			clearTimeout(nextTimer);
+		};
+	}, [steps]);
+
+	return (
+		<Block>
+			<Line>MPP Agent Demo v0.1.0</Line>
+			{phase === "init" ? (
+				<Line variant="loading">Initializing...</Line>
+			) : (
+				<Line variant="success" prefix="✓">
+					Agent ready
+				</Line>
+			)}
+		</Block>
+	);
+}
+
+export function ConnectWallet() {
+	const { steps } = useContext(Context);
+	const { address } = useConnection();
+	const connectors = useConnectors();
+	const { connect, isPending } = useConnect();
+
+	const connector = connectors[0];
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: only run on address change
+	useEffect(() => {
+		if (address) {
+			const timer = setTimeout(() => steps.next(), 500);
+			return () => clearTimeout(timer);
+		}
+	}, [address]);
+
+	return (
+		<Block>
+			<Line variant="info">
+				Create a Tempo Wallet, or use your existing one:
+			</Line>
+			{address ? (
+				<Line variant="success" prefix="✓">
+					Connected: {address.slice(0, 10)}…{address.slice(-8)}
+				</Line>
+			) : isPending ? (
+				<Line variant="loading">Connecting...</Line>
+			) : (
+				<Toggle
+					autoFocus
+					onSubmit={(type) => {
+						if (connector) {
+							connect({
+								connector,
+								capabilities: { type: type as "sign-in" | "sign-up" },
+							});
+						}
+					}}
+				>
+					<Toggle.Option value="sign-in">Sign In</Toggle.Option>
+					<Toggle.Option value="sign-up">Sign Up</Toggle.Option>
+				</Toggle>
+			)}
+		</Block>
+	);
+}
+
+export function Faucet() {
+	const { steps, initialBalance } = useContext(Context);
+	const { address } = useConnection();
+	const { mutate, isPending, isSuccess } = Hooks.faucet.useFundSync();
+	const [alreadyFunded, setAlreadyFunded] = useState(false);
+
+	useEffect(() => {
+		if (!address) return;
+		if (isPending) return;
+		if (isSuccess) return;
+		if (alreadyFunded) return;
+		if (initialBalance.value === undefined) return;
+		if (initialBalance.value > 0n) {
+			setAlreadyFunded(true);
+			return;
+		}
+
+		mutate({ account: address });
+	}, [
+		address,
+		alreadyFunded,
+		initialBalance.value,
+		isPending,
+		isSuccess,
+		mutate,
+	]);
+
+	useEffect(() => {
+		if (isSuccess || alreadyFunded) {
+			initialBalance.reset();
+			const timer = setTimeout(() => steps.next(), 1000);
+			return () => clearTimeout(timer);
+		}
+	}, [alreadyFunded, initialBalance, isSuccess, steps]);
+
+	if (!address) return null;
+
+	const funded = isSuccess || alreadyFunded;
+
+	return (
+		<Block>
+			{isPending && <Line variant="loading">Requesting testnet funds...</Line>}
+			{funded && (
+				<Line variant="success" prefix="✓">
+					Wallet funded
+				</Line>
+			)}
+		</Block>
+	);
+}
+
+export function Ping() {
+	const [history, setHistory] = useState<Array<"success" | "error">>([]);
+	const [showResult, setShowResult] = useState(false);
+	const { data: client } = useConnectorClient();
+
+	const { mutate, isPending, isSuccess, isError, reset } = useMutation({
+		mutationFn: () =>
+			fetch("/ping/paid", { context: { account: client?.account } }),
+		onSettled: (_, error) => {
+			setShowResult(true);
+			setTimeout(() => {
+				setHistory((h) => [...h, error ? "error" : "success"]);
+				setShowResult(false);
+				reset();
+			}, 500);
+		},
+	});
+
+	const isIdle = !isPending && !showResult;
+
+	return (
+		<>
+			{history.map((result, i) => (
+				// biome-ignore lint/suspicious/noArrayIndexKey: _
+				<Block key={i}>
+					<Line variant="info">Make request to /ping/paid:</Line>
+					{result === "success" ? (
+						<Line variant="success" prefix="✓">
+							Request complete
+						</Line>
+					) : (
+						<Line variant="error" prefix="✗">
+							Request failed
+						</Line>
+					)}
+				</Block>
+			))}
+			<Block>
+				<Line variant="info">Make request to /ping/paid:</Line>
+				{isIdle && (
+					<Toggle autoFocus onSubmit={() => mutate()}>
+						<Toggle.Option value="request">Make request</Toggle.Option>
+					</Toggle>
+				)}
+				{isPending && <Line variant="loading">Sending request...</Line>}
+				{showResult && isSuccess && (
+					<Line variant="success" prefix="✓">
+						Request complete
+					</Line>
+				)}
+				{showResult && isError && (
+					<Line variant="error" prefix="✗">
+						Request failed
+					</Line>
+				)}
+			</Block>
+		</>
+	);
 }

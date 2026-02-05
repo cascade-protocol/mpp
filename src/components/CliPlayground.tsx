@@ -126,36 +126,11 @@ export function CliPlayground() {
 				/>
 			</Cli.Window>
 
-			<Cli.Window token={alphaUsd}>
-				<Cli.TitleBar title="Connect Wallet">
-					<Cli.Refresh />
-					<Cli.Account />
-				</Cli.TitleBar>
-
-				<Cli.Panel height={200}>
-					<Cli.Steps>
-						<Cli.Step>
-							<Cli.Block.Startup />
-						</Cli.Step>
-						<Cli.Step>
-							<Cli.Block.ConnectWallet />
-						</Cli.Step>
-						<Cli.Step>
-							<Cli.Block.Faucet />
-						</Cli.Step>
-					</Cli.Steps>
-				</Cli.Panel>
-
-				<Cli.CtaBar
-					left={<Cli.Hint />}
-					right={
-						<>
-							<Cli.Balance />
-							<Cli.Spent />
-						</>
-					}
-				/>
-			</Cli.Window>
+			<Cli.Demo
+				title="Make a request with payment"
+				token={alphaUsd}
+				steps={[Cli.Startup, Cli.ConnectWallet, Cli.Faucet, Cli.Ping]}
+			/>
 		</div>
 	);
 }
