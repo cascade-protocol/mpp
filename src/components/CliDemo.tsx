@@ -3,6 +3,7 @@
 import { Receipt } from "mpay";
 import { Fetch, tempo } from "mpay/client";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { AsciiLogo } from "./AsciiLogo";
 
 // Terminal line types
 interface TerminalLine {
@@ -324,8 +325,6 @@ export function CliDemo() {
 
 				// Initial terminal output
 				addLines([
-					{ type: "header", content: "MPP Agent Demo v0.1.0" },
-					{ type: "blank", content: "" },
 					{ type: "info", content: "Initializing payment-enabled agent..." },
 				]);
 
@@ -732,15 +731,15 @@ export function CliDemo() {
 		}
 
 		const typeStyles: Record<string, string> = {
-			header: "text-[var(--vocs-color-text)] font-medium",
-			input: "text-[#61afef]",
-			output: "text-[var(--vocs-color-text-2)]",
-			info: "text-[var(--vocs-color-text-3)]",
-			success: "text-[#98c379]",
-			error: "text-[var(--vocs-color-destructive)]",
-			payment: "text-[#e5c07b]",
-			link: "text-[var(--vocs-color-accent)]",
-			menu: "text-[var(--vocs-color-text-2)]",
+			header: "text-gray-900 font-medium",
+			input: "text-[#0166FF]",
+			output: "text-gray-600",
+			info: "text-gray-400",
+			success: "text-green-600",
+			error: "text-red-600",
+			payment: "text-amber-600",
+			link: "text-[#0166FF]",
+			menu: "text-gray-600",
 		};
 
 		if (line.type === "link" && line.href) {
@@ -769,10 +768,10 @@ export function CliDemo() {
 						setHighlightedIndex(line.menuIndex!);
 						runQuery(line.menuIndex!);
 					}}
-					className={`block w-full text-left leading-relaxed whitespace-pre transition-colors ${
+					className={`block w-full text-left leading-relaxed whitespace-pre-wrap transition-colors ${
 						isHighlighted
-							? "bg-[var(--vocs-color-accent)]/20 text-[var(--vocs-color-accent)]"
-							: "text-[var(--vocs-color-text-2)] hover:bg-[rgba(255,255,255,0.05)]"
+							? "bg-blue-50 text-[#0166FF]"
+							: "text-gray-600 hover:bg-gray-50"
 					}`}
 					disabled={status !== "selecting"}
 				>
@@ -785,7 +784,7 @@ export function CliDemo() {
 		return (
 			<div
 				key={index}
-				className={`${typeStyles[line.type] || ""} leading-relaxed whitespace-pre`}
+				className={`${typeStyles[line.type] || ""} leading-relaxed whitespace-pre-wrap`}
 			>
 				{line.content}
 			</div>
@@ -794,15 +793,15 @@ export function CliDemo() {
 
 	return (
 		<div
-			className="bg-[#1e1e1e] rounded-xl overflow-hidden font-mono text-sm"
-			style={{ border: "1px solid rgba(255,255,255,0.08)" }}
+			className="bg-white rounded-xl overflow-hidden font-mono text-sm flex flex-col flex-1"
+			style={{ border: "1px solid #e5e7eb" }}
 		>
 			{/* Terminal header */}
 			<div
 				className="flex items-center justify-between px-4 py-2.5"
 				style={{
-					borderBottom: "1px solid rgba(255,255,255,0.08)",
-					background: "rgba(255,255,255,0.02)",
+					borderBottom: "1px solid #e5e7eb",
+					background: "#fafafa",
 				}}
 			>
 				<div className="flex items-center gap-2">
@@ -811,32 +810,30 @@ export function CliDemo() {
 						<span className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
 						<span className="w-3 h-3 rounded-full bg-[#27c93f]" />
 					</div>
-					<span className="text-[var(--vocs-color-text-3)] text-xs ml-2">
-						agent-demo
-					</span>
+					<span className="text-gray-400 text-xs ml-2">agent-demo</span>
 				</div>
 				<div className="flex items-center gap-3 text-xs">
 					{balance !== null && (
-						<span className="text-[var(--vocs-color-text-2)]">
+						<span className="text-gray-500">
 							Balance:{" "}
-							<span className="text-[#98c379]">${formatBalance(balance)}</span>
+							<span className="text-green-600">${formatBalance(balance)}</span>
 						</span>
 					)}
 					{totalSpent > 0 && (
-						<span className="text-[var(--vocs-color-text-3)]">
+						<span className="text-gray-400">
 							Spent:{" "}
-							<span className="text-[#e5c07b]">${totalSpent.toFixed(3)}</span>
+							<span className="text-amber-600">${totalSpent.toFixed(3)}</span>
 						</span>
 					)}
 					<span
 						className={`px-2 py-0.5 rounded text-[10px] uppercase tracking-wider ${
 							status === "running"
-								? "bg-[#e5c07b]/20 text-[#e5c07b]"
+								? "bg-amber-50 text-amber-600"
 								: status === "complete"
-									? "bg-[#98c379]/20 text-[#98c379]"
+									? "bg-green-50 text-green-600"
 									: status === "error"
-										? "bg-[var(--vocs-color-destructive)]/20 text-[var(--vocs-color-destructive)]"
-										: "bg-[var(--vocs-color-text-3)]/20 text-[var(--vocs-color-text-3)]"
+										? "bg-red-50 text-red-600"
+										: "bg-gray-100 text-gray-400"
 						}`}
 					>
 						{status === "funding"
@@ -854,12 +851,15 @@ export function CliDemo() {
 			<div
 				ref={terminalRef}
 				onClick={handleTerminalClick}
-				className="p-4 h-[400px] overflow-y-auto cursor-text"
-				style={{ background: "#1e1e1e" }}
+				className="p-4 min-h-[300px] max-h-[500px] overflow-y-auto cursor-text"
+				style={{ background: "#ffffff" }}
 			>
+				<div className="mb-3">
+					<AsciiLogo morph={false} color="#9ca3af" />
+				</div>
 				{lines.map(renderLine)}
 				{status === "running" && currentCall >= 0 && (
-					<div className="text-[var(--vocs-color-text-3)] animate-pulse">▊</div>
+					<div className="text-gray-300 animate-pulse">▊</div>
 				)}
 			</div>
 
@@ -869,17 +869,15 @@ export function CliDemo() {
 			<div
 				onClick={() => inputRef.current?.focus()}
 				className={`flex items-center px-4 py-2.5 gap-2 cursor-text ${
-					status === "selecting" ? "bg-[rgba(152,195,121,0.05)]" : ""
+					status === "selecting" ? "bg-green-50/50" : ""
 				}`}
 				style={{
-					borderTop: "1px solid rgba(255,255,255,0.08)",
+					borderTop: "1px solid #e5e7eb",
 				}}
 			>
 				<span
 					className={
-						status === "selecting"
-							? "text-[#98c379]"
-							: "text-[var(--vocs-color-text-4)]"
+						status === "selecting" ? "text-green-600" : "text-gray-300"
 					}
 				>
 					❯
@@ -900,15 +898,15 @@ export function CliDemo() {
 									? "Running query..."
 									: ""
 					}
-					className="flex-1 bg-transparent border-none outline-none text-[var(--vocs-color-text)] text-sm font-mono placeholder:text-[var(--vocs-color-text-4)] disabled:cursor-not-allowed"
-					style={{ caretColor: "#98c379" }}
+					className="flex-1 bg-transparent border-none outline-none text-gray-900 text-sm font-mono placeholder:text-gray-300 disabled:cursor-not-allowed"
+					style={{ caretColor: "#16a34a" }}
 				/>
 				{account && (
 					<a
 						href={`${EXPLORER_URL}/address/${account.address}`}
 						target="_blank"
 						rel="noopener noreferrer"
-						className="text-[11px] text-[var(--vocs-color-text-3)] hover:text-[var(--vocs-color-accent)] no-underline"
+						className="text-[11px] text-gray-400 hover:text-[#0166FF] no-underline"
 					>
 						Tempo Moderato ↗
 					</a>

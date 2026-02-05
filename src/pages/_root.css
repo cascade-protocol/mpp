@@ -1,3 +1,22 @@
+@import "@fontsource/commit-mono/400.css";
+@import "@fontsource/commit-mono/700.css";
+
+@font-face {
+	font-family: "Berkeley Mono";
+	src: url("/fonts/BerkeleyMono-Regular.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Berkeley Mono";
+	src: url("/fonts/BerkeleyMono-Bold.woff2") format("woff2");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
 @import "tailwindcss" important;
 
 @import "./_vocs.generated.css";
@@ -15,7 +34,7 @@
 
 /* Smaller header logo */
 [data-v-logo] img {
-	height: 24px;
+	height: 28px;
 }
 
 [data-v-gutter-top] nav a[data-v-active="true"] {
@@ -23,8 +42,29 @@
 	color: light-dark(var(--vocs-color-accent), var(--vocs-color-accent8));
 }
 
-[data-v-outline-items] a[data-active="true"] {
-	color: light-dark(var(--vocs-color-accent), var(--vocs-color-accent8));
+[data-v-gutter-top] nav a:hover {
+	color: #0166ff;
+	text-decoration: underline;
+}
+
+[data-v-sidebar] a:hover,
+[data-v-outline-items] a:hover,
+[data-v-content] a:hover {
+	color: #0166ff;
+	text-decoration: underline;
+}
+
+[data-v-sidebar] [data-v-sidebar-item][data-active="true"] {
+	background-color: #0166ff !important;
+	color: #ffffff !important;
+	--vocs-color-accent8: #ffffff;
+	--color-accent8: #ffffff;
+}
+
+[data-v-outline-items] a[data-active="true"],
+[data-v-outline-items] a[data-active="true"] * {
+	background-color: transparent !important;
+	color: #0166ff !important;
 }
 
 [data-v-outline-indicator] {
@@ -52,8 +92,26 @@
 	max-width: 1400px;
 }
 
-/* Force dark mode on landing page to prevent flash */
-[data-layout="minimal"] {
-	color-scheme: dark;
-	background-color: var(--vocs-color-gray2);
+/* Berkeley Mono as primary monospace + body font */
+:root {
+	--font-mono:
+		"Berkeley Mono", "Commit Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+		Consolas, monospace;
+}
+
+body,
+[data-v-content],
+[data-layout] {
+	font-family: var(--font-mono);
+}
+
+[data-v-content] {
+	font-size: 14px;
+}
+
+pre,
+code,
+.vocs_Code,
+[data-v-code] {
+	font-family: var(--font-mono) !important;
 }

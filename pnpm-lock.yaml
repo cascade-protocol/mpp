@@ -13,6 +13,9 @@ importers:
 
   .:
     dependencies:
+      '@fontsource/commit-mono':
+        specifier: ^5.2.5
+        version: 5.2.5
       '@tanstack/react-query':
         specifier: ^5.90.20
         version: 5.90.20(react@19.2.4)
@@ -699,6 +702,9 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@fontsource/commit-mono@5.2.5':
+    resolution: {integrity: sha512-htX8yQWtiPt5L1Hzh4sirvfUJT2+KYiquDB/Q2sY2tWQYplpBUOD5zHnIM3k36Hnm4V+JIIqA/wmwupSQ68WjA==}
 
   '@hiogawa/node-loader-cloudflare@0.0.2':
     resolution: {integrity: sha512-ly7gF+iQ8DFYV0dC9rKLA32KuncqQNVyQsgnZesGDE22N/jCvOnI2XWeyfpq8lOfTTygRitREQZQFOMbcIt9vQ==}
@@ -4524,6 +4530,8 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
 
   '@floating-ui/utils@0.2.10': {}
+
+  '@fontsource/commit-mono@5.2.5': {}
 
   '@hiogawa/node-loader-cloudflare@0.0.2(miniflare@4.20260128.0)(vite@7.3.1(@types/node@22.19.7)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))(wrangler@4.61.1(@cloudflare/workers-types@4.20260129.0))':
     dependencies:
