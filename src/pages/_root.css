@@ -92,21 +92,7 @@
 	max-width: 1400px;
 }
 
-/* Force light mode on the landing page (minimal layout) */
-[data-layout="minimal"],
-[data-layout="minimal"] * {
-	color-scheme: light !important;
-}
 
-[data-layout="minimal"] {
-	--vocs-color-background: #ffffff !important;
-	--vocs-color-background-2: #f5f5f5 !important;
-	background-color: #ffffff !important;
-}
-
-[data-layout="minimal"] [data-v-gutter-top] {
-	background-color: #ffffff !important;
-}
 
 /* Berkeley Mono as primary monospace + body font */
 :root {
