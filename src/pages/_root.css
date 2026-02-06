@@ -200,6 +200,11 @@ pre[data-v] {
 
 [data-v-footer] a,
 [data-v-socials] a {
+	text-decoration: none;
+}
+
+[data-v-footer] a:hover,
+[data-v-socials] a:hover {
 	color: #0166ff;
 	text-decoration: underline;
 }
