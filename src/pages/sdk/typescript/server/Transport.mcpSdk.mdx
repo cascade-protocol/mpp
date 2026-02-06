@@ -8,15 +8,15 @@ MCP SDK transport for server-side payment handling with [`@modelcontextprotocol/
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import { Mpay, tempo, Transport } from 'mpay/server'
 
-const payment = Mpay.create({
-  method: tempo(),
+const mpay = Mpay.create({
+  methods: [tempo.charge()],
   transport: Transport.mcpSdk(),
 })
 
 const server = new McpServer({ name: 'example', version: '1.0.0' })
 
 server.registerTool('premium', { description: 'A premium tool' }, async (extra) => {
-  const result = await payment.charge({
+  const result = await mpay.charge({
     amount: '0.1', currency: '0x...', recipient: '0x...',
   })(extra)
 

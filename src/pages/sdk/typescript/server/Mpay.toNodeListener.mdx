@@ -8,13 +8,13 @@ Wraps a payment handler to create a Node.js HTTP listener.
 import * as http from 'node:http'
 import { Mpay, tempo } from 'mpay/server'
 
-const payment = Mpay.create({
-  method: tempo(),
+const mpay = Mpay.create({
+  methods: [tempo.charge()],
 })
 
 http.createServer(async (req, res) => {
   const result = await Mpay.toNodeListener(
-    payment.charge({
+    mpay.charge({
       amount: '0.1', 
       currency: '0x...', 
       recipient: '0x...',
@@ -53,14 +53,14 @@ The payment handler function returned by calling an intent on the payment object
 import * as http from 'node:http'
 import { Mpay, tempo } from 'mpay/server'
 
-const payment = Mpay.create({
-  method: tempo(),
+const mpay = Mpay.create({
+  methods: [tempo.charge()],
 })
 
 http.createServer(async (req, res) => {
   const result = await Mpay.toNodeListener(
     // [!code focus:start]
-    payment.charge({
+    mpay.charge({
       amount: '0.1',
       currency: '0x...',
       recipient: '0x...',

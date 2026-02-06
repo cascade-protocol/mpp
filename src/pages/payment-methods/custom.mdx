@@ -357,7 +357,7 @@ const serverMethod = Method.toServer(lightningMethod, {
 })
 // ---cut---
 const mpay = Mpay.create({
-  method: serverMethod,
+  methods: [serverMethod],
 })
 ```
 
