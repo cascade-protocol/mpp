@@ -17,7 +17,7 @@ import { privateKeyToAccount } from 'viem/accounts'
 const account = privateKeyToAccount('0x...')
 
 const fetch = Fetch.from({
-  methods: [tempo({ account })],
+  methods: [tempo.charge({ account })],
 })
 
 // Use the wrapped fetch — handles 402 automatically
@@ -78,7 +78,7 @@ const account = privateKeyToAccount('0x...')
 
 const fetch = Fetch.from({
   // [!code focus:start]
-  methods: [tempo({ account })],
+  methods: [tempo.charge({ account })],
   // [!code focus:end]
 })
 ```
@@ -100,6 +100,6 @@ const account = privateKeyToAccount('0x...')
 
 const fetch = Fetch.from({
   fetch: customFetch, // [!code focus]
-  methods: [tempo({ account })],
+  methods: [tempo.charge({ account })],
 })
 ```

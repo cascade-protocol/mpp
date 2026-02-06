@@ -11,7 +11,7 @@ import { privateKeyToAccount } from 'viem/accounts'
 const account = privateKeyToAccount('0x...')
 
 Fetch.polyfill({
-  methods: [tempo({ account })],
+  methods: [tempo.charge({ account })],
 })
 
 // Global fetch now handles 402 automatically
@@ -63,7 +63,7 @@ const account = privateKeyToAccount('0x...')
 
 Fetch.polyfill({
   // [!code focus:start]
-  methods: [tempo({ account })],
+  methods: [tempo.charge({ account })],
   // [!code focus:end]
 })
 ```

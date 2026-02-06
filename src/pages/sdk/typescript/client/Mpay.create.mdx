@@ -9,7 +9,7 @@ import { Mpay, tempo } from 'mpay/client'
 import { privateKeyToAccount } from 'viem/accounts'
 
 const mpay = Mpay.create({
-  methods: [tempo()],
+  methods: [tempo.charge()],
 })
 
 const response = await fetch('/resource')
@@ -56,7 +56,7 @@ const account = privateKeyToAccount('0x...')
 
 const mpay = Mpay.create({
   // [!code focus:start]
-  methods: [tempo({ account })],
+  methods: [tempo.charge({ account })],
   // [!code focus:end]
 })
 ```
@@ -75,7 +75,7 @@ import { privateKeyToAccount } from 'viem/accounts'
 const account = privateKeyToAccount('0x...')
 
 const mpay = Mpay.create({
-  methods: [tempo({ account })],
+  methods: [tempo.charge({ account })],
   transport: Transport.mcp(), // [!code focus]
 })
 ```
