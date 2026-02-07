@@ -11,7 +11,7 @@ const header = 'Payment id="abc123", realm="mpp.dev", method="tempo", intent="ch
 const challenge = Challenge.deserialize(header)
 ```
 
-### With Method Type Narrowing
+### With method type narrowing
 
 Use a method definition to get type-safe access to method-specific request fields.
 
@@ -23,7 +23,7 @@ const header = 'Payment id="abc123", realm="mpp.dev", method="tempo", intent="ch
 const challenge = Challenge.deserialize(header, { method: tempo })
 ```
 
-## Return Type
+## Return type
 
 ```ts
 type ReturnType = Challenge

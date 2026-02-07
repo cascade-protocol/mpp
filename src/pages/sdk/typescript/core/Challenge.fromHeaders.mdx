@@ -11,7 +11,7 @@ const response = await fetch('/resource')
 const challenge = Challenge.fromHeaders(response.headers)
 ```
 
-### With Method Type Narrowing
+### With method type narrowing
 
 Use a method definition to get type-safe access to method-specific request fields.
 
@@ -23,7 +23,7 @@ const response = await fetch('/resource')
 const challenge = Challenge.fromHeaders(response.headers, { method: tempo })
 ```
 
-## Return Type
+## Return type
 
 ```ts
 type ReturnType = Challenge
