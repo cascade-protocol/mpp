@@ -1,16 +1,9 @@
 import { assertType, describe, expectTypeOf, test } from 'vitest'
 import * as Challenge from './Challenge.js'
-import * as Method from './Method.js'
+import { MethodIntent } from './index.js'
 import * as Intents from './tempo/Intents.js'
 
-const fooMethod = Method.from({
-  name: 'tempo',
-  intents: {
-    charge: Intents.charge,
-  },
-})
-
-const method = Method.toServer(fooMethod, {
+const method = MethodIntent.toServer(Intents.charge, {
   async verify() {
     return {
       method: 'tempo',
@@ -23,7 +16,7 @@ const method = Method.toServer(fooMethod, {
 
 describe('FromMethod', () => {
   test('extracts method and intent from method', () => {
-    type Result = Challenge.FromMethod<typeof method>
+    type Result = Challenge.FromMethods<[typeof method]>
 
     assertType<Result['method']>('tempo' as const)
     assertType<Result['intent']>('charge' as const)
@@ -56,7 +49,7 @@ describe('from', () => {
         realm: 'api.example.com',
         request: { amount: '1000' },
       },
-      { method },
+      { methods: [method] },
     )
 
     assertType<'tempo'>(challenge.method)
@@ -79,7 +72,7 @@ describe('fromResponse', () => {
 
   test('behavior: method narrows type', () => {
     const response = new Response(null, { status: 402 })
-    const challenge = Challenge.fromResponse(response, { method })
+    const challenge = Challenge.fromResponse(response, { methods: [method] })
     expectTypeOf(challenge.method).toEqualTypeOf<'tempo'>()
     expectTypeOf(challenge.intent).toEqualTypeOf<'charge'>()
     expectTypeOf(challenge.request).toHaveProperty('amount')
