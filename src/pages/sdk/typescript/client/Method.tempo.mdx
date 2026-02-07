@@ -65,20 +65,8 @@ const method = tempo.charge({
 })
 ```
 
-### rpcUrl (optional)
+### client (optional)
 
-- **Type:** `{ [chainId: number]: string }`
+- **Type:** `(chainId: number) => Client`
 
-RPC URLs keyed by chain ID.
-
-```ts twoslash
-import { tempo } from 'mpay/client'
-
-const method = tempo.charge({
-  // [!code focus:start]
-  rpcUrl: {
-    123456: 'https://rpc.tempo.xyz',
-  },
-  // [!code focus:end]
-})
-```
+Function that returns a viem client for the given chain ID.

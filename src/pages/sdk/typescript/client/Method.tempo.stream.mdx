@@ -65,26 +65,20 @@ const method = tempo.stream({
 })
 ```
 
-### chainId (optional)
-
-- **Type:** `number`
-
-Chain ID override. Derived from the server Challenge if not provided.
-
 ### client (optional)
 
-- **Type:** `Client`
+- **Type:** `(chainId: number) => Client`
 
-Viem client for signing vouchers. Mutually exclusive with `walletClient`.
+Function that returns a viem client for the given chain ID.
+
+### deposit (optional)
+
+- **Type:** `bigint`
+
+Initial deposit amount for auto-managed channels. When set, the client handles the full channel lifecycle (open, voucher, cumulative tracking) automatically.
 
 ### escrowContract (optional)
 
 - **Type:** `Address`
 
 Escrow contract address override. Derived from the server Challenge if not provided.
-
-### walletClient (optional)
-
-- **Type:** `WalletClient`
-
-Wallet client for signing vouchers. Mutually exclusive with `client`.
