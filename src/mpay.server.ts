@@ -5,9 +5,13 @@ import { privateKeyToAccount } from "viem/accounts";
 export const mpay = Mpay.create({
 	methods: [
 		tempo.charge({
-			feePayer: privateKeyToAccount(
-				env.FEE_PAYER_PRIVATE_KEY! as `0x${string}`,
-			),
+			...(env.FEE_PAYER_PRIVATE_KEY
+				? {
+						feePayer: privateKeyToAccount(
+							env.FEE_PAYER_PRIVATE_KEY as `0x${string}`,
+						),
+					}
+				: {}),
 			testnet: true,
 		}),
 	],
