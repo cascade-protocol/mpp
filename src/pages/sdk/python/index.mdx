@@ -34,28 +34,36 @@ $ pip install "pympay[tempo]"
 ### Server
 
 ```python [server.py]
-from datetime import datetime, timedelta, UTC
 from fastapi import FastAPI, Request
-from mpay import Credential, Receipt
-from mpay.server import requires_payment
-from mpay.methods.tempo import ChargeIntent
+from fastapi.responses import JSONResponse
+from mpay import Challenge
+from mpay.server import Mpay
+from mpay.methods.tempo import tempo
 
 app = FastAPI()
-intent = ChargeIntent(rpc_url="https://rpc.tempo.xyz")
+
+mpay = Mpay.create(
+    method=tempo(
+        currency="0x20c0000000000000000000000000000000000001",
+        recipient="0xa726a1CD723409074DF9108A2187cfA19899aCF8",
+    ),
+)
 
 @app.get("/resource")
-@requires_payment(
-    intent=intent,
-    request={
-        "amount": "1000000",
-        "currency": "0x20c0000000000000000000000000000000000001",
-        "recipient": "0xa726a1CD723409074DF9108A2187cfA19899aCF8",
-        "expires": (datetime.now(UTC) + timedelta(minutes=5)).isoformat(),
-    },
-    realm="mpp.dev",
-    secret_key="my-server-secret",
-)
-async def get_resource(request: Request, credential: Credential, receipt: Receipt):
+async def get_resource(request: Request):
+    result = await mpay.charge(
+        authorization=request.headers.get("Authorization"),
+        amount="0.50",
+    )
+
+    if isinstance(result, Challenge):
+        return JSONResponse(
+            status_code=402,
+            content={"error": "Payment required"},
+            headers={"WWW-Authenticate": result.to_www_authenticate(mpay.realm)},
+        )
+
+    credential, receipt = result
     return {"data": "paid content", "payer": credential.source}
 ```
 
@@ -68,7 +76,7 @@ from mpay.methods.tempo import tempo, TempoAccount
 
 async def main():
     account = TempoAccount.from_env()
-    
+
     async with Client(methods=[tempo(account=account)]) as client:
         response = await client.get("https://mpp.dev/api/ping/paid")
         print(response.json())

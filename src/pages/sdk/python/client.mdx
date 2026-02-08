@@ -4,37 +4,85 @@ Handle `402` Payment Required responses automatically.
 
 ## Quick start
 
-```python
+```python [client.py]
 from mpay.client import Client
 from mpay.methods.tempo import tempo, TempoAccount
 
 account = TempoAccount.from_key("0x...")
 
 async with Client(methods=[tempo(account=account)]) as client:
-    response = await client.get("https://mpp.dev/api/ping/paid")
+    response = await client.get("https://api.example.com/resource")
     print(response.json())
 ```
 
-## Common Methods
+## Common methods
 
 | Method | Description |
 |--------|-------------|
+| `delete(url, **kwargs)` | DELETE request with payment handling |
 | `get(url, **kwargs)` | GET request with payment handling |
 | `post(url, **kwargs)` | POST request with payment handling |
 | `put(url, **kwargs)` | PUT request with payment handling |
-| `delete(url, **kwargs)` | DELETE request with payment handling |
 | `request(method, url, **kwargs)` | Generic request |
 
-## One-off Requests
+## One-off requests
 
-```python
+```python [client.py]
 from mpay.client import get
 from mpay.methods.tempo import tempo, TempoAccount
 
 response = await get(
-    "https://mpp.dev/api/ping/paid",
+    "https://api.example.com/resource",
     methods=[tempo(account=TempoAccount.from_key("0x..."))],
 )
 ```
 
-For manual challenge/credential handling, see [Core Types](/sdk/python/core).
+## Streaming payments
+
+For streaming payment channels, use `StreamMethod` instead of `tempo()`. The client opens a payment channel and sends incremental vouchers as it consumes content:
+
+```python [stream.py]
+import httpx
+from mpay.client import PaymentTransport
+from mpay.methods.tempo import StreamMethod, TempoAccount
+
+account = TempoAccount.from_key("0x...")
+
+method = StreamMethod(
+    account=account,
+    currency="0x20c0000000000000000000000000000000000001",
+    deposit=10_000_000,
+)
+
+transport = PaymentTransport(methods=[method])
+async with httpx.AsyncClient(transport=transport, timeout=60.0) as client:
+    async with client.stream("GET", "https://api.example.com/chat",
+        params={"prompt": "Explain payment channels"},
+    ) as response:
+        async for line in response.aiter_lines():
+            if line.startswith("data: "):
+                print(line[6:], end="", flush=True)
+```
+
+`StreamMethod` auto-manages the channel lifecycle—opening the channel on the first request and sending cumulative vouchers on subsequent requests to the same server.
+
+## Custom httpx transport
+
+`PaymentTransport` wraps any `httpx.AsyncBaseTransport`, so you can compose it with custom transports:
+
+```python [transport.py]
+import httpx
+from mpay.client import PaymentTransport
+from mpay.methods.tempo import tempo, TempoAccount
+
+account = TempoAccount.from_key("0x...")
+transport = PaymentTransport(
+    methods=[tempo(account=account)],
+    inner=httpx.AsyncHTTPTransport(retries=3),
+)
+
+async with httpx.AsyncClient(transport=transport) as client:
+    response = await client.get("https://api.example.com/resource")
+```
+
+For manual Challenge/Credential handling, see [Core types](/sdk/python/core).

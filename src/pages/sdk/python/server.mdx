@@ -4,7 +4,295 @@ Protect endpoints with payment requirements.
 
 ## Quick start
 
-```python
+Create an `Mpay` instance with `Mpay.create()` and call `charge()` with a human-readable amount. The `tempo()` factory creates a Tempo payment method—configure `currency` and `recipient` once, then every `charge()` call uses those defaults.
+
+```python [server.py]
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from mpay import Challenge
+from mpay.server import Mpay
+from mpay.methods.tempo import tempo
+
+app = FastAPI()
+
+mpay = Mpay.create(
+    method=tempo(
+        currency="0x20c0000000000000000000000000000000000001",
+        recipient="0xa726a1CD723409074DF9108A2187cfA19899aCF8",
+    ),
+)
+
+@app.get("/resource")
+async def get_resource(request: Request):
+    result = await mpay.charge(
+        authorization=request.headers.get("Authorization"),
+        amount="0.50",
+    )
+
+    if isinstance(result, Challenge):
+        return JSONResponse(
+            status_code=402,
+            content={"error": "Payment required"},
+            headers={"WWW-Authenticate": result.to_www_authenticate(mpay.realm)},
+        )
+
+    credential, receipt = result
+    return {"data": "paid content", "payer": credential.source}
+```
+
+`Mpay.create()` auto-detects `realm` from environment variables (`VERCEL_URL`, `FLY_APP_NAME`, `HOSTNAME`, and others) and auto-generates a `secret_key` persisted to `.env`. Pass explicit values to override:
+
+```python [server.py]
+mpay = Mpay.create(
+    method=tempo(
+        currency="0x20c0000000000000000000000000000000000001",
+        recipient="0xa726a1CD723409074DF9108A2187cfA19899aCF8",
+    ),
+    realm="api.example.com",
+    secret_key="my-server-secret",
+)
+```
+
+## `tempo()` factory
+
+`tempo()` creates a `TempoMethod` that bundles a payment network, its intents, and default parameters together. By default it registers a `charge` intent. Pass additional intents (like `StreamIntent`) via the `intents` parameter.
+
+```python [server.py]
+from mpay.methods.tempo import tempo
+
+method = tempo(
+    currency="0x20c0000000000000000000000000000000000001",
+    recipient="0xa726a1CD723409074DF9108A2187cfA19899aCF8",
+)
+```
+
+### With charge and stream
+
+Register both intents on a single method by passing a `StreamIntent` via `intents`:
+
+```python [server.py]
+from mpay.methods.tempo import tempo, StreamIntent
+from mpay.methods.tempo.stream.storage import MemoryStorage
+
+mpay = Mpay.create(
+    method=tempo(
+        currency="0x20c0000000000000000000000000000000000001",
+        recipient="0xa726a1CD723409074DF9108A2187cfA19899aCF8",
+        intents={
+            "stream": StreamIntent(
+                storage=MemoryStorage(),
+                rpc_url="https://rpc.tempo.xyz",
+            ),
+        },
+    ),
+)
+```
+
+### `tempo()` parameters
+
+### currency (optional)
+
+- **Type:** `str`
+
+Default TIP-20 token address for charges.
+
+### decimals (optional)
+
+- **Type:** `int`
+- **Default:** `6`
+
+Token decimal places for amount conversion (6 for pathUSD).
+
+### intents (optional)
+
+- **Type:** `dict[str, Intent]`
+
+Additional intents to register, merged with the default `charge` intent. Use this to add stream support.
+
+### recipient (optional)
+
+- **Type:** `str`
+
+Default recipient address for charges.
+
+### rpc_url (optional)
+
+- **Type:** `str`
+- **Default:** `"https://rpc.tempo.xyz"`
+
+Tempo RPC endpoint URL.
+
+## `Mpay.create()` parameters
+
+### method
+
+- **Type:** `Method`
+
+Payment method instance returned by `tempo()`.
+
+### realm (optional)
+
+- **Type:** `str`
+
+Server realm for `WWW-Authenticate` headers. Auto-detected from environment if omitted.
+
+### secret_key (optional)
+
+- **Type:** `str`
+
+HMAC secret for stateless Challenge ID verification. Auto-generated and persisted to `.env` if omitted.
+
+## `charge()` parameters
+
+### amount
+
+- **Type:** `str`
+
+Payment amount in human-readable units (for example, `"0.50"` for $0.50). Automatically converted to base units using the method's decimal precision (6 decimals for pathUSD).
+
+### authorization
+
+- **Type:** `str | None`
+
+The `Authorization` header value from the incoming request.
+
+### currency (optional)
+
+- **Type:** `str`
+
+Override the method's default currency address.
+
+### description (optional)
+
+- **Type:** `str`
+
+Human-readable description attached to the Challenge.
+
+### expires (optional)
+
+- **Type:** `str`
+
+Challenge expiration as ISO 8601 timestamp. Defaults to 5 minutes from now.
+
+### recipient (optional)
+
+- **Type:** `str`
+
+Override the method's default recipient address.
+
+## `stream()` parameters
+
+### amount
+
+- **Type:** `str`
+
+Price per unit in human-readable units (for example, `"0.000075"` for $0.000075 per token). Automatically converted to base units.
+
+### authorization
+
+- **Type:** `str | None`
+
+The `Authorization` header value from the incoming request.
+
+### currency (optional)
+
+- **Type:** `str`
+
+Override the method's default currency address.
+
+### description (optional)
+
+- **Type:** `str`
+
+Human-readable description attached to the Challenge.
+
+### recipient (optional)
+
+- **Type:** `str`
+
+Override the method's default recipient address.
+
+### unit_type (optional)
+
+- **Type:** `str`
+- **Default:** `"token"`
+
+Service unit type label (for example, `"token"`, `"byte"`, `"request"`).
+
+## Streaming example
+
+`StreamIntent` requires a `storage` backend that implements the `ChannelStorage` protocol to persist channel and session state. The SDK ships `MemoryStorage` for development and testing—state lives in a Python dict and is lost on restart. For production, implement `ChannelStorage` backed by your database (Postgres, Redis, and others). The protocol has four methods:
+
+| Method | Description |
+|--------|-------------|
+| `get_channel(channel_id)` | Look up a channel by ID |
+| `get_session(challenge_id)` | Look up a session by Challenge ID |
+| `update_channel(channel_id, fn)` | Atomic read-modify-write for channel state |
+| `update_session(challenge_id, fn)` | Atomic read-modify-write for session state |
+
+A full SSE endpoint with per-token streaming payments:
+
+```python [server.py]
+import asyncio
+import json
+
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse, StreamingResponse
+from mpay import Challenge
+from mpay.methods.tempo import StreamIntent, tempo
+from mpay.methods.tempo.stream.storage import MemoryStorage
+from mpay.server import Mpay
+
+app = FastAPI()
+
+mpay = Mpay.create(
+    method=tempo(
+        currency="0x20c0000000000000000000000000000000000001",
+        recipient="0xa726a1CD723409074DF9108A2187cfA19899aCF8",
+        intents={
+            "stream": StreamIntent(
+                storage=MemoryStorage(),
+                rpc_url="https://rpc.tempo.xyz",
+            ),
+        },
+    ),
+)
+
+@app.get("/api/chat")
+async def chat(request: Request, prompt: str = "Hello!"):
+    result = await mpay.stream(
+        authorization=request.headers.get("Authorization"),
+        amount="0.000075",
+        unit_type="token",
+    )
+
+    if isinstance(result, Challenge):
+        return JSONResponse(
+            status_code=402,
+            content={"error": "Payment required"},
+            headers={"WWW-Authenticate": result.to_www_authenticate(mpay.realm)},
+        )
+
+    credential, receipt = result
+
+    async def event_stream():
+        for token in ["The", " answer", " is", " 42."]:
+            yield f"data: {json.dumps({'token': token})}\n\n"
+            await asyncio.sleep(0.05)
+        yield "data: [DONE]\n\n"
+
+    return StreamingResponse(
+        event_stream(),
+        media_type="text/event-stream",
+        headers={"Payment-Receipt": receipt.to_payment_receipt()},
+    )
+```
+
+## `@requires_payment` decorator
+
+For the lower-level decorator API, use `@requires_payment` with an explicit intent, request, realm, and secret key:
+
+```python [server.py]
 from fastapi import FastAPI, Request
 from mpay import Credential, Receipt
 from mpay.server import requires_payment
@@ -16,54 +304,19 @@ intent = ChargeIntent(rpc_url="https://rpc.tempo.xyz")
 @app.get("/resource")
 @requires_payment(
     intent=intent,
-    request={
-        "amount": "1000000",
-        "currency": "0x20c0000000000000000000000000000000000001",
-        "recipient": "0xa726a1CD723409074DF9108A2187cfA19899aCF8",
-    },
-    realm="mpp.dev",
+    request={"amount": "1000000", "currency": "0x...", "recipient": "0x..."},
+    realm="api.example.com",
     secret_key="my-server-secret",
 )
 async def get_resource(request: Request, credential: Credential, receipt: Receipt):
     return {"data": "paid content", "payer": credential.source}
 ```
 
-## Parameters
+### Parameters
 
 | Parameter | Description |
 |-----------|-------------|
 | `intent` | Payment intent for verification |
-| `request` | Payment request data (dict or callable) |
 | `realm` | Server realm for `WWW-Authenticate` |
-| `secret_key` | Secret for challenge IDs |
-| `method` | Optional payment method name (defaults to `"tempo"`) |
-
-## Reuse Configuration
-
-Bind method, realm, and secret_key at initialization.
-
-```python
-from mpay import Challenge
-from mpay.server import Mpay
-from mpay.methods.tempo import TempoMethod
-
-payment = Mpay(
-    method=TempoMethod(rpc_url="https://rpc.tempo.xyz"),
-    realm="mpp.dev",
-    secret_key="my-server-secret",
-)
-
-result = await payment.charge(
-    authorization=request.headers.get("Authorization"),
-    request={"amount": "1000", "currency": "0x...", "recipient": "0x..."},
-)
-
-if isinstance(result, Challenge):
-    return JSONResponse(
-        status_code=402,
-        headers={"WWW-Authenticate": result.to_www_authenticate(payment.realm)},
-    )
-
-credential, receipt = result
-return {"data": "paid content"}
-```
+| `request` | Payment request data (dict or callable) |
+| `secret_key` | Secret for Challenge IDs |
