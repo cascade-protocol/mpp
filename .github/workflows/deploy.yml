@@ -28,7 +28,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
 
       - name: Install dependencies
         run: pnpm install
@@ -46,6 +46,9 @@ jobs:
         run: pnpm build
         env:
           SPEC_PAT: ${{ secrets.SPEC_PAT }}
+
+      - name: Prune server bundle
+        run: node --experimental-strip-types scripts/prune-server.ts
 
       - name: Upload build
         uses: actions/upload-artifact@v4
