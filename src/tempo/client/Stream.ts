@@ -1,11 +1,12 @@
 import { Hex } from 'ox'
-import { type Account, type Address, encodeFunctionData, type Client as viem_Client } from 'viem'
+import { type Address, encodeFunctionData, type Client as viem_Client } from 'viem'
 import { prepareTransactionRequest, signTransaction } from 'viem/actions'
 import { tempo as tempo_chain } from 'viem/chains'
 import { Abis } from 'viem/tempo'
 import type * as Challenge from '../../Challenge.js'
 import * as Credential from '../../Credential.js'
 import * as MethodIntent from '../../MethodIntent.js'
+import * as Account from '../../viem/Account.js'
 import * as Client from '../../viem/Client.js'
 import * as z from '../../zod.js'
 import * as Intents from '../Intents.js'
@@ -16,7 +17,7 @@ import type { StreamCredentialPayload } from '../stream/Types.js'
 import { signVoucher } from '../stream/Voucher.js'
 
 export const streamContextSchema = z.object({
-  account: z.optional(z.custom<Account>()),
+  account: z.optional(z.custom<Account.getResolver.Parameters['account']>()),
   action: z.optional(z.enum(['open', 'topUp', 'voucher', 'close'])),
   channelId: z.optional(z.string()),
   cumulativeAmount: z.optional(z.bigint()),
@@ -72,6 +73,7 @@ export function stream(parameters: stream.Parameters = {}) {
     getClient: parameters.getClient,
     rpcUrl: defaults.rpcUrl,
   })
+  const getAccount = Account.getResolver({ account: parameters.account })
 
   const escrowContractMap = new Map<string, Address>()
   const channels = new Map<string, ChannelEntry>()
@@ -104,7 +106,7 @@ export function stream(parameters: stream.Parameters = {}) {
 
   async function voucherPayload(
     client: viem_Client,
-    account: Account,
+    account: Account.Account,
     channelId: Hex.Hex,
     cumulativeAmount: bigint,
     escrowContract: Address,
@@ -129,7 +131,7 @@ export function stream(parameters: stream.Parameters = {}) {
     challenge: Challenge.Challenge,
     payload: StreamCredentialPayload,
     chainId: number,
-    account: Account,
+    account: Account.Account,
   ): string {
     return Credential.serialize({
       challenge,
@@ -140,7 +142,7 @@ export function stream(parameters: stream.Parameters = {}) {
 
   async function autoManageCredential(
     challenge: Challenge.Challenge,
-    account: Account,
+    account: Account.Account,
   ): Promise<string> {
     const md = challenge.request.methodDetails as
       | { chainId?: number; escrowContract?: string; channelId?: string; feePayer?: boolean }
@@ -289,7 +291,7 @@ export function stream(parameters: stream.Parameters = {}) {
 
   async function manualCredential(
     challenge: Challenge.Challenge,
-    account: Account,
+    account: Account.Account,
     context: StreamContext,
   ): Promise<string> {
     const md = challenge.request.methodDetails as
@@ -391,9 +393,9 @@ export function stream(parameters: stream.Parameters = {}) {
     context: streamContextSchema,
 
     async createCredential({ challenge, context }) {
-      const account = context?.account ?? parameters.account
-      if (!account)
-        throw new Error('No `account` provided. Pass `account` to parameters or context.')
+      const chainId = challenge.request.methodDetails?.chainId ?? 0
+      const client = await getClient({ chainId })
+      const account = getAccount(client, context)
 
       if (!context?.action && parameters.deposit !== undefined)
         return autoManageCredential(challenge, account)
@@ -408,12 +410,11 @@ export function stream(parameters: stream.Parameters = {}) {
 }
 
 export declare namespace stream {
-  type Parameters = Client.getResolver.Parameters & {
-    /** Account to sign vouchers with. Can be overridden per-call via context. */
-    account?: Account | undefined
-    /** Initial deposit amount for auto-managed channels. When set, the method handles the full channel lifecycle (open, voucher, cumulative tracking) automatically. */
-    deposit?: bigint | undefined
-    /** Escrow contract address override. Derived from challenge or defaults if not provided. */
-    escrowContract?: Address | undefined
-  }
+  type Parameters = Account.getResolver.Parameters &
+    Client.getResolver.Parameters & {
+      /** Initial deposit amount for auto-managed channels. When set, the method handles the full channel lifecycle (open, voucher, cumulative tracking) automatically. */
+      deposit?: bigint | undefined
+      /** Escrow contract address override. Derived from challenge or defaults if not provided. */
+      escrowContract?: Address | undefined
+    }
 }
