@@ -1,7 +1,9 @@
-import type { Account, Address, Client, Hex } from 'viem'
-import { recoverTypedDataAddress } from 'viem'
+import type { Account, Client, Hex } from 'viem'
+import { hashTypedData, isAddressEqual, recoverTypedDataAddress } from 'viem'
 import { signTypedData } from 'viem/actions'
+import { SignatureEnvelope } from 'ox/tempo'
 import type { SignedVoucher, Voucher } from './Types.js'
+import { Address, Secp256k1 } from 'ox'
 
 /** Must match the on-chain TempoStreamChannel DOMAIN_SEPARATOR name. */
 const DOMAIN_NAME = 'Tempo Stream Channel'
@@ -11,7 +13,7 @@ const DOMAIN_VERSION = '1'
 /**
  * EIP-712 domain for voucher signing.
  */
-function getVoucherDomain(escrowContract: Address, chainId: number) {
+function getVoucherDomain(escrowContract: Address.Address, chainId: number) {
   return {
     name: DOMAIN_NAME,
     version: DOMAIN_VERSION,
@@ -38,7 +40,7 @@ export async function signVoucher(
   client: Client,
   account: Account,
   message: Voucher,
-  escrowContract: Address,
+  escrowContract: Address.Address,
   chainId: number,
 ): Promise<Hex> {
   return signTypedData(client, {
@@ -55,25 +57,36 @@ export async function signVoucher(
 
 /**
  * Verify a voucher signature matches the expected signer.
+ *
+ * Supports both direct signatures (secp256k1/p256/webAuthn) and
+ * Tempo access key (keychain) signatures. For keychain signatures,
+ * the envelope's `userAddress` is compared to `expectedSigner`.
  */
 export async function verifyVoucher(
-  escrowContract: Address,
+  escrowContract: Address.Address,
   chainId: number,
   voucher: SignedVoucher,
-  expectedSigner: Address,
+  expectedSigner: Address.Address,
 ): Promise<boolean> {
   try {
+    const domain = getVoucherDomain(escrowContract, chainId)
+    const message = {
+      channelId: voucher.channelId,
+      cumulativeAmount: voucher.cumulativeAmount,
+    }
+
+    const envelope = SignatureEnvelope.from(voucher.signature as SignatureEnvelope.Serialized)
+
+    if (envelope.type === 'keychain') return isAddressEqual(envelope.userAddress, expectedSigner)
+
     const signer = await recoverTypedDataAddress({
-      domain: getVoucherDomain(escrowContract, chainId),
+      domain,
       types: voucherTypes,
       primaryType: 'Voucher',
-      message: {
-        channelId: voucher.channelId,
-        cumulativeAmount: voucher.cumulativeAmount,
-      },
+      message,
       signature: voucher.signature,
     })
-    return signer.toLowerCase() === expectedSigner.toLowerCase()
+    return isAddressEqual(signer, expectedSigner)
   } catch {
     return false
   }
