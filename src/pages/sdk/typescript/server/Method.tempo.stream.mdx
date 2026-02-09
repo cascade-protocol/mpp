@@ -86,7 +86,7 @@ Account for sponsoring open and top-up transaction fees.
 
 ### getClient (optional)
 
-- **Type:** `(chainId: number) => Client`
+- **Type:** `(parameters: { chainId: number }) => MaybePromise<Client>`
 
 Function that returns a viem client for the given chain ID.
 

@@ -12,12 +12,13 @@ The `tempo` namespace provides client-side payment methods for the Tempo blockch
 ## Usage
 
 ```ts twoslash
-import { Fetch, tempo } from 'mpay/client'
+import { Mpay, tempo } from 'mpay/client'
 import { privateKeyToAccount } from 'viem/accounts'
 
 const account = privateKeyToAccount('0x...')
 
-const fetch = Fetch.from({
+const mpay = Mpay.create({
+  polyfill: false,
   methods: [
     // [!code focus:start]
     tempo.charge({ account }),
@@ -31,12 +32,13 @@ const fetch = Fetch.from({
 Register both charge and stream methods on a single client.
 
 ```ts twoslash
-import { Fetch, tempo } from 'mpay/client'
+import { Mpay, tempo } from 'mpay/client'
 import { privateKeyToAccount } from 'viem/accounts'
 
 const account = privateKeyToAccount('0x...')
 
-const fetch = Fetch.from({
+const mpay = Mpay.create({
+  polyfill: false,
   // [!code focus:start]
   methods: [
     tempo.charge({ account }),
@@ -67,6 +69,6 @@ const method = tempo.charge({
 
 ### getClient (optional)
 
-- **Type:** `(chainId: number) => Client`
+- **Type:** `(parameters: { chainId: number }) => MaybePromise<Client>`
 
 Function that returns a viem client for the given chain ID.

@@ -34,17 +34,17 @@ const account = privateKeyToAccount('0xabc…123')
 With Tempo, you can also use [Passkey or WebCrypto accounts](https://viem.sh/tempo/accounts).
 :::
 
-### Polyfill fetch
+### Create payment handler
 
-Call `Fetch.polyfill` at startup. All `fetch` calls then handle payment challenges.
+Call `Mpay.create` at startup. All `fetch` calls then handle payment challenges.
 
 ```ts twoslash [polyfill-fetch.ts]
 import { privateKeyToAccount } from 'viem/accounts'
-import { Fetch, tempo } from 'mpay/client'
+import { Mpay, tempo } from 'mpay/client'
 
 const account = privateKeyToAccount('0xabc…123')
 
-Fetch.polyfill({
+Mpay.create({
   methods: [tempo.charge({ account })]
 })
 ```
@@ -65,20 +65,21 @@ const response = await fetch('https://mpp.dev/api/ping/paid')
 
 ### Wrapped fetch instance
 
-Use `Fetch.from` to create a separate payment-enabled fetch without modifying the global:
+Set `polyfill: false` and use the returned `fetch`:
 
 ```ts twoslash [wrapped-fetch.ts]
 import { privateKeyToAccount } from 'viem/accounts'
-import { Fetch, tempo } from 'mpay/client'
+import { Mpay, tempo } from 'mpay/client'
 
 const account = privateKeyToAccount('0xabc…123')
 
 // [!code hl:start]
-const paidFetch = Fetch.from({
+const mpay = Mpay.create({
+  polyfill: false,
   methods: [tempo.charge({ account })]
 })
 // [!code hl:end]
-const response = await paidFetch('https://mpp.dev/api/ping/paid')
+const response = await mpay.fetch('https://mpp.dev/api/ping/paid')
 ```
 
 ### Per-request accounts
@@ -87,14 +88,15 @@ Pass accounts on individual requests instead of at setup:
 
 ```ts twoslash [per-request-account.ts]
 import { privateKeyToAccount } from 'viem/accounts'
-import { Fetch, tempo } from 'mpay/client'
+import { Mpay, tempo } from 'mpay/client'
 
-const paidFetch = Fetch.from({
+const mpay = Mpay.create({
+  polyfill: false,
   methods: [tempo.charge()]
 })
 
 // [!code hl:start]
-const response = await paidFetch('https://mpp.dev/api/ping/paid', {
+const response = await mpay.fetch('https://mpp.dev/api/ping/paid', {
   context: {
     account: privateKeyToAccount('0xabc…123'),
   }
@@ -116,6 +118,7 @@ import { privateKeyToAccount } from 'viem/accounts'
 
 // [!code hl:start]
 const mpay = Mpay.create({
+  polyfill: false,
   methods: [tempo.charge()],
 })
 // [!code hl:end]
@@ -164,8 +167,8 @@ console.log(receipt.timestamp)  // ISO 8601
   />
   <Card
     icon="lucide:book-open"
-    title="Fetch.polyfill reference"
+    title="Mpay.create reference"
     description="Full API documentation"
-    to="/sdk/typescript/client/Fetch.polyfill"
+    to="/sdk/typescript/client/Mpay.create"
   />
 </Cards>

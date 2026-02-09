@@ -130,30 +130,16 @@ export default defineConfig({
 								text: "Client Reference",
 								items: [
 									{
-										text: "Fetch",
-										collapsed: true,
-										items: [
-											{
-												text: ".from",
-												link: "/sdk/typescript/client/Fetch.from",
-											},
-											{
-												text: ".polyfill",
-												link: "/sdk/typescript/client/Fetch.polyfill",
-											},
-											{
-												text: ".restore",
-												link: "/sdk/typescript/client/Fetch.restore",
-											},
-										],
-									},
-									{
 										text: "Mpay",
 										collapsed: true,
 										items: [
 											{
 												text: ".create",
 												link: "/sdk/typescript/client/Mpay.create",
+											},
+											{
+												text: ".restore",
+												link: "/sdk/typescript/client/Mpay.restore",
 											},
 										],
 									},

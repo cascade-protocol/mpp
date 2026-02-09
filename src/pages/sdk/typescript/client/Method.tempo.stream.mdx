@@ -6,12 +6,13 @@ Creates a Tempo stream payment method for client-side voucher signing.
 
 ```ts twoslash
 // @noErrors
-import { Fetch, tempo } from 'mpay/client'
+import { Mpay, tempo } from 'mpay/client'
 import { privateKeyToAccount } from 'viem/accounts'
 
 const account = privateKeyToAccount('0x...')
 
-const fetch = Fetch.from({
+const mpay = Mpay.create({
+  polyfill: false,
   methods: [
     // [!code focus:start]
     tempo.stream({ account }),
@@ -26,12 +27,13 @@ Register both intents on a single client.
 
 ```ts twoslash
 // @noErrors
-import { Fetch, tempo } from 'mpay/client'
+import { Mpay, tempo } from 'mpay/client'
 import { privateKeyToAccount } from 'viem/accounts'
 
 const account = privateKeyToAccount('0x...')
 
-const fetch = Fetch.from({
+const mpay = Mpay.create({
+  polyfill: false,
   methods: [
     tempo.charge({ account }),
     tempo.stream({ account }),
@@ -79,6 +81,6 @@ Escrow contract address override. Derived from the server Challenge if not provi
 
 ### getClient (optional)
 
-- **Type:** `(chainId: number) => Client`
+- **Type:** `(parameters: { chainId: number }) => MaybePromise<Client>`
 
 Function that returns a viem client for the given chain ID.

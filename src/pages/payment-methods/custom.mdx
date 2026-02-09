@@ -179,11 +179,11 @@ const serverMethod = MethodIntent.toServer(lightningCharge, {
 
 ### Client
 
-Pass the client method intent to `Fetch.from`:
+Pass the client method intent to `Mpay.create`:
 
 ```ts twoslash
 import { Credential, Intent, MethodIntent, z } from 'mpay'
-import { Fetch } from 'mpay/client'
+import { Mpay } from 'mpay/client'
 
 const charge = Intent.from({
   name: 'charge',
@@ -229,7 +229,8 @@ const clientMethod = MethodIntent.toClient(lightningCharge, {
   },
 })
 // ---cut---
-const fetch = Fetch.from({
+const { fetch } = Mpay.create({
+  polyfill: false,
   methods: [clientMethod],
 })
 
