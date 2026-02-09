@@ -1,6 +1,8 @@
 import { env } from "cloudflare:workers";
 import { Mpay, tempo } from "mpay/server";
+import { createClient, http } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
+import { tempoModerato } from "viem/chains";
 
 export const mpay = Mpay.create({
 	methods: [
@@ -12,6 +14,19 @@ export const mpay = Mpay.create({
 						),
 					}
 				: {}),
+			getClient() {
+				const user = process.env.RPC_AUTH_USER;
+				const pass = process.env.RPC_AUTH_PASS;
+				const url = (() => {
+					if (user && pass)
+						return `https://${user}:${pass}@rpc.moderato.tempo.xyz`;
+					return "https://rpc.moderato.tempo.xyz";
+				})();
+				return createClient({
+					chain: tempoModerato,
+					transport: http(url),
+				});
+			},
 			testnet: true,
 		}),
 	],

@@ -1053,9 +1053,12 @@ function timeAgo(iso: string) {
 
 export function Startup() {
 	const stepIndex = useStore(store, (s) => s.stepIndex);
+	const hasMounted = useRef(false);
 
 	useEffect(() => {
 		if (stepIndex !== 0) return;
+		if (hasMounted.current) return;
+		hasMounted.current = true;
 		store.setState((s) => ({ ...s, stepIndex: s.stepIndex + 1 }));
 	}, [stepIndex]);
 
@@ -1121,14 +1124,26 @@ export function ConnectWallet() {
 export function Faucet() {
 	const initialBalance = useStore(store, (s) => s.initialBalance);
 	const { address } = useConnection();
-	const { mutate, isPending, isSuccess } = Hooks.faucet.useFundSync();
 	const [alreadyFunded, setAlreadyFunded] = useState(false);
 
 	const token = useStore(store, (s) => s.token);
-	const { data: currentBalance } = Hooks.token.useGetBalance({
+	const { data: currentBalance, refetch } = Hooks.token.useGetBalance({
 		account: address,
 		token,
 		blockTag: "latest",
+	});
+
+	const { mutate, isPending, isSuccess } = Hooks.faucet.useFundSync({
+		mutation: {
+			onSuccess: async () => {
+				const { data } = await refetch();
+				store.setState((s) => ({
+					...s,
+					initialBalance: data,
+					stepIndex: s.stepIndex + 1,
+				}));
+			},
+		},
 	});
 
 	useEffect(() => {
@@ -1146,7 +1161,7 @@ export function Faucet() {
 	}, [address, alreadyFunded, initialBalance, isPending, isSuccess, mutate]);
 
 	useEffect(() => {
-		if (isSuccess || alreadyFunded) {
+		if (alreadyFunded) {
 			store.setState((s) => ({ ...s, initialBalance: currentBalance }));
 			const timer = setTimeout(
 				() => store.setState((s) => ({ ...s, stepIndex: s.stepIndex + 1 })),
@@ -1154,7 +1169,7 @@ export function Faucet() {
 			);
 			return () => clearTimeout(timer);
 		}
-	}, [alreadyFunded, currentBalance, isSuccess]);
+	}, [alreadyFunded, currentBalance]);
 
 	if (!address) return null;
 
