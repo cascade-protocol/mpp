@@ -1,4 +1,4 @@
-import { Badge, Card, Cards, Tab, Tabs } from 'vocs'
+import { Badge, Card, Cards } from 'vocs'
 
 # Server quickstart [Charge for resources and verify payment credentials]
 
@@ -6,128 +6,7 @@ import { Badge, Card, Cards, Tab, Tabs } from 'vocs'
 
 This quickstart demonstrates how to plug MPP into any server framework to accept payments for protected resources.
 
-## Framework middleware
-
-Use the framework-specific middleware from `mpay` to integrate payment into your server. Each middleware handles the `402` challenge/credential flow and attaches receipts automatically.
-
-<Tabs stateKey="framework">
-  <Tab title="Next.js">
-  <div className="space-y-4">
-
-```ts [app/api/resource/route.ts]
-import { Mpay, tempo } from 'mpay/nextjs'
-
-// [!code hl:start]
-const mpay = Mpay.create({
-  methods: [tempo.charge({
-    currency: '0x20c0000000000000000000000000000000000000',
-    recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8',
-  })],
-})
-// [!code hl:end]
-
-export const GET = 
-  mpay.charge({ amount: '0.1' }) // [!code hl]
-  (() => Response.json({ data: '...' }))
-```
-
-[See Next.js middleware reference →](/sdk/typescript/middlewares/nextjs)
-
-  </div>
-  </Tab>
-  <Tab title="Hono">
-  <div className="space-y-4">
-
-```ts [server.ts]
-import { Hono } from 'hono'
-import { Mpay, tempo } from 'mpay/hono'
-
-const app = new Hono()
-
-// [!code hl:start]
-const mpay = Mpay.create({
-  methods: [tempo.charge({
-    currency: '0x20c0000000000000000000000000000000000000',
-    recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8',
-  })],
-})
-// [!code hl:end]
-
-app.get(
-  '/resource', 
-  mpay.charge({ amount: '0.1' }), // [!code hl]
-  (c) => c.json({ data: '...' }),
-)
-```
-
-[See Hono middleware reference →](/sdk/typescript/middlewares/hono)
-
-  </div>
-  </Tab>
-  <Tab title="Elysia">
-  <div className="space-y-4">
-
-```ts [server.ts]
-import { Elysia } from 'elysia'
-import { Mpay, tempo } from 'mpay/elysia'
-
-// [!code hl:start]
-const mpay = Mpay.create({
-  methods: [tempo.charge({
-    currency: '0x20c0000000000000000000000000000000000000',
-    recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8',
-  })],
-})
-// [!code hl:end]
-
-const app = new Elysia()
-  .guard(
-    { beforeHandle: mpay.charge({ amount: '0.1' }) }, // [!code hl]
-    (app) => app.get('/resource', () => ({ data: '...' })),
-  )
-```
-
-[See Elysia middleware reference →](/sdk/typescript/middlewares/elysia)
-
-  </div>
-  </Tab>
-  <Tab title="Express">
-  <div className="space-y-4">
-
-```ts [server.ts]
-import express from 'express'
-import { Mpay, tempo } from 'mpay/express'
-
-const app = express()
-
-// [!code hl:start]
-const mpay = Mpay.create({
-  methods: [tempo.charge({
-    currency: '0x20c0000000000000000000000000000000000000',
-    recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8',
-  })],
-})
-// [!code hl:end]
-
-app.get(
-  '/resource', 
-  mpay.charge({ amount: '0.1' }), // [!code hl]
-  (req, res) => res.json({ data: '...' }))
-```
-
-[See Express middleware reference →](/sdk/typescript/middlewares/express)
-
-  </div>
-  </Tab>
-</Tabs>
-
-:::note
-Don't see your framework? `mpay` is designed to be framework-agnostic. See [Manual mode](#manual-mode) below.
-:::
-
-## Manual mode
-
-If you prefer full control over the payment flow, use `mpay/server` directly with the Fetch API.
+## Steps
 
 :::::steps
 
@@ -138,12 +17,7 @@ Create an `Mpay` instance to request payment for protected resources.
 ```ts twoslash [create-mpay.ts]
 import { Mpay, tempo } from 'mpay/server'
 
-const mpay = Mpay.create({
-  methods: [tempo.charge({
-    currency: '0x20c0000000000000000000000000000000000000',
-    recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8',
-  })],
-})
+const mpay = Mpay.create({ methods: [tempo.charge()] })
 ```
 
 :::tip
@@ -156,10 +30,7 @@ MPAY_SECRET_KEY="random-secret-key" // [!code focus]
 
 // config.ts // [!code focus]
 const mpay = Mpay.create({
-  methods: [tempo.charge({
-    currency: '0x20c0000000000000000000000000000000000000',
-    recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8',
-  })],
+  methods: [tempo.charge()],
   secretKey: process.env.MPAY_SECRET_KEY!, // [!code focus]
 })
 ```
@@ -172,18 +43,17 @@ const mpay = Mpay.create({
 Use the `mpay.charge(){:ts}` method to request payment from the client within your request handler.
 
 ```ts twoslash [charge-handler.ts]
-import { Mpay, tempo } from 'mpay/server' // [!code collapse:7 collapsed]
+import { Mpay, tempo } from 'mpay/server' // [!code collapse:2 collapsed]
 
-const mpay = Mpay.create({
-  methods: [tempo.charge({
-    currency: '0x20c0000000000000000000000000000000000000',
-    recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8',
-  })],
-})
+const mpay = Mpay.create({ methods: [tempo.charge()] })
 
 // [!code focus:start]
 export async function handler(request: Request) { 
-  const response = await mpay.charge({ amount: '0.1' })(request) 
+  const response = await mpay.charge({ 
+    amount: '0.1', 
+    currency: '0x20c0000000000000000000000000000000000000', 
+    recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8', 
+  })(request) 
   // [!code focus:end]
 
   // Payment required: send 402 response with challenge 
@@ -196,46 +66,29 @@ export async function handler(request: Request) {
 
 The intent handler accepts a [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)-compatible request object, and returns a `Response` object.
 
-The Fetch API is compatible with most server frameworks, including: [Hono](https://hono.dev), [Deno](https://deno.com), [Cloudflare Workers](https://workers.dev), [Next.js](https://nextjs.org),
+The Fetch API is compatible with most server frameworks, including: [Hono](https://hono.dev), [Deno](https://deno.com), [Cloudflare Workers](https://workers.dev), [Next.js](https://nextjs.org)
 [Bun](https://bun.sh), and other Fetch API-compatible frameworks.
 
-:::tip
-You can also override `currency` and `recipient` per call if different routes need different payment configurations.
-
-```ts
-const response = await mpay.charge({ 
-  amount: '0.1', 
-  currency: '0x…', // [!code ++]
-  recipient: '0x…', // [!code ++]
-})(request) 
-```
-:::
-
-:::::
-
-## Node.js & Express compatibility
-
-If your framework doesn't support the **Fetch API** (for example, Express or Node.js), you're likely interfacing with the [Node.js Request Listener API](https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener).
+::::info
+:::details[Node.js & Express Compatibility]
+If your framework doesn't support the Fetch API (for example, Express or Node.js), you're likely interfacing with the [Node.js Request Listener API](https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener).
 
 Use the `Mpay.toNodeListener` helper to transform the handler into a Node.js-compatible listener.
 
 ```ts twoslash
 import { Mpay, tempo } from 'mpay/server'
 
-const mpay = Mpay.create({
-  methods: [tempo.charge({
-    currency: '0x20c0000000000000000000000000000000000000',
-    recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8',
-  })],
-})
+const mpay = Mpay.create({ methods: [tempo.charge()] })
 
 type IncomingMessage = import('node:http').IncomingMessage
 type ServerResponse = import('node:http').ServerResponse
 // ---cut---
 export async function handler(req: IncomingMessage, res: ServerResponse) { 
-  const response = await Mpay.toNodeListener( // [!code ++]
-    mpay.charge({ amount: '0.1' })
-  )(req, res) // [!code ++]
+  const response = await Mpay.toNodeListener(mpay.charge({ // [!code ++]
+    amount: '0.1', 
+    currency: '0x20c0000000000000000000000000000000000000', 
+    recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8', 
+  }))(req, res) // [!code ++]
 
   // Payment required: send 402 response with challenge 
   if (response.status === 402) return response.challenge 
@@ -244,6 +97,80 @@ export async function handler(req: IncomingMessage, res: ServerResponse) {
   return response.withReceipt(Response.json({ data: '...' })) 
 } 
 ```
+:::
+::::
+
+:::tip
+We can also hoist values that we use often up into the `Mpay` instance.
+
+```ts
+const mpay = Mpay.create({ 
+  methods: [tempo.charge({
+    currency: '0x20c0000000000000000000000000000000000000', // [!code ++]
+    recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8', // [!code ++]
+  })] 
+})
+
+const response = await mpay.charge({ 
+  amount: '0.1', 
+  currency: '0x20c0000000000000000000000000000000000000',  // [!code --]
+  recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8',  // [!code --]
+})(request) 
+```
+:::
+
+### Plug into your framework
+
+Plug the handler into your framework of choice, like [Hono](https://hono.dev).
+
+```ts [hono-server.ts]
+import { Hono } from 'hono' // [!code focus]
+import { Mpay, tempo } from 'mpay/server'
+
+const mpay = Mpay.create({ methods: [tempo.charge()] })
+
+const app = new Hono() // [!code focus]
+
+app.get('/resource', async (c) => { // [!code focus:99]
+  const r = await mpay.charge({
+    amount: '0.1',
+    currency: '0x20c0000000000000000000000000000000000000',
+    recipient: '0xa726a1CD723409074DF9108A2187cfA19899aCF8',
+  })(c.req.raw)
+
+  if (r.status === 402) return r.challenge
+
+  return r.withReceipt(c.json({ data: '...' }))
+})
+```
+
+### <div className="mr-2"><Badge variant="note">Optional</Badge></div> Use agent skills & create middleware
+
+Use your coding agent (Claude Code, Cursor, or Amp) with [Agent Skills](https://skills.sh) to integrate `mpay` with your framework.
+
+```bash [Terminal]
+npx skills install wevm/mpay --skill mpay-hono
+```
+
+Then ask your agent:
+
+```
+Add an `mpay` middleware to my Hono server to charge $0.001 
+on all `/resource` endpoints.
+```
+
+:::note[Available skills]
+- [`mpay-bun`](https://github.com/wevm/mpay/tree/main/skills/mpay-bun) - Bun HTTP server
+- [`mpay-cloudflare`](https://github.com/wevm/mpay/tree/main/skills/mpay-cloudflare) - Cloudflare Workers
+- [`mpay-deno`](https://github.com/wevm/mpay/tree/main/skills/mpay-deno) - Deno server
+- [`mpay-elysia`](https://github.com/wevm/mpay/tree/main/skills/mpay-elysia) - Elysia framework
+- [`mpay-express`](https://github.com/wevm/mpay/tree/main/skills/mpay-express) - Express.js
+- [`mpay-hono`](https://github.com/wevm/mpay/tree/main/skills/mpay-hono) - Hono framework
+- [`mpay-nextjs`](https://github.com/wevm/mpay/tree/main/skills/mpay-nextjs) - Next.js
+- [`mpay-node-http`](https://github.com/wevm/mpay/tree/main/skills/mpay-node-http) - Node.js HTTP server
+:::
+
+:::::
 
 
 ## Testing with tempoctl
