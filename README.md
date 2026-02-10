@@ -140,7 +140,7 @@ Install globally to use `mpay` from anywhere:
 
 ```bash
 npm i -g mpay
-
+```
 ```bash
 pnpm add -g mpay
 ```
