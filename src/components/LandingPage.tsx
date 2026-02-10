@@ -2,6 +2,7 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { Link } from "vocs";
 import { useConnectorClient } from "wagmi";
 import { fetch } from "../mpay.client";
 import { pathUsd } from "../wagmi.config";
@@ -75,8 +76,8 @@ export function LandingPage() {
 
 						{/* CTA buttons */}
 						<div className="flex flex-wrap gap-3">
-							<a
-								href="/quickstart/client"
+							<Link
+								to="/quickstart"
 								className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0166FF] text-white! text-sm font-medium rounded-md hover:bg-[#0052CC] transition-colors no-underline!"
 							>
 								Get started
@@ -93,9 +94,9 @@ export function LandingPage() {
 								>
 									<path d="M5 12h14M12 5l7 7-7 7" />
 								</svg>
-							</a>
-							<a
-								href="/specs"
+							</Link>
+							<Link
+								to="/specs"
 								className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-md transition-colors no-underline"
 								style={{
 									border: "1px solid light-dark(#e5e7eb, #4b5563)",
@@ -103,7 +104,7 @@ export function LandingPage() {
 								}}
 							>
 								Read the specs
-							</a>
+							</Link>
 						</div>
 					</div>
 
