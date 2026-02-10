@@ -236,6 +236,27 @@ export default defineConfig({
 								],
 							},
 							{
+								text: "Middleware Reference",
+								items: [
+									{
+										text: "Elysia",
+										link: "/sdk/typescript/middlewares/elysia",
+									},
+									{
+										text: "Express",
+										link: "/sdk/typescript/middlewares/express",
+									},
+									{
+										text: "Hono",
+										link: "/sdk/typescript/middlewares/hono",
+									},
+									{
+										text: "Next.js",
+										link: "/sdk/typescript/middlewares/nextjs",
+									},
+								],
+							},
+							{
 								text: "Core Reference",
 								items: [
 									{
