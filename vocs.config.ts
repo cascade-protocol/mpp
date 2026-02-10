@@ -59,6 +59,7 @@ export default defineConfig({
 			{
 				text: "Quick Start",
 				items: [
+					{ text: "Overview", link: "/quickstart" },
 					{ text: "Client", link: "/quickstart/client" },
 					{ text: "Server", link: "/quickstart/server" },
 					{ text: "tempoctl CLI", link: "/quickstart/tempoctl" },
