@@ -127,7 +127,7 @@ export default defineConfig({
 						collapsed: true,
 						items: [
 							{ text: "Overview", link: "/payment-methods/stripe" },
-							{ text: "Charge 🚧", disabled: true },
+							{ text: "Charge", link: "/payment-methods/stripe/charge" },
 						],
 					},
 					{ text: "Custom", link: "/payment-methods/custom" },
