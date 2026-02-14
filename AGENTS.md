@@ -317,4 +317,7 @@ export function SidebarHeader() {
 
 ## Testing changes
 
-When testing changes, you should *always* make sure the site builds and types check
+When testing changes, you should *always* make sure the site builds and types check:
+
+1. `pnpm check:types` — Must pass with no errors
+2. `pnpm build` — Must complete successfully

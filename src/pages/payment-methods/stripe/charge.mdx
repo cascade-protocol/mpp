@@ -100,9 +100,9 @@ const mppx = Mppx.create({
 
 ## Client
 
-Use `stripe` with `Mppx.create` to automatically handle `402` responses. The client parses the Challenge, creates an SPT through the `createSpt` callback, and retries with the Credential.
+Use `stripe` with `Mppx.create` to automatically handle `402` responses. The client parses the Challenge, creates an SPT through the `createToken` callback, and retries with the Credential.
 
-SPT creation requires a Stripe secret key, so the client accepts a `createSpt` callback that proxies through a server endpoint.
+SPT creation requires a Stripe secret key, so the client accepts a `createToken` callback that proxies through a server endpoint.
 
 ```ts twoslash
 import { Mppx, stripe } from 'mppx/client'
@@ -110,7 +110,7 @@ import { Mppx, stripe } from 'mppx/client'
 Mppx.create({
   methods: [
     stripe({
-      createSpt: async (params) => {
+      createToken: async (params) => {
         const res = await fetch('/api/create-spt', {
           body: JSON.stringify(params),
           headers: { 'Content-Type': 'application/json' },
@@ -141,7 +141,7 @@ declare const stripeClient: {
 declare const elements: any
 // ---cut---
 const charge = stripe.charge({
-  createSpt: async (params) => {
+  createToken: async (params) => {
     const res = await fetch('/api/create-spt', {
       body: JSON.stringify(params),
       headers: { 'Content-Type': 'application/json' },
@@ -181,7 +181,7 @@ const mppx = Mppx.create({
   polyfill: false,
   methods: [
     stripe({
-      createSpt: async (params) => {
+      createToken: async (params) => {
         const res = await fetch('/api/create-spt', {
           body: JSON.stringify(params),
           headers: { 'Content-Type': 'application/json' },
@@ -200,22 +200,23 @@ const response = await mppx.fetch('https://api.example.com/resource')
 
 | Parameter | Type | Required | Description |
 | --- | --- | --- | --- |
-| `createSpt` | `(params) => Promise<string>` | Required | Callback to create an SPT (proxied through a server endpoint) |
+| `createToken` | `(params) => Promise<string>` | Required | Callback to create an SPT (proxied through a server endpoint) |
 | `externalId` | `string` | Optional | Client reference ID included in the Credential payload |
 | `paymentMethod` | `string` | Optional | Default Stripe payment method ID (overridden by `context.paymentMethod`) |
 
-### `createSpt` callback parameters
+### `createToken` callback parameters
 
-The `createSpt` callback receives a single object with the following fields:
+The `createToken` callback receives a single object with the following fields:
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `amount` | `string` | Payment amount in smallest currency unit |
+| `challenge` | `Challenge` | The parsed Challenge from the server |
 | `currency` | `string` | Three-letter ISO currency code |
 | `expiresAt` | `number` | SPT expiration as a Unix timestamp (seconds) |
 | `metadata` | `Record<string, string>` | Optional metadata from the Challenge |
 | `networkId` | `string \| undefined` | Stripe Business Network profile ID |
-| `paymentMethod` | `string` | Stripe payment method ID |
+| `paymentMethod` | `string \| undefined` | Stripe payment method ID |
 
 ## Request fields
 
