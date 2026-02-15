@@ -29,7 +29,7 @@ jobs:
           node-version: "24"
           cache: "pnpm"
 
-      - run: pnpm install
+      - run: pnpm install --frozen-lockfile
 
       - name: Check code
         run: pnpm check
@@ -51,7 +51,7 @@ jobs:
           node-version: "24"
           cache: "pnpm"
 
-      - run: pnpm install
+      - run: pnpm install --frozen-lockfile
 
       - name: Tests
         run: pnpm test
@@ -71,7 +71,7 @@ jobs:
           node-version: "24"
           cache: "pnpm"
 
-      - run: pnpm install
+      - run: pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm build
@@ -81,7 +81,7 @@ jobs:
       - name: Smoke test (wrangler dev)
         run: |
           WRANGLER_LOG=$(mktemp)
-          npx wrangler dev --port 8788 > "$WRANGLER_LOG" 2>&1 &
+          pnpm exec wrangler dev --port 8788 > "$WRANGLER_LOG" 2>&1 &
           WRANGLER_PID=$!
 
           for i in $(seq 1 30); do
