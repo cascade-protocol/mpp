@@ -1,6 +1,7 @@
 dist
 node_modules
 .vocs
+.wrangler
 src/pages.gen.ts
 .dev.vars*
 .env
