@@ -32,7 +32,7 @@ import IconLoader from "~icons/lucide/loader";
 import IconLogOut from "~icons/lucide/log-out";
 import IconRefresh from "~icons/lucide/refresh-cw";
 import { useRequests } from "../lib/network-store";
-import { fetch } from "../mppx.client";
+import * as mppx from "../mppx.client";
 import { AsciiLogo } from "./AsciiLogo";
 
 export namespace Store {
@@ -1207,7 +1207,7 @@ export function Ping() {
 
 	const { mutate, isPending, isSuccess, isError, reset } = useMutation({
 		mutationFn: () =>
-			fetch("/api/ping/paid", { context: { account: client?.account } }),
+			mppx.fetch("/api/ping/paid", { context: { account: client?.account } }),
 		onSettled: (_, error) => {
 			setShowResult(true);
 			setTimeout(() => {

@@ -6,6 +6,6 @@ const trackedFetch = wrapFetch(globalThis.fetch);
 
 export const { fetch } = Mppx.create({
 	fetch: trackedFetch,
-	methods: [tempo.charge(config.connectors.at(0))],
+	methods: [tempo(config.connectors.at(0))],
 	polyfill: false,
 });

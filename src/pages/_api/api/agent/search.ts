@@ -7,8 +7,8 @@ export async function GET(request: Request) {
 
 	const result = await mppx.charge({
 		amount: "0.002",
-		currency: process.env.DEFAULT_CURRENCY!,
-		recipient: process.env.DEFAULT_RECIPIENT!,
+		currency: import.meta.env.VITE_DEFAULT_CURRENCY!,
+		recipient: import.meta.env.VITE_DEFAULT_RECIPIENT!,
 		expires: Expires.minutes(5),
 		description: `Search: ${query}`,
 	})(request);

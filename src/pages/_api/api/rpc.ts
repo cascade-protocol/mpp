@@ -4,8 +4,8 @@ function getRpcHeaders(): Record<string, string> {
 	const headers: Record<string, string> = {
 		"Content-Type": "application/json",
 	};
-	const user = process.env.RPC_AUTH_USER;
-	const pass = process.env.RPC_AUTH_PASS;
+	const user = import.meta.env.VITE_RPC_AUTH_USER;
+	const pass = import.meta.env.VITE_RPC_AUTH_PASS;
 	if (user && pass) {
 		headers.Authorization = `Basic ${btoa(`${user}:${pass}`)}`;
 	}

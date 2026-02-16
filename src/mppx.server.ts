@@ -6,16 +6,16 @@ import { tempoModerato } from "viem/chains";
 export const mppx = Mppx.create({
 	methods: [
 		tempo.charge({
-			...(process.env.FEE_PAYER_PRIVATE_KEY
+			...(import.meta.env.VITE_FEE_PAYER_PRIVATE_KEY
 				? {
 						feePayer: privateKeyToAccount(
-							process.env.FEE_PAYER_PRIVATE_KEY as `0x${string}`,
+							import.meta.env.VITE_FEE_PAYER_PRIVATE_KEY as `0x${string}`,
 						),
 					}
 				: {}),
 			getClient() {
-				const user = process.env.RPC_AUTH_USER;
-				const pass = process.env.RPC_AUTH_PASS;
+				const user = import.meta.env.VITE_RPC_AUTH_USER;
+				const pass = import.meta.env.VITE_RPC_AUTH_PASS;
 				const url = (() => {
 					if (user && pass)
 						return `https://${user}:${pass}@rpc.moderato.tempo.xyz`;
