@@ -104,7 +104,7 @@ function AmpLogo({ className }: { className?: string }) {
   );
 }
 
-const AGENT_PROMPT = `"Read ${SETUP_URL} for setup and available services. Use fal.ai to generate a logo for my startup called 'Moonshot Labs' - modern, minimal, space themed."`;
+const AGENT_PROMPT = `"Read ${SETUP_URL} for setup and available services. Add as needed to my SKILLS.md for future usage. Use fal.ai to generate a logo for my startup called 'Moonshot Labs' - modern, minimal, space themed."`;
 
 const AGENTS = [
   {

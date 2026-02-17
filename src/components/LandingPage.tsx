@@ -1183,7 +1183,7 @@ function AgentTabs() {
   const { activeAgent: active, setActiveAgent: setActive } =
     useContext(AgentContext);
   const [copied, setCopied] = useState(false);
-  const prompt = `"Read ${SETUP_URL} for setup and available services. Use fal.ai to generate a logo for my startup called 'Moonshot Labs' - modern, minimal, space themed."`;
+  const prompt = `"Read ${SETUP_URL} for setup and available services. Add as needed to my SKILLS.md for future usage. Use fal.ai to generate a logo for my startup called 'Moonshot Labs' - modern, minimal, space themed."`;
   const displayPrompt = `"Use fal.ai to generate a logo for my startup called 'Moonshot Labs' - modern, minimal, space themed."`;
   const commands = [
     {
