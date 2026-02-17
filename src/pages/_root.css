@@ -108,7 +108,8 @@
  */
 
 /* Prevent layout shift when scrollbar appears/disappears between routes */
-html, body {
+html,
+body {
   scrollbar-gutter: stable;
   overflow-x: hidden;
 }
@@ -180,7 +181,10 @@ a[class*="rounded-md"][class*="border"]:hover {
 a[data-v-sidebar-item][data-active="true"],
 a[data-v-sidebar-item][data-active="true"]:link,
 a[data-v-sidebar-item][data-active="true"]:visited {
-  background-color: light-dark(rgba(0,0,0,0.08), rgba(255,255,255,0.1)) !important;
+  background-color: light-dark(
+    rgba(0, 0, 0, 0.08),
+    rgba(255, 255, 255, 0.1)
+  ) !important;
   color: var(--vocs-text-color-heading) !important;
   -webkit-text-fill-color: var(--vocs-text-color-heading) !important;
   font-weight: 500 !important;
@@ -188,7 +192,10 @@ a[data-v-sidebar-item][data-active="true"]:visited {
 
 /* Sidebar item hover — subtle bg, heading color text */
 a[data-v-sidebar-item]:hover {
-  background-color: light-dark(rgba(0,0,0,0.04), rgba(255,255,255,0.06)) !important;
+  background-color: light-dark(
+    rgba(0, 0, 0, 0.04),
+    rgba(255, 255, 255, 0.06)
+  ) !important;
   color: var(--vocs-text-color-heading) !important;
   -webkit-text-fill-color: var(--vocs-text-color-heading) !important;
 }
@@ -199,11 +206,24 @@ a[data-v-sidebar-item]:not([data-active="true"]):not(:hover) {
   -webkit-text-fill-color: var(--vocs-text-color-secondary) !important;
 }
 
-/* Section/group headings — heading color, same as subsections */
+/* ALL sidebar text — uniform color for sections, subsections, labels */
 [data-v-sidebar] [data-v-sidebar-group] > span,
-[data-v-sidebar] [data-v-sidebar-group] > button {
+[data-v-sidebar] [data-v-sidebar-group] > button,
+[data-v-sidebar] [data-v-sidebar-group] span[class*="font-medium"],
+[data-v-sidebar] [data-v-sidebar-group] [data-v-sidebar-group] > span {
   color: var(--vocs-text-color-heading) !important;
   -webkit-text-fill-color: var(--vocs-text-color-heading) !important;
+}
+
+/* Uniform sidebar font size */
+[data-v-sidebar] {
+  font-size: 14px !important;
+}
+
+/* More vertical breathing room for nested sidebar groups */
+[data-v-sidebar] [data-v-sidebar-group] [data-v-sidebar-group] {
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
 }
 
 /* Sidebar section headings */
