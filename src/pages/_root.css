@@ -196,13 +196,20 @@ a[data-v-sidebar-item][data-active="true"]:visited {
   font-weight: 500 !important;
 }
 
-/* Sidebar hover — text brightens to heading color (no bg change) */
+/* Sidebar hover — use theme heading color so dark mode stays visible (Tailwind hover can resolve to black) */
 [data-v-sidebar] a:hover,
 [data-v-sidebar] button:hover,
 [data-v-sidebar] a:hover *,
 [data-v-sidebar] button:hover * {
-  color: var(--vocs-text-color-heading) !important;
-  -webkit-text-fill-color: var(--vocs-text-color-heading) !important;
+  color: var(--text-color-heading) !important;
+  -webkit-text-fill-color: var(--text-color-heading) !important;
+}
+
+/* Collapsible section header rows (div with role=button) — same theme heading color on hover */
+[data-v-sidebar] [data-v-sidebar-section-header]:hover,
+[data-v-sidebar] [data-v-sidebar-section-header]:hover * {
+  color: var(--text-color-heading) !important;
+  -webkit-text-fill-color: var(--text-color-heading) !important;
 }
 
 /* Inactive sidebar items — muted */
@@ -261,8 +268,7 @@ a[data-v-sidebar-item]:not([data-active="true"]):not(:hover) {
 /* TOC active item — heading color so it is visible on dark backgrounds */
 [data-v-outline-items] a[data-active="true"] {
   background-color: oklch(
-    from var(--vocs-text-color-heading) l c h /
-    0.08
+    from var(--vocs-text-color-heading) l c h / 0.08
   ) !important;
   color: var(--vocs-text-color-heading) !important;
   -webkit-text-fill-color: var(--vocs-text-color-heading) !important;
@@ -287,12 +293,10 @@ a[data-v-sidebar-item]:not([data-active="true"]):not(:hover) {
   :where(& > :not(:last-child)) {
     --tw-space-y-reverse: 0;
     margin-block-start: calc(
-      calc(var(--vocs-spacing) * 4) *
-      var(--tw-space-y-reverse)
+      calc(var(--vocs-spacing) * 4) * var(--tw-space-y-reverse)
     );
     margin-block-end: calc(
-      calc(var(--vocs-spacing) * 4) *
-      calc(1 - var(--tw-space-y-reverse))
+      calc(var(--vocs-spacing) * 4) * calc(1 - var(--tw-space-y-reverse))
     );
   }
 }
@@ -315,10 +319,16 @@ a[data-v-sidebar-item]:not([data-active="true"]):not(:hover) {
   /* Accent button text - always white since accent bg is near-black */
   --accent-button-text: white;
 
-  /* Inline code background — darker on dark mode for more contrast */
+  /* Inline code background — brighter on dark mode for readability */
   --background-color-inline-code: light-dark(
     var(--vocs-color-gray12),
-    var(--vocs-color-gray5)
+    var(--vocs-color-gray6)
+  );
+
+  /* Inline code text — brighter on dark mode */
+  --text-color-inline-code: light-dark(
+    var(--vocs-color-gray3),
+    var(--vocs-color-gray12)
   );
 
   --font-pilat:
@@ -378,6 +388,11 @@ code,
 [data-v-code] {
   letter-spacing: 0;
   font-family: var(--font-mono) !important;
+}
+
+/* Inline code text — use brighter color for dark mode readability */
+:not(pre) > code[data-v]:not(.twoslash-popup-code) {
+  color: var(--text-color-inline-code) !important;
 }
 
 [data-empty-line] {
@@ -580,6 +595,11 @@ aside[data-v-callout] a:hover {
   margin-left: 1.5rem !important;
 }
 
+/* Copy page for AI — align with TOC left edge */
+[data-v-outline] [data-v-copy-for-ai] {
+  margin-left: 1.5rem !important;
+}
+
 /* Move Ask AI to bottom-right corner instead of centered over content */
 [data-v-ask-ai-container] {
   left: auto !important;
@@ -590,7 +610,7 @@ aside[data-v-callout] a:hover {
 
 @media (min-width: 1280px) {
   [data-v-ask-ai-container] {
-    right: 2rem !important;
+    right: 1.25rem !important;
     bottom: 2rem !important;
   }
 }
