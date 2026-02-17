@@ -3,64 +3,47 @@
 import { useCallback, useRef, useState } from "react";
 
 const AGENT_COLOR = "#e8873a";
+const CMD_PURPLE = "#c084fc";
+const PRESTO_GREEN = "#4ade80";
+const FLAG_GREY = "var(--vocs-text-color-muted)";
 const PRESTO_INSTALL =
   "curl -fsSL https://raw.githubusercontent.com/tempoxyz/presto/main/install.sh | bash";
 const PRESTO_LOGIN = "presto login";
 const SETUP_URL = "https://mpp.tempo.xyz/setup.md";
 
-function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false);
-  const t = useRef<ReturnType<typeof setTimeout>>(undefined);
-  const copy = useCallback(() => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    if (t.current) clearTimeout(t.current);
-    t.current = setTimeout(() => setCopied(false), 2000);
-  }, [text]);
-
-  return (
-    <button
-      type="button"
-      onClick={copy}
-      className="transition-colors shrink-0 cursor-pointer"
-      style={{
-        color: copied
-          ? "var(--vocs-text-color-heading)"
-          : "var(--vocs-text-color-muted)",
-      }}
-      aria-label="Copy to clipboard"
+function CopyIcon({ copied }: { copied: boolean }) {
+  const color = copied
+    ? "var(--vocs-text-color-heading)"
+    : "var(--vocs-text-color-muted)";
+  return copied ? (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
     >
-      {copied ? (
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M20 6 9 17l-5-5" />
-        </svg>
-      ) : (
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-        </svg>
-      )}
-    </button>
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  ) : (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+    </svg>
   );
 }
 
@@ -115,6 +98,8 @@ const AGENTS = [
 
 export function AgentTabs() {
   const [active, setActive] = useState(0);
+  const [copied, setCopied] = useState(false);
+  const t = useRef<ReturnType<typeof setTimeout>>(undefined);
   const agent = AGENTS[active];
   const setupCmd = [agent.bin, agent.args, SETUP_PROMPT]
     .filter(Boolean)
@@ -123,6 +108,15 @@ export function AgentTabs() {
     .filter(Boolean)
     .join(" ");
   const allSteps = `${PRESTO_INSTALL} && ${PRESTO_LOGIN} && ${setupCmd} && ${taskCmd}`;
+
+  const copy = useCallback(() => {
+    const sel = window.getSelection();
+    if (sel && sel.toString().length > 0) return;
+    navigator.clipboard.writeText(allSteps);
+    setCopied(true);
+    if (t.current) clearTimeout(t.current);
+    t.current = setTimeout(() => setCopied(false), 2000);
+  }, [allSteps]);
 
   return (
     <div className="not-prose flex flex-col gap-3" style={{ maxWidth: 620 }}>
@@ -172,20 +166,32 @@ export function AgentTabs() {
           })}
         </div>
 
-        {/* Setup + prompt as terminal-style block */}
-        <div
-          className="px-4 py-3 font-mono text-sm whitespace-pre-wrap break-words text-left"
+        {/* Setup + prompt as terminal-style block — click anywhere to copy */}
+        <button
+          type="button"
+          className="px-4 py-3 font-mono text-sm whitespace-pre-wrap break-words text-left cursor-pointer w-full"
+          onClick={copy}
           style={{
             userSelect: "text",
             WebkitUserSelect: "text",
             lineHeight: 1.7,
+            background: "var(--vocs-background-color-primary)",
+            border: "none",
+            appearance: "none",
           }}
         >
           <div style={{ color: "var(--vocs-text-color-muted)", opacity: 0.7 }}>
             # Install presto
           </div>
-          <div style={{ color: "var(--vocs-text-color-heading)" }}>
-            {PRESTO_INSTALL}
+          <div>
+            <span style={{ color: CMD_PURPLE }}>curl</span>
+            <span style={{ color: FLAG_GREY }}> -fsSL</span>
+            <span style={{ color: "var(--vocs-text-color-heading)" }}>
+              {" "}
+              https://raw.githubusercontent.com/tempoxyz/presto/main/install.sh
+            </span>
+            <span style={{ color: FLAG_GREY }}> |</span>
+            <span style={{ color: CMD_PURPLE }}> bash</span>
           </div>
           <div
             style={{
@@ -196,8 +202,12 @@ export function AgentTabs() {
           >
             # Connect wallet
           </div>
-          <div style={{ color: "var(--vocs-text-color-heading)" }}>
-            {PRESTO_LOGIN}
+          <div>
+            <span style={{ color: PRESTO_GREEN }}>presto</span>
+            <span style={{ color: "var(--vocs-text-color-heading)" }}>
+              {" "}
+              login
+            </span>
           </div>
           <div
             style={{
@@ -211,15 +221,7 @@ export function AgentTabs() {
           <div>
             <span style={{ color: AGENT_COLOR }}>{agent.bin}</span>
             {agent.args && (
-              <span
-                style={{
-                  color: "var(--vocs-text-color-heading)",
-                  opacity: 0.6,
-                }}
-              >
-                {" "}
-                {agent.args}
-              </span>
+              <span style={{ color: FLAG_GREY }}> {agent.args}</span>
             )}
             <span style={{ color: "var(--vocs-text-color-heading)" }}>
               {" "}
@@ -235,28 +237,33 @@ export function AgentTabs() {
           >
             # Try it
           </div>
-          <div className="flex items-start justify-between gap-2">
-            <div>
-              <span style={{ color: AGENT_COLOR }}>{agent.bin}</span>
-              {agent.args && (
-                <span
-                  style={{
-                    color: "var(--vocs-text-color-heading)",
-                    opacity: 0.6,
-                  }}
-                >
-                  {" "}
-                  {agent.args}
-                </span>
-              )}
-              <span style={{ color: "var(--vocs-text-color-heading)" }}>
-                {" "}
-                {TASK_PROMPT}
-              </span>
-            </div>
-            <CopyButton text={allSteps} />
+          <div>
+            <span style={{ color: AGENT_COLOR }}>{agent.bin}</span>
+            {agent.args && (
+              <span style={{ color: FLAG_GREY }}> {agent.args}</span>
+            )}
+            <span style={{ color: "var(--vocs-text-color-heading)" }}>
+              {" "}
+              {TASK_PROMPT}
+            </span>
           </div>
-        </div>
+
+          {/* Copy indicator */}
+          <div
+            className="flex items-center gap-2 pt-3 mt-3"
+            style={{
+              borderTop: "1px solid var(--vocs-border-color-secondary)",
+            }}
+          >
+            <CopyIcon copied={copied} />
+            <span
+              className="text-xs"
+              style={{ color: "var(--vocs-text-color-muted)", opacity: 0.6 }}
+            >
+              {copied ? "Copied!" : "Click to copy"}
+            </span>
+          </div>
+        </button>
       </div>
     </div>
   );

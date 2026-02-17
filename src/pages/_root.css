@@ -114,6 +114,14 @@ body {
   overflow-x: hidden;
 }
 
+/* Pagination: hide "Next" / "Previous" label text, keep only shortcut (Shift → / ←) */
+[data-v-pagination] a > span:last-of-type {
+  font-size: 0;
+}
+[data-v-pagination] a > span:last-of-type > span {
+  font-size: 0.75rem;
+}
+
 /* Custom utility for muted text */
 .text-muted {
   color: var(--vocs-text-color-muted);
@@ -268,7 +276,8 @@ a[data-v-sidebar-item]:not([data-active="true"]):not(:hover) {
 /* TOC active item — heading color so it is visible on dark backgrounds */
 [data-v-outline-items] a[data-active="true"] {
   background-color: oklch(
-    from var(--vocs-text-color-heading) l c h / 0.08
+    from var(--vocs-text-color-heading) l c h /
+    0.08
   ) !important;
   color: var(--vocs-text-color-heading) !important;
   -webkit-text-fill-color: var(--vocs-text-color-heading) !important;
@@ -293,10 +302,12 @@ a[data-v-sidebar-item]:not([data-active="true"]):not(:hover) {
   :where(& > :not(:last-child)) {
     --tw-space-y-reverse: 0;
     margin-block-start: calc(
-      calc(var(--vocs-spacing) * 4) * var(--tw-space-y-reverse)
+      calc(var(--vocs-spacing) * 4) *
+      var(--tw-space-y-reverse)
     );
     margin-block-end: calc(
-      calc(var(--vocs-spacing) * 4) * calc(1 - var(--tw-space-y-reverse))
+      calc(var(--vocs-spacing) * 4) *
+      calc(1 - var(--tw-space-y-reverse))
     );
   }
 }
@@ -374,6 +385,9 @@ body,
 
 [data-v-content] {
   font-size: 15px;
+  /* Prevent content area from growing after load (avoids jitter) */
+  max-width: var(--spacing-content);
+  overflow-x: hidden;
 }
 
 pre,
@@ -432,6 +446,7 @@ pre[data-v] {
 
 [data-v-content] table {
   width: 100% !important;
+  table-layout: fixed;
 }
 
 [data-v-content] table td,
@@ -443,7 +458,37 @@ pre[data-v] {
 [data-v-content] table td:first-child,
 [data-v-content] table th:first-child {
   width: 9rem;
-  min-width: 9rem;
+}
+
+/* Endpoint / 3rd column — fixed width so it aligns across tables */
+[data-v-content] table th:nth-child(3),
+[data-v-content] table td:nth-child(3) {
+  width: 16rem;
+  text-align: left;
+}
+
+/* Status column (e.g. Coming soon table) — left align, colored dot before text */
+[data-v-content] table td .status-planned,
+[data-v-content] table td .status-in-progress {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+[data-v-content] table td .status-planned::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: oklch(0.75 0.15 55);
+  flex-shrink: 0;
+}
+[data-v-content] table td .status-in-progress::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: oklch(0.65 0.2 145);
+  flex-shrink: 0;
 }
 
 /* Description column wraps, with gap between text and endpoint */
