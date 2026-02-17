@@ -3,8 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 
 const AGENT_COLOR = "#e8873a";
-const PRESTO_INSTALL =
-  "curl -fsSL https://raw.githubusercontent.com/tempoxyz/presto/main/install.sh | bash";
+const PRESTO_INSTALL = "curl -fsSL https://raw.githubusercontent.com/tempoxyz/presto/main/install.sh | bash";
 const PRESTO_LOGIN = "presto login";
 
 function CopyButton({ text }: { text: string }) {
@@ -18,17 +17,7 @@ function CopyButton({ text }: { text: string }) {
   }, [text]);
 
   return (
-    <button
-      type="button"
-      onClick={copy}
-      className="transition-colors shrink-0 cursor-pointer"
-      style={{
-        color: copied
-          ? "var(--vocs-text-color-heading)"
-          : "var(--vocs-text-color-muted)",
-      }}
-      aria-label="Copy to clipboard"
-    >
+    <button type="button" onClick={copy} className="transition-colors shrink-0 cursor-pointer" style={{ color: copied ? "var(--vocs-text-color-heading)" : "var(--vocs-text-color-muted)" }} aria-label="Copy to clipboard">
       {copied ? (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
       ) : (
@@ -54,20 +43,11 @@ const AGENTS = [
   { label: "Amp", bin: "amp", args: null, icon: AmpLogo, prompt: `"Use fal.ai to generate a logo for my startup called 'Moonshot Labs' - modern, minimal, space themed."` },
 ];
 
-function CommandRow({ label, command }: { label: string; command: string }) {
-  return (
-    <div className="flex items-center gap-3">
-      <span className="text-[11px] font-medium uppercase shrink-0" style={{ color: "var(--vocs-text-color-muted)", letterSpacing: "0.05em", minWidth: 100 }}>{label}</span>
-      <span className="flex-1 font-mono text-xs break-words text-left" style={{ color: "var(--vocs-text-color-heading)", userSelect: "text", WebkitUserSelect: "text" }}>{command}</span>
-      <CopyButton text={command} />
-    </div>
-  );
-}
-
 export function AgentTabs() {
   const [active, setActive] = useState(0);
   const agent = AGENTS[active];
   const fullPrompt = [agent.bin, agent.args, agent.prompt].filter(Boolean).join(" ");
+  const allSteps = `# install presto\n${PRESTO_INSTALL}\n\n# connect wallet\n${PRESTO_LOGIN}\n\n# try it\n${fullPrompt}`;
 
   return (
     <div className="not-prose flex flex-col gap-3" style={{ maxWidth: 620 }}>
@@ -84,21 +64,23 @@ export function AgentTabs() {
           })}
         </div>
 
-        {/* Setup steps */}
-        <div className="flex flex-col gap-2.5 px-4 py-3" style={{ borderBottom: "1px solid var(--vocs-border-color-secondary)", background: "light-dark(var(--vocs-background-color-surfaceMuted), oklch(0.18 0 0))" }}>
-          <CommandRow label="1. Install" command={PRESTO_INSTALL} />
-          <CommandRow label="2. Log in" command={PRESTO_LOGIN} />
-        </div>
-
-        {/* Prompt */}
-        <div className="flex items-center gap-3 px-4 py-3">
-          <span className="flex-1 font-mono text-sm whitespace-pre-wrap break-words text-left" style={{ userSelect: "text", WebkitUserSelect: "text" }}>
-            <span style={{ color: "var(--vocs-text-color-muted)", opacity: 0.4 }}>$</span>
-            <span style={{ color: AGENT_COLOR }}> {agent.bin}</span>
+        {/* Setup + prompt as terminal-style block */}
+        <div className="px-4 py-3 font-mono text-sm whitespace-pre-wrap break-words text-left" style={{ userSelect: "text", WebkitUserSelect: "text", lineHeight: 1.7 }}>
+          <div style={{ color: "var(--vocs-text-color-muted)", opacity: 0.5 }}># install presto</div>
+          <div style={{ color: "var(--vocs-text-color-heading)" }}>{PRESTO_INSTALL}</div>
+          <div style={{ color: "var(--vocs-text-color-muted)", opacity: 0.5, marginTop: 8 }}># connect wallet</div>
+          <div style={{ color: "var(--vocs-text-color-heading)" }}>{PRESTO_LOGIN}</div>
+          <div style={{ color: "var(--vocs-text-color-muted)", opacity: 0.5, marginTop: 8 }}># try it</div>
+          <div>
+            <span style={{ color: AGENT_COLOR }}>{agent.bin}</span>
             {agent.args && <span style={{ color: "var(--vocs-text-color-heading)", opacity: 0.6 }}> {agent.args}</span>}
             <span style={{ color: "var(--vocs-text-color-heading)" }}> {agent.prompt}</span>
-          </span>
-          <CopyButton text={fullPrompt} />
+          </div>
+        </div>
+
+        {/* Copy all button */}
+        <div className="flex justify-end px-4 py-2" style={{ borderTop: "1px solid var(--vocs-border-color-secondary)" }}>
+          <CopyButton text={allSteps} />
         </div>
       </div>
     </div>

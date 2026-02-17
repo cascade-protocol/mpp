@@ -14,6 +14,7 @@ import { AsciiLogo } from "./AsciiLogo";
 const ACCENT = "var(--vocs-text-color-heading)";
 const AGENT_COLOR = "#e8873a";
 const ANIM_SESSION_KEY = "mpp-landing-animated";
+const PRESTO_SETUP = `# install presto\ncurl -fsSL https://raw.githubusercontent.com/tempoxyz/presto/main/install.sh | bash\n\n# connect wallet\npresto login\n\n# try it\n`;
 
 // ---------------------------------------------------------------------------
 // Context — shares active agent tab index across components
@@ -852,7 +853,7 @@ function DesktopTooltip({
   const prefix = [agent.bin, agent.args].filter(Boolean).join(" ");
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(fullPrompt);
+    navigator.clipboard.writeText(PRESTO_SETUP + fullPrompt);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -964,7 +965,7 @@ function MobileServiceCard({
   const Logo = service.logo;
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(fullPrompt);
+    navigator.clipboard.writeText(PRESTO_SETUP + fullPrompt);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -1206,7 +1207,7 @@ function AgentTabs() {
   const cmd = commands[active];
   const fullCommand = [cmd.bin, cmd.args, cmd.str].filter(Boolean).join(" ");
   const handleCopy = () => {
-    navigator.clipboard.writeText(fullCommand);
+    navigator.clipboard.writeText(PRESTO_SETUP + fullCommand);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
