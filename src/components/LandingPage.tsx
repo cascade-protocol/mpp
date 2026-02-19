@@ -20,7 +20,8 @@ const ANIM_STORAGE_KEY = "mpp-landing-animated";
 const PRESTO_INSTALL =
   "curl -fsSL https://raw.githubusercontent.com/tempoxyz/presto/main/install.sh | bash";
 const PRESTO_LOGIN = "presto login";
-const SETUP_URL = "https://mpp.tempo.xyz/setup.md";
+const QUICKSTART_URL = "https://mpp.sh/quickstart/client.md";
+const SERVICES_URL = "https://mpp.tempo.xyz/llms.txt";
 
 // ---------------------------------------------------------------------------
 // Context — shares active agent tab index across components
@@ -134,7 +135,9 @@ function LandingStyles() {
 
 			@media (min-width: 768px) {
 				[data-v-gutter-top] {
-					background: linear-gradient(to bottom, oklch(from var(--vocs-background-color-primary) l c h / 0.8) 0%, transparent 100%) !important;
+					background: linear-gradient(to bottom, oklch(from var(--vocs-background-color-primary) l c h / 0.97) 0%, oklch(from var(--vocs-background-color-primary) l c h / 0.7) 60%, transparent 100%) !important;
+					backdrop-filter: blur(12px) !important;
+					-webkit-backdrop-filter: blur(12px) !important;
 				}
 				[data-v-main]::after {
 					content: '';
@@ -147,14 +150,19 @@ function LandingStyles() {
 				}
 			}
 
+			@media (max-width: 1023px) {
+				.lockup-stacked { max-width: 320px; margin: 0 auto; }
+				.hero-right { align-items: center !important; }
+				.co-designed-by { padding-top: 64px; }
+			}
+
 			@media (max-width: 767px) {
 				[data-v-gutter-top] {
 					background: var(--vocs-background-color-primary) !important;
 					background-color: var(--vocs-background-color-primary) !important;
+					backdrop-filter: none !important;
+					-webkit-backdrop-filter: none !important;
 				}
-				.lockup-stacked { max-width: 320px; margin: 0 auto; }
-				.hero-right { align-items: center !important; }
-				.co-designed-by { padding-top: 64px; }
 				.not-prose p { font-size: 17px; }
 				.not-prose .text-sm { font-size: 15px; }
 				.not-prose .font-mono { font-size: 15px; }
@@ -866,7 +874,7 @@ function DesktopTooltip({
   const setupCmd = [
     agent.bin,
     agent.args,
-    `"Add ${SETUP_URL} to my SKILLS.md for future reference."`,
+    `"Add ${QUICKSTART_URL} (MPP quickstart) & ${SERVICES_URL} (MPP service endpoints) to my SKILLS.md for future reference."`,
   ]
     .filter(Boolean)
     .join(" ");
@@ -987,7 +995,7 @@ function MobileServiceCard({
   const setupCmd = [
     agent.bin,
     agent.args,
-    `"Add ${SETUP_URL} to my SKILLS.md for future reference."`,
+    `"Add ${QUICKSTART_URL} (MPP quickstart) & ${SERVICES_URL} (MPP service endpoints) to my SKILLS.md for future reference."`,
   ]
     .filter(Boolean)
     .join(" ");
@@ -1206,7 +1214,7 @@ function AgentTabs() {
   const { activeAgent: active, setActiveAgent: setActive } =
     useContext(AgentContext);
   const [copied, setCopied] = useState(false);
-  const setupPrompt = `"Add ${SETUP_URL} to my SKILLS.md for future reference."`;
+  const setupPrompt = `"Add ${QUICKSTART_URL} (MPP quickstart) & ${SERVICES_URL} (MPP service endpoints) to my SKILLS.md for future reference."`;
   const taskPrompt = `"Use fal.ai to generate a logo for my startup called 'Moonshot Labs' - modern, minimal, space themed."`;
   const displayPrompt = taskPrompt;
   const commands = [

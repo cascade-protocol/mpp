@@ -9,7 +9,8 @@ const FLAG_GREY = "var(--vocs-text-color-muted)";
 const PRESTO_INSTALL =
   "curl -fsSL https://raw.githubusercontent.com/tempoxyz/presto/main/install.sh | bash";
 const PRESTO_LOGIN = "presto login";
-const SETUP_URL = "https://mpp.tempo.xyz/setup.md";
+const QUICKSTART_URL = "https://mpp.sh/quickstart/client.md";
+const SERVICES_URL = "https://mpp.tempo.xyz/llms.txt";
 
 function CopyIcon({ copied }: { copied: boolean }) {
   const color = copied
@@ -87,7 +88,7 @@ function AmpLogo({ className }: { className?: string }) {
   );
 }
 
-const SETUP_PROMPT = `"Add ${SETUP_URL} to my SKILLS.md for future reference."`;
+const SETUP_PROMPT = `"Add ${QUICKSTART_URL} (MPP quickstart) & ${SERVICES_URL} (MPP service endpoints) to my SKILLS.md for future reference."`;
 const TASK_PROMPT = `"Use fal.ai to generate a logo for my startup called 'Moonshot Labs' - modern, minimal, space themed."`;
 
 const AGENTS = [
@@ -119,7 +120,7 @@ export function AgentTabs() {
   }, [allSteps]);
 
   return (
-    <div className="not-prose flex flex-col gap-3" style={{ maxWidth: 620 }}>
+    <div className="not-prose flex flex-col gap-3">
       <div
         className="rounded-md overflow-hidden text-left"
         style={{
@@ -180,7 +181,7 @@ export function AgentTabs() {
             background: "var(--vocs-background-color-primary)",
           }}
         >
-          <div style={{ color: "var(--vocs-text-color-muted)", opacity: 0.7 }}>
+          <div style={{ color: "var(--vocs-text-color-muted)" }}>
             # Install presto
           </div>
           <div>
@@ -196,7 +197,6 @@ export function AgentTabs() {
           <div
             style={{
               color: "var(--vocs-text-color-muted)",
-              opacity: 0.7,
               marginTop: 8,
             }}
           >
@@ -212,7 +212,6 @@ export function AgentTabs() {
           <div
             style={{
               color: "var(--vocs-text-color-muted)",
-              opacity: 0.7,
               marginTop: 8,
             }}
           >
@@ -231,7 +230,6 @@ export function AgentTabs() {
           <div
             style={{
               color: "var(--vocs-text-color-muted)",
-              opacity: 0.7,
               marginTop: 8,
             }}
           >
@@ -258,7 +256,7 @@ export function AgentTabs() {
             <CopyIcon copied={copied} />
             <span
               className="text-xs"
-              style={{ color: "var(--vocs-text-color-muted)", opacity: 0.6 }}
+              style={{ color: "var(--vocs-text-color-muted)" }}
             >
               {copied ? "Copied!" : "Click to copy"}
             </span>
