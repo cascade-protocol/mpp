@@ -148,6 +148,8 @@ function LandingStyles() {
 				.not-prose .text-sm { font-size: 15px; }
 				.not-prose .font-mono { font-size: 15px; }
 
+
+
 				section { padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem)) !important; }
 			}
 
@@ -503,7 +505,7 @@ function StripeLogo({
 function CTAButtons() {
   const [hovered, setHovered] = useState<"primary" | "secondary" | null>(null);
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-start gap-2">
       <div className="flex flex-wrap gap-3">
         <Link
           to="/quickstart"
@@ -574,7 +576,7 @@ function AgentTabs() {
       bin: "codex",
       args: null,
       icon: OpenAILogo,
-      prompt: `"Read https://mpp.sh/overview.md and charge agents 0.01 USD for reading my site"`,
+      prompt: `"Read https://mpp.sh/overview.md and charge agents 0.01 USD for reading my blog"`,
     },
     {
       label: "Amp",

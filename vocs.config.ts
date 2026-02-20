@@ -49,7 +49,7 @@ export default defineConfig({
     link: "https://github.com/tempoxyz/mpp/edit/main/src/pages/:path",
     text: "Suggest changes to this page",
   },
-  iconUrl: "/favicon-dollar.svg",
+  iconUrl: "/favicon-gear.svg",
   logoUrl: {
     light: "/logo-light.svg",
     dark: "/logo-dark.svg",
