@@ -6,7 +6,7 @@ import * as Cli from "./Cli";
 export function CliPlayground() {
   return (
     <div className="flex flex-col gap-4">
-      <Cli.Window>
+      <Cli.Window className="max-w-[540px]">
         <Cli.TitleBar title="Accept Payments" />
 
         <Cli.Panel height={300}>
@@ -127,6 +127,7 @@ export function CliPlayground() {
       </Cli.Window>
 
       <Cli.Demo
+        className="max-w-[540px]"
         title="Make a request with payment"
         token={pathUsd}
         restartStep={1}
