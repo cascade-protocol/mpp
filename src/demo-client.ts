@@ -17,11 +17,17 @@ export async function createDemoClient() {
     createClient({ chain: tempoModerato, transport: http() });
 
   const { fetch } = Mppx.create({
+    fetch: globalThis.fetch,
     polyfill: false,
     methods: [tempo({ account, maxDeposit, getClient })],
   });
 
-  const session = tempo.session({ account, maxDeposit, getClient });
+  const session = tempo.session({
+    account,
+    maxDeposit,
+    getClient,
+    fetch: globalThis.fetch,
+  });
 
   async function fundWallet() {
     const res = await globalThis.fetch("/api/wallet", {
