@@ -402,7 +402,7 @@ export function ServicesPage() {
               marginTop: "-0.5rem",
             }}
           >
-            MPP-enabled APIs your agent or application can use seamlessly.
+            MPP-enabled APIs your agent or application can seamlessly use.
           </p>
         </div>
 
@@ -693,20 +693,7 @@ function PrestoCardFull() {
           marginBottom: "1.25rem",
         }}
       >
-        A command-line HTTP client with built-in MPP payment support. When a
-        server responds with{" "}
-        <code
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 12,
-            padding: "0.1rem 0.3rem",
-            borderRadius: 3,
-            background: CODE_BG,
-          }}
-        >
-          402
-        </code>
-        , Presto handles the payment and retries automatically.
+        A command-line HTTP client with built-in MPP payment support.
       </p>
       <PrestoSteps />
     </div>
@@ -775,7 +762,7 @@ function HeaderCards({
           </div>
         </button>
         <a
-          href="https://mpp.tempo.xyz/llms.txt"
+          href="/services/llms.txt"
           target="_blank"
           rel="noopener noreferrer"
           className="info-card-link"
@@ -907,7 +894,7 @@ function SidebarInfoCards() {
       }}
     >
       <a
-        href="https://mpp.tempo.xyz/llms.txt"
+        href="/services/llms.txt"
         target="_blank"
         rel="noopener noreferrer"
         className="info-card-link"
@@ -937,6 +924,39 @@ function SidebarInfoCards() {
         <div style={{ flex: 1 }}>
           <div style={titleStyle}>llms.txt</div>
           <div style={descStyle}>Service discovery for agents.</div>
+        </div>
+        <ArrowRightIcon />
+      </a>
+      <a
+        href="/api/services"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="info-card-link"
+        style={{
+          ...cardStyle,
+          textDecoration: "none",
+          color: "var(--vocs-text-color-heading)",
+          transition: "background 0.15s, border-color 0.15s",
+        }}
+      >
+        <span style={iconStyle}>
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+          </svg>
+        </span>
+        <div style={{ flex: 1 }}>
+          <div style={titleStyle}>API</div>
+          <div style={descStyle}>Programmatically discover services.</div>
         </div>
         <ArrowRightIcon />
       </a>
@@ -991,9 +1011,7 @@ function SidebarInfoCards() {
         />
         <div>
           <div style={titleStyle}>First-party services</div>
-          <div style={descStyle}>
-            Hosted natively on Tempo with built-in MPP support.
-          </div>
+          <div style={descStyle}>Directly integrated with MPP.</div>
         </div>
       </div>
     </div>
