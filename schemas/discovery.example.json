@@ -5,7 +5,7 @@
       "id": "exa",
       "name": "Exa",
       "url": "https://api.exa.ai",
-      "serviceUrl": "https://mpp.tempo.xyz/exa",
+      "serviceUrl": "https://exa.mpp.tempo.xyz",
       "description": "AI-powered web search, content retrieval, and answers.",
       "categories": [
         "search",
@@ -48,7 +48,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Search the web",
             "amount": "5000"
           },
@@ -63,7 +62,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get page contents",
             "amount": "5000"
           },
@@ -78,7 +76,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Find similar pages",
             "amount": "5000"
           },
@@ -93,7 +90,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get AI-powered answers",
             "amount": "10000"
           },
@@ -105,7 +101,7 @@
       "id": "openrouter",
       "name": "OpenRouter",
       "url": "https://openrouter.ai/api",
-      "serviceUrl": "https://mpp.tempo.xyz/openrouter",
+      "serviceUrl": "https://openrouter.mpp.tempo.xyz",
       "description": "Unified API for 100+ LLMs with live per-model pricing.",
       "categories": [
         "ai"
@@ -147,7 +143,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Chat completions (GPT-4, Claude, Llama, etc.) - price varies by model",
             "dynamic": true
           },
@@ -159,7 +154,7 @@
       "id": "storage",
       "name": "Object Storage",
       "url": "https://mpp.tempo.xyz/storage",
-      "serviceUrl": "https://mpp.tempo.xyz/storage",
+      "serviceUrl": "https://storage.mpp.tempo.xyz",
       "description": "S3/R2-compatible object storage with dynamic per-size pricing.",
       "categories": [
         "storage"
@@ -202,7 +197,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Download object ($0.001 base + $0.01/MB)",
             "dynamic": true
           }
@@ -216,7 +210,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Upload object ($0.001 base + $0.01/MB, max 100MB)",
             "dynamic": true
           }
@@ -230,7 +223,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Delete object",
             "amount": "100"
           }
@@ -244,7 +236,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List objects",
             "amount": "100"
           }
@@ -258,7 +249,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Initiate/complete multipart upload",
             "amount": "100"
           }

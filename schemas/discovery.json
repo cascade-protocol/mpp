@@ -5,7 +5,7 @@
       "id": "agentmail",
       "name": "AgentMail",
       "url": "https://api.agentmail.to",
-      "serviceUrl": "https://mpp.tempo.xyz/agentmail",
+      "serviceUrl": "https://agentmail.mpp.tempo.xyz",
       "description": "Email inboxes for AI agents — create, send, receive, and manage email programmatically.",
       "categories": [
         "ai",
@@ -48,7 +48,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List inboxes",
             "amount": "5000"
           },
@@ -63,7 +62,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create an inbox",
             "amount": "5000"
           },
@@ -78,7 +76,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get inbox details",
             "amount": "5000"
           },
@@ -93,7 +90,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Update an inbox",
             "amount": "5000"
           },
@@ -108,7 +104,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Delete an inbox",
             "amount": "5000"
           },
@@ -123,7 +118,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List threads in inbox",
             "amount": "5000"
           },
@@ -138,7 +132,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get thread details",
             "amount": "5000"
           },
@@ -153,7 +146,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get thread attachment",
             "amount": "5000"
           },
@@ -168,7 +160,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Delete a thread",
             "amount": "5000"
           },
@@ -183,7 +174,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List messages in inbox",
             "amount": "5000"
           },
@@ -198,7 +188,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get message details",
             "amount": "5000"
           },
@@ -213,7 +202,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get message attachment",
             "amount": "5000"
           },
@@ -228,7 +216,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get raw message",
             "amount": "5000"
           },
@@ -243,7 +230,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Send a message",
             "amount": "10000"
           },
@@ -258,7 +244,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Send a message",
             "amount": "10000"
           },
@@ -273,7 +258,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Reply to a message",
             "amount": "10000"
           },
@@ -288,7 +272,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Reply all to a message",
             "amount": "10000"
           },
@@ -303,7 +286,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Forward a message",
             "amount": "10000"
           },
@@ -318,7 +300,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Update a message",
             "amount": "5000"
           },
@@ -333,7 +314,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List drafts in inbox",
             "amount": "5000"
           },
@@ -348,7 +328,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get draft details",
             "amount": "5000"
           },
@@ -363,7 +342,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get draft attachment",
             "amount": "5000"
           },
@@ -378,7 +356,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create a draft",
             "amount": "5000"
           },
@@ -393,7 +370,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Update a draft",
             "amount": "5000"
           },
@@ -408,7 +384,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Send a draft",
             "amount": "10000"
           },
@@ -423,7 +398,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Delete a draft",
             "amount": "5000"
           },
@@ -438,7 +412,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get inbox metrics",
             "amount": "5000"
           },
@@ -453,7 +426,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List threads across all inboxes",
             "amount": "5000"
           },
@@ -468,7 +440,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get thread details",
             "amount": "5000"
           },
@@ -483,7 +454,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get thread attachment",
             "amount": "5000"
           },
@@ -498,7 +468,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List drafts across all inboxes",
             "amount": "5000"
           },
@@ -513,7 +482,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get draft details",
             "amount": "5000"
           },
@@ -528,7 +496,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get draft attachment",
             "amount": "5000"
           },
@@ -543,7 +510,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List domains",
             "amount": "5000"
           },
@@ -558,7 +524,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create a domain",
             "amount": "10000"
           },
@@ -573,7 +538,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get domain details",
             "amount": "5000"
           },
@@ -588,7 +552,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get domain zone file",
             "amount": "5000"
           },
@@ -603,7 +566,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Delete a domain",
             "amount": "10000"
           },
@@ -618,7 +580,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Verify a domain",
             "amount": "10000"
           },
@@ -633,7 +594,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List webhooks",
             "amount": "5000"
           },
@@ -648,7 +608,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create a webhook",
             "amount": "5000"
           },
@@ -663,7 +622,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get webhook details",
             "amount": "5000"
           },
@@ -678,7 +636,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Update a webhook",
             "amount": "5000"
           },
@@ -693,7 +650,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Delete a webhook",
             "amount": "5000"
           },
@@ -708,7 +664,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List metrics",
             "amount": "5000"
           },
@@ -723,7 +678,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List API keys",
             "amount": "5000"
           },
@@ -738,7 +692,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create an API key",
             "amount": "5000"
           },
@@ -753,7 +706,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Delete an API key",
             "amount": "5000"
           },
@@ -768,7 +720,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List pods",
             "amount": "5000"
           },
@@ -783,7 +734,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create a pod",
             "amount": "5000"
           },
@@ -798,7 +748,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get pod details",
             "amount": "5000"
           },
@@ -813,7 +762,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Delete a pod",
             "amount": "5000"
           },
@@ -828,7 +776,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List pod inboxes",
             "amount": "5000"
           },
@@ -843,7 +790,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create pod inbox",
             "amount": "5000"
           },
@@ -858,7 +804,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get pod inbox",
             "amount": "5000"
           },
@@ -873,7 +818,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Delete pod inbox",
             "amount": "5000"
           },
@@ -888,7 +832,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List pod threads",
             "amount": "5000"
           },
@@ -903,7 +846,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get pod thread",
             "amount": "5000"
           },
@@ -918,7 +860,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get pod thread attachment",
             "amount": "5000"
           },
@@ -933,7 +874,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List pod drafts",
             "amount": "5000"
           },
@@ -948,7 +888,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get pod draft",
             "amount": "5000"
           },
@@ -963,7 +902,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get pod draft attachment",
             "amount": "5000"
           },
@@ -978,7 +916,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List pod domains",
             "amount": "5000"
           },
@@ -993,7 +930,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create pod domain",
             "amount": "10000"
           },
@@ -1008,7 +944,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Delete pod domain",
             "amount": "10000"
           },
@@ -1023,7 +958,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get organization details",
             "amount": "5000"
           },
@@ -1035,7 +969,7 @@
       "id": "alchemy",
       "name": "Alchemy",
       "url": "https://eth-mainnet.g.alchemy.com",
-      "serviceUrl": "https://mpp.tempo.xyz/alchemy",
+      "serviceUrl": "https://alchemy.mpp.tempo.xyz",
       "description": "Blockchain data platform with JSON-RPC and NFT APIs across 80+ chains.",
       "categories": [
         "blockchain",
@@ -1079,7 +1013,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "JSON-RPC call (eth_*, alchemy_*)",
             "amount": "100"
           },
@@ -1094,7 +1027,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "NFT API v3",
             "amount": "500"
           },
@@ -1109,7 +1041,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "NFT API v3",
             "amount": "500"
           },
@@ -1121,7 +1052,7 @@
       "id": "anthropic",
       "name": "Anthropic",
       "url": "https://api.anthropic.com",
-      "serviceUrl": "https://mpp.tempo.xyz/anthropic",
+      "serviceUrl": "https://anthropic.mpp.tempo.xyz",
       "description": "Claude chat completions (Sonnet, Opus, Haiku) via native and OpenAI-compatible APIs.",
       "categories": [
         "ai"
@@ -1166,7 +1097,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create messages with Claude (Sonnet, Opus, Haiku) - price varies by model",
             "dynamic": true
           }
@@ -1180,7 +1110,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "OpenAI-compatible chat completions (auto-converted to Anthropic format)",
             "dynamic": true
           }
@@ -1191,7 +1120,7 @@
       "id": "browserbase",
       "name": "Browserbase",
       "url": "https://api.browserbase.com",
-      "serviceUrl": "https://mpp.tempo.xyz/browserbase",
+      "serviceUrl": "https://browserbase.mpp.tempo.xyz",
       "description": "Headless browser sessions for web scraping and automation.",
       "categories": [
         "web",
@@ -1234,7 +1163,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create a browser session",
             "amount": "120000"
           },
@@ -1249,7 +1177,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Add more time to session",
             "amount": "120000"
           },
@@ -1261,7 +1188,7 @@
       "id": "codex",
       "name": "Codex",
       "url": "https://graph.codex.io",
-      "serviceUrl": "https://mpp.tempo.xyz/codex",
+      "serviceUrl": "https://codex.mpp.tempo.xyz",
       "description": "GraphQL API for DeFi and blockchain data across 80+ networks.",
       "categories": [
         "blockchain",
@@ -1305,7 +1232,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "GraphQL query (token data, trades, liquidity, NFTs, wallets)",
             "amount": "350"
           },
@@ -1317,7 +1243,7 @@
       "id": "digitalocean",
       "name": "DigitalOcean",
       "url": "https://api.digitalocean.com",
-      "serviceUrl": "https://mpp.tempo.xyz/digitalocean",
+      "serviceUrl": "https://digitalocean.mpp.tempo.xyz",
       "description": "Cloud infrastructure for 1-click deploy of hosted MPP Agents on DigitalOcean Droplets.",
       "categories": [
         "compute"
@@ -1359,7 +1285,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create a Droplet",
             "dynamic": true
           },
@@ -1388,7 +1313,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Delete a Droplet",
             "dynamic": true
           },
@@ -1403,7 +1327,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Run a Droplet action",
             "dynamic": true
           },
@@ -1418,7 +1341,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Add an SSH key",
             "dynamic": true
           },
@@ -1472,7 +1394,7 @@
       "id": "elevenlabs",
       "name": "ElevenLabs",
       "url": "https://api.elevenlabs.io",
-      "serviceUrl": "https://mpp.tempo.xyz/elevenlabs",
+      "serviceUrl": "https://elevenlabs.mpp.tempo.xyz",
       "description": "Text-to-speech, speech-to-text, and voice cloning.",
       "categories": [
         "ai",
@@ -1517,7 +1439,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Convert text to speech audio",
             "amount": "30000"
           },
@@ -1532,7 +1453,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Stream text-to-speech audio",
             "amount": "30000"
           },
@@ -1547,7 +1467,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Transcribe audio to text (Scribe)",
             "amount": "50000"
           },
@@ -1573,7 +1492,7 @@
       "id": "exa",
       "name": "Exa",
       "url": "https://api.exa.ai",
-      "serviceUrl": "https://mpp.tempo.xyz/exa",
+      "serviceUrl": "https://exa.mpp.tempo.xyz",
       "description": "AI-powered web search, content retrieval, and answers.",
       "categories": [
         "search",
@@ -1616,7 +1535,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Search the web",
             "amount": "5000"
           },
@@ -1631,7 +1549,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get page contents",
             "amount": "5000"
           },
@@ -1646,7 +1563,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Find similar pages",
             "amount": "5000"
           },
@@ -1661,7 +1577,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get AI-powered answers",
             "amount": "10000"
           },
@@ -1673,7 +1588,7 @@
       "id": "fal",
       "name": "fal.ai",
       "url": "https://fal.run",
-      "serviceUrl": "https://mpp.tempo.xyz/fal",
+      "serviceUrl": "https://fal.mpp.tempo.xyz",
       "description": "Image, video, and audio generation with 600+ models (Flux, SD, Recraft, Grok).",
       "categories": [
         "ai",
@@ -1718,7 +1633,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "FLUX.1 [dev] - High-quality text-to-image generation",
             "amount": "25000"
           },
@@ -1733,7 +1647,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "FLUX.1 [schnell] - Fast text-to-image (1-4 steps)",
             "amount": "3000"
           },
@@ -1748,7 +1661,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "FLUX1.1 [pro] - Professional-grade image generation",
             "amount": "35000"
           },
@@ -1763,7 +1675,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "FLUX1.1 [pro] ultra - Up to 2K resolution with improved realism",
             "amount": "60000"
           },
@@ -1778,7 +1689,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Stable Diffusion 3.5 Large - MMDiT text-to-image",
             "amount": "35000"
           },
@@ -1793,7 +1703,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Fast SDXL - Quick Stable Diffusion XL generation",
             "amount": "3000"
           },
@@ -1808,7 +1717,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Recraft V3 - SOTA text-to-image with long text and vector art",
             "amount": "40000"
           },
@@ -1823,7 +1731,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Grok Imagine - xAI image generation",
             "amount": "40000"
           },
@@ -1838,7 +1745,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Grok Imagine Edit - xAI image editing",
             "amount": "40000"
           },
@@ -1853,7 +1759,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Stable Video Diffusion - Image-to-video generation",
             "amount": "70000"
           },
@@ -1868,7 +1773,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "MiniMax Video-01 - Text/image to video generation",
             "amount": "70000"
           },
@@ -1883,7 +1787,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "MiniMax Video-01 Live - Real-time video generation",
             "amount": "70000"
           },
@@ -1898,7 +1801,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Grok Imagine Video - xAI text-to-video generation",
             "amount": "300000"
           },
@@ -1913,7 +1815,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Grok Imagine Video - xAI image-to-video generation",
             "amount": "300000"
           },
@@ -1928,7 +1829,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "fal.ai model generation",
             "amount": "20000"
           },
@@ -1943,7 +1843,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "fal.ai model generation (with namespace)",
             "amount": "20000"
           },
@@ -1955,7 +1854,7 @@
       "id": "firecrawl",
       "name": "Firecrawl",
       "url": "https://api.firecrawl.dev",
-      "serviceUrl": "https://mpp.tempo.xyz/firecrawl",
+      "serviceUrl": "https://firecrawl.mpp.tempo.xyz",
       "description": "Web scraping, crawling, and structured data extraction for LLMs.",
       "categories": [
         "web",
@@ -1998,7 +1897,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Scrape a URL",
             "amount": "2000"
           },
@@ -2013,7 +1911,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Crawl a website",
             "amount": "5000"
           },
@@ -2028,7 +1925,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Map website URLs",
             "amount": "2000"
           },
@@ -2043,7 +1939,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Search the web",
             "amount": "4000"
           },
@@ -2058,7 +1953,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Extract structured data",
             "amount": "5000"
           },
@@ -2070,7 +1964,7 @@
       "id": "gemini",
       "name": "Google Gemini",
       "url": "https://generativelanguage.googleapis.com",
-      "serviceUrl": "https://mpp.tempo.xyz/gemini",
+      "serviceUrl": "https://gemini.mpp.tempo.xyz",
       "description": "Gemini text generation, Veo video, and Nano Banana image generation with model-tier pricing.",
       "categories": [
         "ai",
@@ -2114,7 +2008,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Generate content (Gemini, Veo, Imagen, etc.) - price varies by model",
             "amount": "500",
             "unitType": "request"
@@ -2129,7 +2022,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Poll async operation status",
             "amount": "100",
             "unitType": "request"
@@ -2144,7 +2036,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Upload file for multimodal input",
             "amount": "1000",
             "unitType": "request"
@@ -2198,7 +2089,7 @@
       "id": "modal",
       "name": "Modal",
       "url": "https://api.modal.com",
-      "serviceUrl": "https://mpp.tempo.xyz/modal",
+      "serviceUrl": "https://modal.mpp.tempo.xyz",
       "description": "Serverless GPU compute for sandboxed code execution and AI/ML workloads.",
       "categories": [
         "compute"
@@ -2240,7 +2131,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create a sandbox for code execution",
             "dynamic": true
           },
@@ -2273,7 +2163,7 @@
       "id": "openai",
       "name": "OpenAI",
       "url": "https://api.openai.com",
-      "serviceUrl": "https://mpp.tempo.xyz/openai",
+      "serviceUrl": "https://openai.mpp.tempo.xyz",
       "description": "Chat completions, embeddings, image generation, and audio with model-tier pricing.",
       "icon": "https://mpp.tempo.xyz/icons/openai.svg",
       "categories": [
@@ -2322,7 +2212,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Responses API (Codex, GPT-4o, etc.) - price varies by model",
             "dynamic": true
           },
@@ -2337,7 +2226,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Chat completions (GPT-4o, GPT-4, o1, etc.) - price varies by model",
             "dynamic": true
           },
@@ -2352,7 +2240,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create embeddings",
             "amount": "100"
           },
@@ -2367,7 +2254,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Generate images with DALL-E",
             "amount": "50000"
           },
@@ -2382,7 +2268,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Transcribe audio with Whisper",
             "amount": "10000"
           },
@@ -2397,7 +2282,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Text-to-speech",
             "amount": "20000"
           },
@@ -2409,7 +2293,7 @@
       "id": "openrouter",
       "name": "OpenRouter",
       "url": "https://openrouter.ai/api",
-      "serviceUrl": "https://mpp.tempo.xyz/openrouter",
+      "serviceUrl": "https://openrouter.mpp.tempo.xyz",
       "description": "Unified API for 100+ LLMs with live per-model pricing.",
       "categories": [
         "ai"
@@ -2451,7 +2335,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Chat completions (GPT-4, Claude, Llama, etc.) - price varies by model",
             "dynamic": true
           },
@@ -2463,13 +2346,13 @@
       "id": "parallel",
       "name": "Parallel",
       "url": "https://api.parallel.ai",
-      "serviceUrl": "https://mpp.tempo.xyz/parallel",
+      "serviceUrl": "https://parallel.mpp.tempo.xyz",
       "description": "Web search, page extraction, and web-grounded chat completions.",
       "categories": [
         "search",
         "ai"
       ],
-      "integration": "third-party",
+      "integration": "first-party",
       "tags": [
         "search",
         "web",
@@ -2505,7 +2388,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Search the web",
             "amount": "5000",
             "unitType": "request"
@@ -2520,7 +2402,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Extract page content",
             "amount": "1000",
             "unitType": "request"
@@ -2535,7 +2416,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Web-grounded chat completions - price varies by model",
             "dynamic": true
           }
@@ -2546,7 +2426,7 @@
       "id": "rpc",
       "name": "Tempo RPC",
       "url": "https://rpc.tempo.xyz",
-      "serviceUrl": "https://mpp.tempo.xyz/rpc",
+      "serviceUrl": "https://rpc.mpp.tempo.xyz",
       "description": "Tempo blockchain JSON-RPC access (mainnet and testnet).",
       "categories": [
         "blockchain"
@@ -2589,7 +2469,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "JSON-RPC calls - $0.001 per call",
             "amount": "1000",
             "unitType": "request"
@@ -2601,7 +2480,7 @@
       "id": "storage",
       "name": "Object Storage",
       "url": "https://mpp.tempo.xyz/storage",
-      "serviceUrl": "https://mpp.tempo.xyz/storage",
+      "serviceUrl": "https://storage.mpp.tempo.xyz",
       "description": "S3/R2-compatible object storage with dynamic per-size pricing.",
       "categories": [
         "storage"
@@ -2644,7 +2523,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Download object ($0.001 base + $0.01/MB)",
             "dynamic": true
           }
@@ -2658,7 +2536,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Upload object ($0.001 base + $0.01/MB, max 100MB)",
             "dynamic": true
           }
@@ -2672,7 +2549,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Delete object",
             "amount": "100"
           }
@@ -2686,7 +2562,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "List objects",
             "amount": "100"
           }
@@ -2700,7 +2575,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Initiate/complete multipart upload",
             "amount": "100"
           }
@@ -2711,7 +2585,7 @@
       "id": "twitter",
       "name": "Twitter/X",
       "url": "https://api.x.com",
-      "serviceUrl": "https://mpp.tempo.xyz/twitter",
+      "serviceUrl": "https://twitter.mpp.tempo.xyz",
       "description": "X API v2 for tweets, users, and search.",
       "categories": [
         "social",
@@ -2754,7 +2628,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Look up tweets by ID",
             "amount": "5000"
           },
@@ -2769,7 +2642,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Look up a single tweet",
             "amount": "5000"
           },
@@ -2784,7 +2656,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Create a new tweet",
             "amount": "5000"
           },
@@ -2799,7 +2670,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Look up a user by ID",
             "amount": "5000"
           },
@@ -2814,7 +2684,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Look up user by username",
             "amount": "5000"
           },
@@ -2829,7 +2698,6 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Search recent tweets",
             "amount": "10000"
           },
@@ -2844,11 +2712,3713 @@
             "method": "tempo",
             "currency": "0x20c000000000000000000000b9537d11c60e8b50",
             "decimals": 6,
-            "recipient": "0xB48141c3Da5030deF992bDc686f0e9A8729206b6",
             "description": "Get user tweet timeline",
             "amount": "5000"
           },
           "docs": "https://context7.com/websites/x_x-api/llms.txt?topic=GET%20%2F2%2Fusers%2F%3Aid%2Ftweets"
+        }
+      ]
+    },
+    {
+      "id": "stableemail",
+      "name": "StableEmail",
+      "url": "https://stableemail.dev",
+      "serviceUrl": "https://stableemail.dev",
+      "description": "Pay-per-send email delivery, forwarding inboxes, and custom subdomains — no API keys or accounts.",
+      "categories": [
+        "social"
+      ],
+      "integration": "first-party",
+      "tags": [
+        "email",
+        "send",
+        "inbox",
+        "forwarding",
+        "subdomain"
+      ],
+      "status": "active",
+      "docs": {
+        "homepage": "https://stableemail.dev",
+        "llmsTxt": "https://stableemail.dev/llms.txt"
+      },
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "stableemail.dev",
+      "provider": {
+        "name": "Merit Systems",
+        "url": "https://stableemail.dev"
+      },
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/send",
+          "description": "Send email from relay address",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Send email from relay address",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/subdomain/buy",
+          "description": "Purchase a custom email subdomain",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Purchase a custom email subdomain",
+            "amount": "5000000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/subdomain/send",
+          "description": "Send email from custom subdomain",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Send email from custom subdomain",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/subdomain/signers",
+          "description": "Add or remove authorized wallet signers",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/subdomain/update",
+          "description": "Update subdomain settings (catch-all forwarding)",
+          "payment": null
+        },
+        {
+          "method": "GET",
+          "path": "/api/subdomain/status",
+          "description": "Check DNS/SES verification status",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/subdomain/inbox/create",
+          "description": "Create inbox on subdomain",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Create inbox on subdomain",
+            "amount": "250000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/subdomain/inbox/list",
+          "description": "List subdomain inboxes",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/subdomain/inbox/update",
+          "description": "Update subdomain inbox settings",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/subdomain/inbox/delete",
+          "description": "Delete inbox from subdomain",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/subdomain/inbox/messages",
+          "description": "List subdomain inbox messages",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "List subdomain inbox messages",
+            "amount": "1000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/subdomain/inbox/messages/read",
+          "description": "Read a subdomain inbox message",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Read a subdomain inbox message",
+            "amount": "1000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/subdomain/inbox/messages/delete",
+          "description": "Delete a subdomain inbox message",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/inbox/buy",
+          "description": "Buy a forwarding inbox (30 days)",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Buy a forwarding inbox (30 days)",
+            "amount": "1000000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/inbox/topup",
+          "description": "Extend inbox 30 days",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Extend inbox 30 days",
+            "amount": "1000000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/inbox/topup/quarter",
+          "description": "Extend inbox 90 days (save 17%)",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Extend inbox 90 days (save 17%)",
+            "amount": "2500000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/inbox/topup/year",
+          "description": "Extend inbox 365 days (save 34%)",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Extend inbox 365 days (save 34%)",
+            "amount": "8000000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/inbox/send",
+          "description": "Send email from inbox address",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Send email from inbox address",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/inbox/status",
+          "description": "Check inbox status and expiry",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/inbox/update",
+          "description": "Update inbox settings",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/inbox/cancel",
+          "description": "Cancel inbox and get pro-rata refund",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/inbox/messages",
+          "description": "List messages in inbox",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "List messages in inbox",
+            "amount": "1000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/inbox/messages/read",
+          "description": "Read a single inbox message",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Read a single inbox message",
+            "amount": "1000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/inbox/messages/delete",
+          "description": "Delete an inbox message",
+          "payment": null
+        }
+      ]
+    },
+    {
+      "id": "stableenrich",
+      "name": "StableEnrich",
+      "url": "https://stableenrich.dev",
+      "serviceUrl": "https://stableenrich.dev",
+      "description": "Pay-per-request research APIs — people, companies, web search, scraping, places, social media, and contact enrichment.",
+      "categories": [
+        "data",
+        "search",
+        "social"
+      ],
+      "integration": "first-party",
+      "tags": [
+        "apollo",
+        "exa",
+        "firecrawl",
+        "google-maps",
+        "grok",
+        "linkedin",
+        "reddit",
+        "enrichment",
+        "research"
+      ],
+      "status": "active",
+      "docs": {
+        "homepage": "https://stableenrich.dev",
+        "llmsTxt": "https://stableenrich.dev/llms.txt"
+      },
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "stableenrich.dev",
+      "provider": {
+        "name": "Merit Systems",
+        "url": "https://stableenrich.dev"
+      },
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/apollo/people-search",
+          "description": "Find prospects by filters",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Find prospects by filters",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/apollo/people-enrich",
+          "description": "Enrich single person by email/name/domain",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Enrich single person by email/name/domain",
+            "amount": "49500"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/apollo/org-search",
+          "description": "Find companies by filters",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Find companies by filters",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/apollo/org-enrich",
+          "description": "Enrich single company by domain",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Enrich single company by domain",
+            "amount": "49500"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/clado/linkedin-scrape",
+          "description": "Scrape full LinkedIn profile data",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Scrape full LinkedIn profile data",
+            "amount": "40000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/clado/contacts-enrich",
+          "description": "Enrich contact info from LinkedIn URL, email, or phone",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Enrich contact info from LinkedIn URL, email, or phone",
+            "amount": "200000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/exa/search",
+          "description": "Neural web search",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Neural web search",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/exa/find-similar",
+          "description": "Find pages similar to a URL",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Find pages similar to a URL",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/exa/contents",
+          "description": "Extract content from URLs",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Extract content from URLs",
+            "amount": "2000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/exa/answer",
+          "description": "AI-generated answers with citations",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "AI-generated answers with citations",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/firecrawl/scrape",
+          "description": "Scrape a URL with full JavaScript rendering",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Scrape a URL with full JavaScript rendering",
+            "amount": "12600"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/firecrawl/search",
+          "description": "Search the web and get scraped results",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search the web and get scraped results",
+            "amount": "25200"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/google-maps/text-search/full",
+          "description": "Text search with full details",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Text search with full details",
+            "amount": "80000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/google-maps/text-search/partial",
+          "description": "Text search with basic details",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Text search with basic details",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/google-maps/nearby-search/full",
+          "description": "Nearby search with full details",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Nearby search with full details",
+            "amount": "80000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/google-maps/nearby-search/partial",
+          "description": "Nearby search with basic details",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Nearby search with basic details",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/google-maps/place-details/full",
+          "description": "Full place details by ID",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Full place details by ID",
+            "amount": "50000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/google-maps/place-details/partial",
+          "description": "Partial place details by ID",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Partial place details by ID",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/grok/x-search",
+          "description": "Search X/Twitter posts",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search X/Twitter posts",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/grok/user-search",
+          "description": "Search X/Twitter users",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search X/Twitter users",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/grok/user-posts",
+          "description": "Get recent posts from an X user",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get recent posts from an X user",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/serper/news",
+          "description": "Google News search",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Google News search",
+            "amount": "40000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/serper/shopping",
+          "description": "Google Shopping search",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Google Shopping search",
+            "amount": "40000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/reddit/search",
+          "description": "Search Reddit posts",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search Reddit posts",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/reddit/post-comments",
+          "description": "Get post details and comments",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get post details and comments",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/whitepages/person-search",
+          "description": "Search for people by name, phone, or address",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search for people by name, phone, or address",
+            "amount": "440000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/whitepages/property-search",
+          "description": "Property ownership and resident details by address",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Property ownership and resident details by address",
+            "amount": "440000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/hunter/email-verifier",
+          "description": "Verify email deliverability",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Verify email deliverability",
+            "amount": "30000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/influencer/enrich-by-email",
+          "description": "Find social profiles by email",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Find social profiles by email",
+            "amount": "400000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/influencer/enrich-by-social",
+          "description": "Enrich social media profile with contact info",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Enrich social media profile with contact info",
+            "amount": "400000"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stabletravel",
+      "name": "StableTravel",
+      "url": "https://stabletravel.dev",
+      "serviceUrl": "https://stabletravel.dev",
+      "description": "Pay-per-request travel APIs — flights, hotels, activities, transfers, and real-time flight tracking. Powered by Amadeus and FlightAware.",
+      "categories": [
+        "data",
+        "web"
+      ],
+      "integration": "first-party",
+      "tags": [
+        "amadeus",
+        "flightaware",
+        "flights",
+        "hotels",
+        "activities",
+        "transfers",
+        "travel"
+      ],
+      "status": "active",
+      "docs": {
+        "homepage": "https://stabletravel.dev",
+        "llmsTxt": "https://stabletravel.dev/llms.txt"
+      },
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "stabletravel.dev",
+      "provider": {
+        "name": "Merit Systems",
+        "url": "https://stabletravel.dev"
+      },
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/flights/search",
+          "description": "Search flight offers (advanced multi-city)",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search flight offers (advanced multi-city)",
+            "amount": "54000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/flights/price",
+          "description": "Confirm pricing for a flight offer",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Confirm pricing for a flight offer",
+            "amount": "32400"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/flights/book",
+          "description": "Book a flight (create flight order)",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Book a flight (create flight order)",
+            "amount": "86400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flights/orders",
+          "description": "Retrieve a flight order by ID",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Retrieve a flight order by ID",
+            "amount": "5400"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/flights/orders/cancel",
+          "description": "Cancel a flight order",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Cancel a flight order",
+            "amount": "5400"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/flights/seatmap",
+          "description": "Get seat maps for a flight",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get seat maps for a flight",
+            "amount": "32400"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/flights/upsell",
+          "description": "Get upsell offers for a flight",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get upsell offers for a flight",
+            "amount": "32400"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/flights/availability",
+          "description": "Check flight availability",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Check flight availability",
+            "amount": "32400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flights/status",
+          "description": "Get flight status by carrier, number, and date",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get flight status by carrier, number, and date",
+            "amount": "5400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flights/checkin-links",
+          "description": "Get airline check-in page URLs",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get airline check-in page URLs",
+            "amount": "5400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/hotels/list",
+          "description": "List hotels by city code",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "List hotels by city code",
+            "amount": "32400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/hotels/list/by-geocode",
+          "description": "List hotels by latitude/longitude",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "List hotels by latitude/longitude",
+            "amount": "32400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/hotels/search",
+          "description": "Search hotel offers by hotel IDs",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search hotel offers by hotel IDs",
+            "amount": "32400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/hotels/search/by-hotel",
+          "description": "Search offers for a specific hotel",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search offers for a specific hotel",
+            "amount": "32400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/hotels/offer",
+          "description": "Get details for a specific hotel offer",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get details for a specific hotel offer",
+            "amount": "32400"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/hotels/book",
+          "description": "Book a hotel offer",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Book a hotel offer",
+            "amount": "2160"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/hotels/autocomplete",
+          "description": "Autocomplete hotel names",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Autocomplete hotel names",
+            "amount": "5400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/activities/search",
+          "description": "Search tours & activities by lat/lng",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search tours & activities by lat/lng",
+            "amount": "54000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/activities/by-square",
+          "description": "Search activities within a geographic square",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search activities within a geographic square",
+            "amount": "54000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/activities/details",
+          "description": "Get activity details by ID",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get activity details by ID",
+            "amount": "54000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/transfers/search",
+          "description": "Search airport transfer options",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search airport transfer options",
+            "amount": "3240"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/transfers/book",
+          "description": "Book a transfer",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Book a transfer",
+            "amount": "2160"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/transfers/cancel",
+          "description": "Cancel a transfer booking",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Cancel a transfer booking",
+            "amount": "2160"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/reference/locations",
+          "description": "Search locations (airports, cities) by keyword",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search locations (airports, cities) by keyword",
+            "amount": "5400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/reference/airports",
+          "description": "Find nearby airports by latitude/longitude",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Find nearby airports by latitude/longitude",
+            "amount": "5400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/reference/airlines",
+          "description": "Look up airline by IATA code",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Look up airline by IATA code",
+            "amount": "5400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/reference/airline-routes",
+          "description": "Get routes for an airline from an airport",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get routes for an airline from an airport",
+            "amount": "5400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/reference/airport-routes",
+          "description": "Get direct destinations from an airport",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get direct destinations from an airport",
+            "amount": "5400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/reference/cities",
+          "description": "Search cities by keyword",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search cities by keyword",
+            "amount": "5400"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/flights/search",
+          "description": "Search flights by query string",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search flights by query string",
+            "amount": "100000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/flights/search/positions",
+          "description": "Search flights with position data",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search flights with position data",
+            "amount": "100000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/flights/search/count",
+          "description": "Get count of flights matching a search",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get count of flights matching a search",
+            "amount": "40000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/flights/search/advanced",
+          "description": "Advanced flight search with complex query syntax",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Advanced flight search with complex query syntax",
+            "amount": "100000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/flights/:id",
+          "description": "Get flights by ident (flight number, registration)",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get flights by ident (flight number, registration)",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/flights/:id/canonical",
+          "description": "Get canonical ident for a flight",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get canonical ident for a flight",
+            "amount": "2000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/flightaware/flights/:id/intents",
+          "description": "Set flight intent for push notifications",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Set flight intent for push notifications",
+            "amount": "1000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/flights/:id/position",
+          "description": "Get latest position for a flight",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get latest position for a flight",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/flights/:id/track",
+          "description": "Get full track/positions for a flight",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get full track/positions for a flight",
+            "amount": "24000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/flights/:id/route-info",
+          "description": "Get route info (fixes, waypoints) for a flight",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get route info (fixes, waypoints) for a flight",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/flights/:id/map",
+          "description": "Get flight track map image (PNG)",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get flight track map image (PNG)",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports",
+          "description": "List all airports",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "List all airports",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/nearby",
+          "description": "Find airports near a lat/lng",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Find airports near a lat/lng",
+            "amount": "8000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/delays",
+          "description": "Get all airport delay information",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get all airport delay information",
+            "amount": "100000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id",
+          "description": "Get airport info by code",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get airport info by code",
+            "amount": "30000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/canonical",
+          "description": "Get canonical airport code",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get canonical airport code",
+            "amount": "2000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/nearby",
+          "description": "Find airports near a specific airport",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Find airports near a specific airport",
+            "amount": "8000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/delays",
+          "description": "Get delays for a specific airport",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get delays for a specific airport",
+            "amount": "20000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/flights",
+          "description": "Get all flights at an airport",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get all flights at an airport",
+            "amount": "40000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/flights/arrivals",
+          "description": "Get arrivals at an airport",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get arrivals at an airport",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/flights/departures",
+          "description": "Get departures from an airport",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get departures from an airport",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/flights/scheduled-departures",
+          "description": "Get scheduled departures",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get scheduled departures",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/flights/scheduled-arrivals",
+          "description": "Get scheduled arrivals",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get scheduled arrivals",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/flights/to/:dest_id",
+          "description": "Get flights between two airports",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get flights between two airports",
+            "amount": "100000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/flights/counts",
+          "description": "Get flight count statistics",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get flight count statistics",
+            "amount": "200000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/weather/observations",
+          "description": "Get METAR weather observations",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get METAR weather observations",
+            "amount": "4000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/weather/forecast",
+          "description": "Get TAF weather forecast",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get TAF weather forecast",
+            "amount": "4000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/airports/:id/routes/:dest_id",
+          "description": "Get route info between airports",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get route info between airports",
+            "amount": "40000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/history/flights/:id",
+          "description": "Get historical flights by ident",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get historical flights by ident",
+            "amount": "40000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/history/flights/:id/track",
+          "description": "Get historical flight track",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get historical flight track",
+            "amount": "120000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/history/flights/:id/map",
+          "description": "Get historical flight map image (PNG)",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get historical flight map image (PNG)",
+            "amount": "280000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/history/flights/:id/route-info",
+          "description": "Get historical flight route info",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get historical flight route info",
+            "amount": "80000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/history/airports/:id/flights/arrivals",
+          "description": "Get historical arrivals at airport",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get historical arrivals at airport",
+            "amount": "40000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/history/airports/:id/flights/departures",
+          "description": "Get historical departures from airport",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get historical departures from airport",
+            "amount": "40000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/history/airports/:id/flights/to/:dest_id",
+          "description": "Get historical flights between airports",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get historical flights between airports",
+            "amount": "240000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/history/aircraft/:registration/last-flight",
+          "description": "Get last flight for an aircraft",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get last flight for an aircraft",
+            "amount": "400000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/history/operators/:id/flights",
+          "description": "Get historical flights by operator",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get historical flights by operator",
+            "amount": "40000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/disruption-counts/:entity_type",
+          "description": "Get disruption stats by entity type",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get disruption stats by entity type",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/flightaware/disruption-counts/:entity_type/:id",
+          "description": "Get disruption stats for a specific entity",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get disruption stats for a specific entity",
+            "amount": "10000"
+          }
+        }
+      ]
+    },
+    {
+      "id": "stablephone",
+      "name": "StablePhone",
+      "url": "https://stablephone.dev",
+      "serviceUrl": "https://stablephone.dev",
+      "description": "AI phone calls, dedicated phone numbers, and iMessage/FaceTime lookup — pay per request.",
+      "categories": [
+        "ai",
+        "social"
+      ],
+      "integration": "first-party",
+      "tags": [
+        "phone",
+        "call",
+        "voice",
+        "ai-call",
+        "imessage"
+      ],
+      "status": "active",
+      "docs": {
+        "homepage": "https://stablephone.dev",
+        "llmsTxt": "https://stablephone.dev/llms.txt"
+      },
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "stablephone.dev",
+      "provider": {
+        "name": "Merit Systems",
+        "url": "https://stablephone.dev"
+      },
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/call",
+          "description": "Make an AI phone call",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Make an AI phone call",
+            "amount": "540000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/call/:id",
+          "description": "Get call status and transcript",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/number",
+          "description": "Buy a phone number (30 days)",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Buy a phone number (30 days)",
+            "amount": "20000000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/number/topup",
+          "description": "Extend a phone number 30 days",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Extend a phone number 30 days",
+            "amount": "15000000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/numbers",
+          "description": "List your phone numbers",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/lookup",
+          "description": "iMessage/FaceTime lookup",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "iMessage/FaceTime lookup",
+            "amount": "50000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/lookup/status",
+          "description": "Poll lookup results",
+          "payment": null
+        }
+      ]
+    },
+    {
+      "id": "stablesocial",
+      "name": "StableSocial",
+      "url": "https://stablesocial.dev",
+      "serviceUrl": "https://stablesocial.dev",
+      "description": "Pay-per-request social media data from TikTok, Instagram, X/Twitter, Facebook, and Reddit.",
+      "categories": [
+        "social",
+        "data"
+      ],
+      "integration": "first-party",
+      "tags": [
+        "tiktok",
+        "instagram",
+        "twitter",
+        "facebook",
+        "reddit",
+        "scraping",
+        "social"
+      ],
+      "status": "active",
+      "docs": {
+        "homepage": "https://stablesocial.dev",
+        "llmsTxt": "https://stablesocial.dev/llms.txt"
+      },
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "stablesocial.dev",
+      "provider": {
+        "name": "Merit Systems",
+        "url": "https://stablesocial.dev"
+      },
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/tiktok/profile",
+          "description": "Get TikTok user profile",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get TikTok user profile",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/tiktok/posts",
+          "description": "Get TikTok user posts",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get TikTok user posts",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/tiktok/post-comments",
+          "description": "Get TikTok video comments",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get TikTok video comments",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/tiktok/comment-replies",
+          "description": "Get TikTok comment replies",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get TikTok comment replies",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/tiktok/followers",
+          "description": "Get TikTok followers",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get TikTok followers",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/tiktok/following",
+          "description": "Get TikTok following",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get TikTok following",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/tiktok/search",
+          "description": "Search TikTok posts by keyword",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search TikTok posts by keyword",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/tiktok/search-hashtag",
+          "description": "Search TikTok by hashtag",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search TikTok by hashtag",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/tiktok/search-profiles",
+          "description": "Search TikTok user profiles",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search TikTok user profiles",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/tiktok/search-music",
+          "description": "Search TikTok posts by sound",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search TikTok posts by sound",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/instagram/profile",
+          "description": "Get Instagram user profile",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Instagram user profile",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/instagram/posts",
+          "description": "Get Instagram user posts",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Instagram user posts",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/instagram/post-comments",
+          "description": "Get Instagram post comments",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Instagram post comments",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/instagram/comment-replies",
+          "description": "Get Instagram comment replies",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Instagram comment replies",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/instagram/followers",
+          "description": "Get Instagram followers",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Instagram followers",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/instagram/following",
+          "description": "Get Instagram following",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Instagram following",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/instagram/stories",
+          "description": "Get Instagram user stories",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Instagram user stories",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/instagram/highlights",
+          "description": "Get Instagram user highlights",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Instagram user highlights",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/instagram/search",
+          "description": "Search Instagram posts by keyword",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search Instagram posts by keyword",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/instagram/search-tags",
+          "description": "Search Instagram by tag",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search Instagram by tag",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/x/profile",
+          "description": "Get X/Twitter user profile",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get X/Twitter user profile",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/x/posts",
+          "description": "Get X/Twitter user posts",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get X/Twitter user posts",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/x/post-replies",
+          "description": "Get X/Twitter post replies",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get X/Twitter post replies",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/x/post-retweets",
+          "description": "Get X/Twitter retweet profiles",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get X/Twitter retweet profiles",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/x/post-quotes",
+          "description": "Get X/Twitter quote tweets",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get X/Twitter quote tweets",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/x/followers",
+          "description": "Get X/Twitter followers",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get X/Twitter followers",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/x/following",
+          "description": "Get X/Twitter following",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get X/Twitter following",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/x/search",
+          "description": "Search X/Twitter posts by keyword",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search X/Twitter posts by keyword",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/x/search-profiles",
+          "description": "Search X/Twitter user profiles",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search X/Twitter user profiles",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/facebook/profile",
+          "description": "Get Facebook page/user profile",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Facebook page/user profile",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/facebook/posts",
+          "description": "Get Facebook page/user posts",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Facebook page/user posts",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/facebook/post-comments",
+          "description": "Get Facebook post comments",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Facebook post comments",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/facebook/comment-replies",
+          "description": "Get Facebook comment replies",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Facebook comment replies",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/facebook/followers",
+          "description": "Get Facebook followers",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Facebook followers",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/facebook/following",
+          "description": "Get Facebook following",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Facebook following",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/facebook/search",
+          "description": "Search Facebook posts by keyword",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search Facebook posts by keyword",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/facebook/search-people",
+          "description": "Search Facebook people profiles",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search Facebook people profiles",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/facebook/search-pages",
+          "description": "Search Facebook page profiles",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search Facebook page profiles",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/facebook/search-groups",
+          "description": "Search Facebook group profiles",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search Facebook group profiles",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/reddit/post",
+          "description": "Get Reddit post details",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Reddit post details",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/reddit/post-comments",
+          "description": "Get Reddit post comments",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Reddit post comments",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/reddit/comment",
+          "description": "Get Reddit comment details",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get Reddit comment details",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/reddit/search",
+          "description": "Search Reddit posts by keyword",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search Reddit posts by keyword",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/reddit/search-profiles",
+          "description": "Search Reddit user profiles",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Search Reddit user profiles",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/reddit/subreddit",
+          "description": "Get subreddit posts",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get subreddit posts",
+            "amount": "60000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/jobs",
+          "description": "Poll job status and retrieve results",
+          "payment": null
+        }
+      ]
+    },
+    {
+      "id": "stablestudio",
+      "name": "StableStudio",
+      "url": "https://stablestudio.dev",
+      "serviceUrl": "https://stablestudio.dev",
+      "description": "Pay-per-generation AI image and video creation — Nano Banana, GPT Image, Grok, Flux, Sora, Veo, Seedance, and Wan.",
+      "categories": [
+        "ai",
+        "media"
+      ],
+      "integration": "first-party",
+      "tags": [
+        "image",
+        "video",
+        "generation",
+        "nano-banana",
+        "gpt-image",
+        "grok",
+        "flux",
+        "sora",
+        "veo",
+        "seedance",
+        "wan"
+      ],
+      "status": "active",
+      "docs": {
+        "homepage": "https://stablestudio.dev",
+        "llmsTxt": "https://stablestudio.dev/llms.txt"
+      },
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "stablestudio.dev",
+      "provider": {
+        "name": "Merit Systems",
+        "url": "https://stablestudio.dev"
+      },
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/generate/nano-banana/generate",
+          "description": "Nano Banana image generation",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Nano Banana image generation",
+            "amount": "39000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/nano-banana/edit",
+          "description": "Nano Banana image editing",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Nano Banana image editing",
+            "amount": "39000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/nano-banana-pro/generate",
+          "description": "Nano Banana Pro image generation (up to 4K)",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Nano Banana Pro image generation (up to 4K)",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/nano-banana-pro/edit",
+          "description": "Nano Banana Pro image editing (up to 4K)",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Nano Banana Pro image editing (up to 4K)",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/grok/generate",
+          "description": "Grok image generation",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Grok image generation",
+            "amount": "70000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/grok/edit",
+          "description": "Grok image editing",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Grok image editing",
+            "amount": "22000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/grok-video/generate",
+          "description": "Grok video generation",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Grok video generation",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/gpt-image-1/generate",
+          "description": "GPT Image 1 generation",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "GPT Image 1 generation",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/gpt-image-1/edit",
+          "description": "GPT Image 1 editing",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "GPT Image 1 editing",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/gpt-image-1.5/generate",
+          "description": "GPT Image 1.5 generation",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "GPT Image 1.5 generation",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/gpt-image-1.5/edit",
+          "description": "GPT Image 1.5 editing",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "GPT Image 1.5 editing",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/flux-2-pro/generate",
+          "description": "Flux 2 Pro image generation",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flux 2 Pro image generation",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/flux-2-pro/edit",
+          "description": "Flux 2 Pro image editing",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flux 2 Pro image editing",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/seedance/t2v",
+          "description": "Seedance text-to-video",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Seedance text-to-video",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/seedance/i2v",
+          "description": "Seedance image-to-video",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Seedance image-to-video",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/seedance-fast/t2v",
+          "description": "Seedance Fast text-to-video",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Seedance Fast text-to-video",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/seedance-fast/i2v",
+          "description": "Seedance Fast image-to-video",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Seedance Fast image-to-video",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/wan-2.6/t2v",
+          "description": "Wan 2.6 text-to-video",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Wan 2.6 text-to-video",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/wan-2.6/i2v",
+          "description": "Wan 2.6 image-to-video",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Wan 2.6 image-to-video",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/sora-2/generate",
+          "description": "Sora 2 video generation",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Sora 2 video generation",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/sora-2-pro/generate",
+          "description": "Sora 2 Pro video generation",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Sora 2 Pro video generation",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/veo-3.1/generate",
+          "description": "Veo 3.1 video generation",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Veo 3.1 video generation",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/generate/veo-3.1-fast/generate",
+          "description": "Veo 3.1 Fast video generation",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Veo 3.1 Fast video generation",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/upload",
+          "description": "Upload image for editing or image-to-video",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Upload image for editing or image-to-video",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/upload/confirm",
+          "description": "Confirm uploaded file",
+          "payment": null
+        },
+        {
+          "method": "GET",
+          "path": "/api/jobs/:jobId",
+          "description": "Poll job status and retrieve results",
+          "payment": null
+        },
+        {
+          "method": "GET",
+          "path": "/api/jobs",
+          "description": "List jobs",
+          "payment": null
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/jobs/:jobId",
+          "description": "Delete a failed job",
+          "payment": null
+        }
+      ]
+    },
+    {
+      "id": "stableupload",
+      "name": "StableUpload",
+      "url": "https://stableupload.dev",
+      "serviceUrl": "https://stableupload.dev",
+      "description": "Pay-per-upload file hosting and static site hosting with custom domains — 6 month TTL.",
+      "categories": [
+        "storage"
+      ],
+      "integration": "first-party",
+      "tags": [
+        "upload",
+        "files",
+        "hosting",
+        "static-site",
+        "cdn"
+      ],
+      "status": "active",
+      "docs": {
+        "homepage": "https://stableupload.dev",
+        "llmsTxt": "https://stableupload.dev/llms.txt"
+      },
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "stableupload.dev",
+      "provider": {
+        "name": "Merit Systems",
+        "url": "https://stableupload.dev"
+      },
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/upload",
+          "description": "Buy an upload slot (10MB $0.02, 100MB $0.20, 1GB $2.00)",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Buy an upload slot (10MB $0.02, 100MB $0.20, 1GB $2.00)",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/api/uploads",
+          "description": "List uploads for authenticated wallet",
+          "payment": null
+        },
+        {
+          "method": "GET",
+          "path": "/api/download/:uploadId",
+          "description": "Get upload details by ID",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/site",
+          "description": "Buy a site upload slot for zip hosting",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Buy a site upload slot for zip hosting",
+            "dynamic": true
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/api/site/activate",
+          "description": "Extract zip and make site live",
+          "payment": null
+        },
+        {
+          "method": "POST",
+          "path": "/api/site/domain",
+          "description": "Connect a custom domain to a site",
+          "payment": null
+        },
+        {
+          "method": "GET",
+          "path": "/api/site/domain/status",
+          "description": "Check TLS provisioning status",
+          "payment": null
+        }
+      ]
+    },
+    {
+      "id": "aviationstack",
+      "name": "AviationStack",
+      "url": "https://api.aviationstack.com",
+      "serviceUrl": "https://aviationstack.mpp.tempo.xyz",
+      "description": "Real-time and historical flight tracking, airports, airlines, and schedules.",
+      "categories": [
+        "data"
+      ],
+      "integration": "third-party",
+      "tags": [
+        "flights",
+        "aviation",
+        "tracking",
+        "airports",
+        "airlines"
+      ],
+      "status": "active",
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "mpp.tempo.xyz",
+      "provider": {
+        "name": "AviationStack",
+        "url": "https://aviationstack.com"
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/v1/aircraft_types",
+          "description": "Aircraft types lookup",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Aircraft types lookup",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/v1/airlines",
+          "description": "Airlines lookup",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Airlines lookup",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/v1/airplanes",
+          "description": "Airplanes lookup",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Airplanes lookup",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/v1/airports",
+          "description": "Airports lookup",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Airports lookup",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/v1/cities",
+          "description": "Cities lookup",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Cities lookup",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/v1/countries",
+          "description": "Countries lookup",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Countries lookup",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/v1/flights",
+          "description": "Real-time flights",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Real-time flights",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/v1/flightsFuture",
+          "description": "Future flight schedules",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Future flight schedules",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/v1/routes",
+          "description": "Routes lookup",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Routes lookup",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/v1/taxes",
+          "description": "Aviation taxes lookup",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Aviation taxes lookup",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/v1/timetable",
+          "description": "Flight schedules",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flight schedules",
+            "amount": "5000"
+          }
+        }
+      ]
+    },
+    {
+      "id": "codestorage",
+      "name": "Code Storage",
+      "url": "https://code.storage",
+      "serviceUrl": "https://codestorage.mpp.tempo.xyz",
+      "description": "Paid Git repository creation — create repos and get authenticated clone URLs.",
+      "categories": [
+        "storage"
+      ],
+      "integration": "third-party",
+      "tags": [
+        "git",
+        "repos",
+        "code",
+        "storage"
+      ],
+      "status": "active",
+      "docs": {
+        "llmsTxt": "https://code.storage/docs/llms.txt"
+      },
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "mpp.tempo.xyz",
+      "provider": {
+        "name": "Code Storage",
+        "url": "https://code.storage"
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/repos/:id",
+          "description": "Get clone URL for a repository",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Get clone URL for a repository",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "POST",
+          "path": "/repos",
+          "description": "Create a Git repository",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Create a Git repository",
+            "amount": "1000000"
+          }
+        }
+      ]
+    },
+    {
+      "id": "flightapi",
+      "name": "FlightAPI",
+      "url": "https://api.flightapi.io",
+      "serviceUrl": "https://flightapi.mpp.tempo.xyz",
+      "description": "Real-time flight prices, tracking, and airport schedules from 700+ airlines.",
+      "categories": [
+        "data"
+      ],
+      "integration": "third-party",
+      "tags": [
+        "flights",
+        "prices",
+        "tracking",
+        "airports",
+        "airlines"
+      ],
+      "status": "active",
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "mpp.tempo.xyz",
+      "provider": {
+        "name": "FlightAPI",
+        "url": "https://flightapi.io"
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/airline/:rest*",
+          "description": "Track a flight",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Track a flight",
+            "amount": "2000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/iata/:rest*",
+          "description": "Airline/airport code lookup",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Airline/airport code lookup",
+            "amount": "2000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/multitrip/:rest*",
+          "description": "Multi-city flight price search",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Multi-city flight price search",
+            "amount": "8000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/onewaytrip/:rest*",
+          "description": "One-way flight price search",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "One-way flight price search",
+            "amount": "3000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/roundtrip/:rest*",
+          "description": "Round-trip flight price search",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Round-trip flight price search",
+            "amount": "3000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/schedule/:rest*",
+          "description": "Airport schedule",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Airport schedule",
+            "amount": "3000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/trackbyroute/:rest*",
+          "description": "Track flights between airports",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Track flights between airports",
+            "amount": "2000"
+          }
+        }
+      ]
+    },
+    {
+      "id": "flightaware",
+      "name": "FlightAware AeroAPI",
+      "url": "https://aeroapi.flightaware.com",
+      "serviceUrl": "https://flightaware.mpp.tempo.xyz",
+      "description": "On-demand flight tracking, airport activity, and aviation data.",
+      "categories": [
+        "data"
+      ],
+      "integration": "third-party",
+      "tags": [
+        "flights",
+        "tracking",
+        "airports",
+        "aviation"
+      ],
+      "status": "active",
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "mpp.tempo.xyz",
+      "provider": {
+        "name": "FlightAware",
+        "url": "https://www.flightaware.com"
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/aeroapi/airports/:id",
+          "description": "Airport info",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Airport info",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/aeroapi/airports/:id/flights",
+          "description": "Airport flights",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Airport flights",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/aeroapi/airports/:id/flights/arrivals",
+          "description": "Airport arrivals",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Airport arrivals",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/aeroapi/airports/:id/flights/departures",
+          "description": "Airport departures",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Airport departures",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/aeroapi/airports/:id/flights/scheduled_arrivals",
+          "description": "Scheduled arrivals",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Scheduled arrivals",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/aeroapi/airports/:id/flights/scheduled_departures",
+          "description": "Scheduled departures",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Scheduled departures",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/aeroapi/flights/:id/map",
+          "description": "Flight map image",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flight map image",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/aeroapi/flights/:id/track",
+          "description": "Flight track positions",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flight track positions",
+            "amount": "30000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/aeroapi/flights/:ident",
+          "description": "Flight lookup by ident",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flight lookup by ident",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/aeroapi/operators/:id",
+          "description": "Operator info",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Operator info",
+            "amount": "15000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/aeroapi/operators/:id/flights",
+          "description": "Operator flights",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Operator flights",
+            "amount": "30000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/aeroapi/schedules/:start/:end",
+          "description": "Flight schedules",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flight schedules",
+            "amount": "20000"
+          }
+        }
+      ]
+    },
+    {
+      "id": "goflightlabs",
+      "name": "GoFlightLabs",
+      "url": "https://goflightlabs.com",
+      "serviceUrl": "https://goflightlabs.mpp.tempo.xyz",
+      "description": "Real-time flight tracking, prices, schedules, and airline data.",
+      "categories": [
+        "data"
+      ],
+      "integration": "third-party",
+      "tags": [
+        "flights",
+        "tracking",
+        "prices",
+        "airlines",
+        "airports"
+      ],
+      "status": "active",
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "mpp.tempo.xyz",
+      "provider": {
+        "name": "GoFlightLabs",
+        "url": "https://goflightlabs.com"
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/airports-by-filters",
+          "description": "Airports by filter",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Airports by filter",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/flight-data-by-date",
+          "description": "Flight data by date",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flight data by date",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/flight-delay",
+          "description": "Flight delay info",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flight delay info",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/flight-info-by-flight-number",
+          "description": "Flight info by number",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flight info by number",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/flight-prices",
+          "description": "Flight price search",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flight price search",
+            "amount": "10000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/flights",
+          "description": "Real-time flights",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Real-time flights",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/flights-airline",
+          "description": "Flights by airline",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flights by airline",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/flights-callsign",
+          "description": "Flights by callsign",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flights by callsign",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/flights-history",
+          "description": "Historical flights",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Historical flights",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/flights-schedules",
+          "description": "Flight schedules",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Flight schedules",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/future-flights",
+          "description": "Future flight predictions",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Future flight predictions",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/retrieve-airlines",
+          "description": "Retrieve airlines",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Retrieve airlines",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/retrieve-airports",
+          "description": "Retrieve airports",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Retrieve airports",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/retrieve-countries",
+          "description": "Retrieve countries",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Retrieve countries",
+            "amount": "5000"
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/retrieve-routes",
+          "description": "Airline routes",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Airline routes",
+            "amount": "5000"
+          }
+        }
+      ]
+    },
+    {
+      "id": "serpapi",
+      "name": "SerpApi",
+      "url": "https://serpapi.com",
+      "serviceUrl": "https://serpapi.mpp.tempo.xyz",
+      "description": "Google Flights search — real-time prices, schedules, and booking options.",
+      "categories": [
+        "search",
+        "data"
+      ],
+      "integration": "third-party",
+      "tags": [
+        "search",
+        "flights",
+        "google",
+        "prices"
+      ],
+      "status": "active",
+      "methods": {
+        "tempo": {
+          "intents": [
+            "charge"
+          ],
+          "assets": [
+            "0x20c000000000000000000000b9537d11c60e8b50"
+          ]
+        }
+      },
+      "realm": "mpp.tempo.xyz",
+      "provider": {
+        "name": "SerpApi",
+        "url": "https://serpapi.com"
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/search",
+          "description": "Google Flights search",
+          "payment": {
+            "intent": "charge",
+            "method": "tempo",
+            "currency": "0x20c000000000000000000000b9537d11c60e8b50",
+            "decimals": 6,
+            "description": "Google Flights search",
+            "amount": "15000"
+          }
         }
       ]
     }

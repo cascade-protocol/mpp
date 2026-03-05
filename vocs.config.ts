@@ -21,8 +21,9 @@ export default defineConfig({
       destination: "https://tempoxyz.github.io/mpp-specs/",
     },
     { source: "/specs", destination: "https://tempoxyz.github.io/mpp-specs/" },
-    { source: "/quickstart/pget", destination: "/quickstart/presto" },
-    { source: "/quickstart/tempoctl", destination: "/quickstart/presto" },
+    { source: "/quickstart/pget", destination: "/quickstart/agent" },
+    { source: "/quickstart/tempoctl", destination: "/quickstart/agent" },
+    { source: "/quickstart/presto", destination: "/quickstart/agent" },
     { source: "/tools/pget", destination: "/tools/presto" },
     { source: "/tools/pget/examples", destination: "/tools/presto/examples" },
     { source: "/tools/tempoctl", destination: "/tools/presto" },
@@ -77,27 +78,26 @@ export default defineConfig({
         text: "Introduction",
         items: [
           { text: "Overview", link: "/overview" },
-          { text: "Services", link: "/services" },
           {
             text: "IETF Specs",
             link: "https://tempoxyz.github.io/mpp-specs/",
           },
           { text: "FAQ", link: "/faq" },
+          { text: "Build with AI", link: "/guides/building-with-ai" },
         ],
       },
       {
         text: "Quick Start",
         items: [
           { text: "Overview", link: "/quickstart" },
-          { text: "Client", link: "/quickstart/client" },
-          { text: "Server", link: "/quickstart/server" },
-          { text: "CLI (presto)", link: "/quickstart/presto" },
+          { text: "Use on your App", link: "/quickstart/client" },
+          { text: "Use on your Server", link: "/quickstart/server" },
+          { text: "Use with your Agent", link: "/quickstart/agent" },
         ],
       },
       {
         text: "Guides",
         items: [
-          { text: "Build with AI", link: "/guides/building-with-ai" },
           {
             text: "Accept One-Time Payments",
             link: "/guides/one-time-payments",
@@ -161,7 +161,7 @@ export default defineConfig({
         ],
       },
       {
-        text: "SDKs & Tools",
+        text: "SDKs",
         items: [
           { text: "Overview", link: "/sdk" },
           {
@@ -456,14 +456,6 @@ export default defineConfig({
               { text: "Server", link: "/sdk/rust/server" },
             ],
           },
-          {
-            text: "CLI (presto)",
-            collapsed: true,
-            items: [
-              { text: "Reference", link: "/tools/presto" },
-              { text: "Examples", link: "/tools/presto/examples" },
-            ],
-          },
         ],
       },
     ],
@@ -484,7 +476,6 @@ export default defineConfig({
   topNav: [
     { text: "Docs", link: "/overview", match: (path) => path !== "/" },
     { text: "Services", link: "/services" },
-    { text: "SDKs & Tools", link: "/sdk" },
     { text: "IETF Specs", link: "https://tempoxyz.github.io/mpp-specs/" },
     {
       text: "GitHub",

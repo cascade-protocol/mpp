@@ -69,17 +69,13 @@ describe("terminal", () => {
     await page.close();
   });
 
-  it.concurrent("types out lines and shows quickstart output", async () => {
+  it.concurrent("types out demo command and reaches wizard", async () => {
     const page = await newPage();
     await page.goto(`http://localhost:${port}`);
 
-    await playwrightExpect(
-      page.getByText("Read the docs:", { exact: false }),
-    ).toBeVisible({ timeout: 15_000 });
+    await waitForWizard(page);
 
-    await playwrightExpect(page.getByText("mpp.dev/llms.txt")).toBeVisible();
-    await playwrightExpect(page.getByText("mpp.dev/services")).toBeVisible();
-    await playwrightExpect(page.getByText("mpp.dev/overview")).toBeVisible();
+    await playwrightExpect(page.getByText("Chat with AI")).toBeVisible();
 
     await page.close();
   });
@@ -181,6 +177,29 @@ describe("terminal", () => {
     await page.close();
   });
 
+  it.concurrent("submits default prompt when Enter is pressed on empty input", async () => {
+    const page = await newPage();
+    await page.goto(`http://localhost:${port}`);
+    await waitForWizard(page);
+
+    await pressKey(page, "Enter");
+
+    await playwrightExpect(page.getByText("Enter prompt:")).toBeVisible({
+      timeout: 5_000,
+    });
+
+    await page.keyboard.press("Enter");
+
+    await playwrightExpect(
+      page.getByText("Enter prompt: what are micropayments?", { exact: true }),
+    ).toBeVisible({ timeout: 5_000 });
+    await playwrightExpect(
+      page.getByText("Creating wallet", { exact: false }),
+    ).toBeVisible({ timeout: 5_000 });
+
+    await page.close();
+  });
+
   it.concurrent('selects "Summarize article" and enters a URL', async () => {
     const page = await newPage();
     await page.goto(`http://localhost:${port}`);
@@ -218,6 +237,41 @@ describe("terminal", () => {
       page.getByText("Creating PaymentIntent"),
     ).toBeVisible({ timeout: 5_000 });
 
+    await playwrightExpect(page.getByText("200 OK")).toBeVisible({
+      timeout: 5_000,
+    });
+
+    await page.close();
+  });
+
+  it.concurrent("uses default URL and card values when Enter is pressed", async () => {
+    const page = await newPage();
+    await page.goto(`http://localhost:${port}`);
+    await waitForWizard(page);
+
+    await pressKey(page, "ArrowDown");
+    await pressKey(page, "ArrowDown");
+    await pressKey(page, "ArrowDown");
+    await pressKey(page, "Enter");
+
+    await playwrightExpect(page.getByText("Enter URL:")).toBeVisible({
+      timeout: 5_000,
+    });
+
+    await page.keyboard.press("Enter");
+
+    await playwrightExpect(
+      page.getByText("Enter URL: https://stripe.com", { exact: true }),
+    ).toBeVisible({ timeout: 5_000 });
+    await playwrightExpect(
+      page.getByText("Card number:", { exact: false }),
+    ).toBeVisible({ timeout: 5_000 });
+
+    await page.keyboard.press("Enter");
+
+    await playwrightExpect(
+      page.getByText("Creating PaymentIntent"),
+    ).toBeVisible({ timeout: 5_000 });
     await playwrightExpect(page.getByText("200 OK")).toBeVisible({
       timeout: 5_000,
     });
@@ -413,6 +467,233 @@ describe("terminal (classic mode)", () => {
 
     await playwrightExpect(page.getByText("200 OK")).toBeVisible({
       timeout: 5_000,
+    });
+
+    await page.close();
+  });
+});
+
+describe("terminal (one-time-payments guide)", () => {
+  it.concurrent("renders the photo payment flow", async () => {
+    const page = await newPage();
+    await page.goto(`http://localhost:${port}/guides/one-time-payments`, {
+      waitUntil: "load",
+    });
+
+    const terminal = page.locator("[data-terminal]");
+
+    // Terminal should render
+    await playwrightExpect(terminal).toBeVisible({
+      timeout: 15_000,
+    });
+
+    // Wait for hydration, then start the demo
+    await page.waitForSelector("[data-demo-ready]", { timeout: 10_000 });
+    await page.waitForTimeout(2_000);
+    await page.locator("[data-demo-ready]").click();
+
+    // Payment flow steps should appear
+    await playwrightExpect(
+      terminal.getByText("Creating wallet", { exact: false }),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(
+      terminal.getByText("402 Payment Required"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(
+      terminal.getByText("Fulfilling payment"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(terminal.getByText("200 OK")).toBeVisible({
+      timeout: 15_000,
+    });
+
+    // Photo should be rendered as an image
+    await playwrightExpect(terminal.locator("img")).toBeVisible({
+      timeout: 10_000,
+    });
+
+    // Restart prompt should appear
+    await playwrightExpect(
+      terminal.getByText("Press Enter or click to restart"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await page.close();
+  });
+});
+
+describe("terminal (pay-as-you-go guide)", () => {
+  it.concurrent("renders the gallery payment flow with session reuse", async () => {
+    const page = await newPage();
+    await page.goto(`http://localhost:${port}/guides/pay-as-you-go`, {
+      waitUntil: "load",
+    });
+
+    const terminal = page.locator("[data-terminal]");
+
+    // Terminal should render
+    await playwrightExpect(terminal).toBeVisible({
+      timeout: 15_000,
+    });
+
+    // Wait for hydration, then start the demo
+    await page.waitForSelector("[data-demo-ready]", { timeout: 10_000 });
+    await page.waitForTimeout(2_000);
+    await page.locator("[data-demo-ready]").click();
+
+    // Payment channel flow steps
+    await playwrightExpect(
+      terminal.getByText("Creating wallet", { exact: false }),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(
+      terminal.getByText("402 Payment Required"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(
+      terminal.getByText("Opening payment channel"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    // Count picker should appear
+    await playwrightExpect(terminal.getByText("How many photos?")).toBeVisible({
+      timeout: 10_000,
+    });
+
+    await playwrightExpect(
+      terminal.getByText("3 photos ($0.03)"),
+    ).toBeVisible();
+
+    // Select 3 photos (first option, press Enter)
+    await pressKey(page, "Enter");
+
+    // Gallery images should be rendered
+    await playwrightExpect(terminal.locator("img").first()).toBeVisible({
+      timeout: 10_000,
+    });
+
+    // Summary line should show completion
+    await playwrightExpect(terminal.getByText("0.03 USDC")).toBeVisible({
+      timeout: 10_000,
+    });
+
+    // Picker should reappear with "Done" option (session reuse)
+    await playwrightExpect(
+      terminal.getByText("How many photos?").last(),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(terminal.getByText("Done")).toBeVisible({
+      timeout: 5_000,
+    });
+
+    // Select Done (arrow down past 3 options to Done)
+    await pressKey(page, "ArrowDown"); // → 5 photos
+    await pressKey(page, "ArrowDown"); // → 10 photos
+    await pressKey(page, "ArrowDown"); // → Done
+    await pressKey(page, "Enter");
+
+    // Close channel
+    await playwrightExpect(
+      terminal.getByText("Closing payment channel"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    // Restart prompt should appear
+    await playwrightExpect(
+      terminal.getByText("Press Enter or click to restart"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await page.close();
+  });
+});
+
+describe("terminal (streamed-payments guide)", () => {
+  it.concurrent("renders the poem streaming flow", async () => {
+    const page = await newPage();
+    await page.goto(`http://localhost:${port}/guides/streamed-payments`, {
+      waitUntil: "load",
+    });
+
+    const terminal = page.locator("[data-terminal]");
+
+    // Terminal should render
+    await playwrightExpect(terminal).toBeVisible({
+      timeout: 15_000,
+    });
+
+    // Wait for hydration, then start the demo
+    await page.waitForSelector("[data-demo-ready]", { timeout: 10_000 });
+    await page.waitForTimeout(2_000);
+    await page.locator("[data-demo-ready]").click();
+
+    // Payment channel flow steps
+    await playwrightExpect(
+      terminal.getByText("Creating wallet", { exact: false }),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(
+      terminal.getByText("402 Payment Required"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(
+      terminal.getByText("Opening payment channel"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(
+      terminal.getByText("tokens streamed", { exact: false }),
+    ).toBeVisible({ timeout: 20_000 });
+
+    await playwrightExpect(
+      terminal.getByText("Closing payment channel"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    // Restart prompt should appear
+    await playwrightExpect(
+      terminal.getByText("Press Enter or click to restart"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await page.close();
+  });
+});
+
+describe("terminal (overview page)", () => {
+  it.concurrent("renders the ping payment flow", async () => {
+    const page = await newPage();
+    await page.goto(`http://localhost:${port}/overview`, {
+      waitUntil: "load",
+    });
+
+    const terminal = page.locator("[data-terminal]");
+
+    // Terminal should render
+    await playwrightExpect(terminal).toBeVisible({
+      timeout: 15_000,
+    });
+
+    // Wait for hydration, then start the demo
+    await page.waitForSelector("[data-demo-ready]", { timeout: 10_000 });
+    // Extra wait for React hydration to attach onClick handler
+    await page.waitForTimeout(2_000);
+    await page.locator("[data-demo-ready]").click();
+
+    // Payment flow steps should appear (simulated mode)
+    await playwrightExpect(
+      terminal.getByText("Creating wallet", { exact: false }),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(
+      terminal.getByText("Funding wallet", { exact: false }),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(
+      terminal.getByText("402 Payment Required"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(
+      terminal.getByText("Fulfilling payment"),
+    ).toBeVisible({ timeout: 10_000 });
+
+    await playwrightExpect(terminal.getByText("200 OK")).toBeVisible({
+      timeout: 15_000,
     });
 
     await page.close();

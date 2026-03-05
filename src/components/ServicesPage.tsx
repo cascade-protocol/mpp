@@ -1,10 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "vocs";
 import type { Category, Endpoint, Service } from "../data/registry";
 import { fetchServices } from "../data/registry";
 
-const CATEGORY_LABELS: Record<Category, string> = {
+export const CATEGORY_LABELS: Record<Category, string> = {
   ai: "AI",
   blockchain: "Blockchain",
   compute: "Compute",
@@ -15,16 +16,16 @@ const CATEGORY_LABELS: Record<Category, string> = {
   storage: "Storage",
   web: "Web",
 };
-const PAGE_SIZE = 60;
+export const PAGE_SIZE = 60;
 const CODE_BG = "light-dark(rgba(0,0,0,0.05), rgba(255,255,255,0.07))";
 const URL_COLOR = "light-dark(rgba(0,0,0,0.7), rgba(255,255,255,0.7))";
 const CMD_PURPLE = "light-dark(#7c3aed, #c084fc)";
 const CMD_GREEN = "light-dark(#15803d, #4ade80)";
 
-function allCategories(s: Service): Category[] {
+export function allCategories(s: Service): Category[] {
   return s.categories ?? [];
 }
-function formatPrice(ep: Endpoint): string {
+export function formatPrice(ep: Endpoint): string {
   const p = ep.payment;
   if (!p) return "—";
   if (!p.amount) return "n/a";
@@ -314,6 +315,16 @@ export function ServicesPage() {
     [services],
   );
   const filtered = useMemo(() => {
+    const PINNED_IDS: string[] = [
+      "openai",
+      "anthropic",
+      "google-gemini",
+      "parallel",
+      "openrouter",
+      "stabletravel",
+      "codestorage",
+      "browserbase",
+    ];
     let list = services;
     if (integrationFilter !== "all")
       list = list.filter(
@@ -333,7 +344,12 @@ export function ServicesPage() {
           s.tags?.some((t) => t.toLowerCase().includes(q)),
       );
     }
-    return list;
+    const pinned = PINNED_IDS.flatMap((id) => list.filter((s) => s.id === id));
+    const pinnedSet = new Set(PINNED_IDS);
+    const rest = list
+      .filter((s) => !pinnedSet.has(s.id))
+      .sort((a, b) => a.name.localeCompare(b.name));
+    return [...pinned, ...rest];
   }, [services, selectedCategories, debouncedSearch, integrationFilter]);
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
@@ -399,7 +415,7 @@ export function ServicesPage() {
               marginTop: "-0.5rem",
             }}
           >
-            MPP-enabled APIs your agent or application can use seamlessly.
+            MPP-enabled APIs your agent or application can seamlessly use.
           </p>
         </div>
 
@@ -684,7 +700,7 @@ function PrestoCardFull() {
           marginBottom: "0.35rem",
         }}
       >
-        Get started with Presto
+        Get started with your Agent
       </h2>
       <p
         style={{
@@ -694,20 +710,11 @@ function PrestoCardFull() {
           marginBottom: "1.25rem",
         }}
       >
-        A command-line HTTP client with built-in MPP payment support. When a
-        server responds with{" "}
-        <code
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 12,
-            padding: "0.1rem 0.3rem",
-            borderRadius: 3,
-            background: CODE_BG,
-          }}
-        >
-          402
-        </code>
-        , Presto handles the payment and retries automatically.
+        Install the{" "}
+        <Link className="text-primary font-medium" to="/quickstart/agent">
+          Presto CLI
+        </Link>{" "}
+        on your agent to use MPP services.
       </p>
       <PrestoSteps />
     </div>
@@ -776,7 +783,7 @@ function HeaderCards({
           </div>
         </button>
         <a
-          href="https://mpp.tempo.xyz/llms.txt"
+          href="/services/llms.txt"
           target="_blank"
           rel="noopener noreferrer"
           className="info-card-link"
@@ -819,7 +826,7 @@ function HeaderCards({
             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
           </svg>
           <div>
-            <div style={titleS}>Documentation</div>
+            <div style={titleS}>Quickstart</div>
             <div style={descS}>Guides, quickstarts, and SDKs</div>
           </div>
         </a>
@@ -908,7 +915,7 @@ function SidebarInfoCards() {
       }}
     >
       <a
-        href="https://mpp.tempo.xyz/llms.txt"
+        href="/services/llms.txt"
         target="_blank"
         rel="noopener noreferrer"
         className="info-card-link"
@@ -992,9 +999,7 @@ function SidebarInfoCards() {
         />
         <div>
           <div style={titleStyle}>First-party services</div>
-          <div style={descStyle}>
-            Hosted natively on Tempo with built-in MPP support.
-          </div>
+          <div style={descStyle}>Directly integrated with MPP.</div>
         </div>
       </div>
     </div>
@@ -1012,21 +1017,12 @@ function PrestoSteps() {
       }}
     >
       <CliSnippet label="Install" desc="One-line install via shell.">
-        curl -fsSL https://presto-binaries.tempo.xyz/install.sh | bash
+        curl -L presto-binaries.tempo.xyz/install.sh | bash
       </CliSnippet>
       <CliSnippet
-        label="Log in"
-        desc="Opens browser to connect your Tempo wallet."
-      >
-        presto login
-      </CliSnippet>
-      <CliSnippet
-        label="Make a request"
-        desc="Payment handled automatically."
-      >{`presto https://mpp.tempo.xyz/openai/v1/chat/completions \\\n  -X POST --json '{"model":"gpt-4o","messages":[{"role":"user","content":"Hello!"}]}'`}</CliSnippet>
-      <CliSnippet label="Dry run" desc="Preview cost without paying.">
-        presto --dry-run https://mpp.tempo.xyz/openai/v1/chat/completions
-      </CliSnippet>
+        label="Prompt your agent"
+        desc="Use a service by prompting your agent (Claude, Codex, Amp, etc):"
+      >{`Generate a surreal image with fal.ai using Presto`}</CliSnippet>
     </div>
   );
 }
@@ -1570,9 +1566,11 @@ function ServiceRow({
               color: "var(--vocs-text-color-muted)",
             }}
           >
-            {s.docs?.homepage && (
+            {(s.docs?.apiReference || s.docs?.llmsTxt || s.docs?.homepage) && (
               <a
-                href={s.docs.homepage}
+                href={
+                  (s.docs?.apiReference ?? s.docs?.llmsTxt ?? s.docs?.homepage)!
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hide-mobile"
@@ -1726,11 +1724,8 @@ function BookIcon({ size = 13 }: { size?: number }) {
 
 function ExpandedDetail({ service: s }: { service: Service }) {
   const { copiedId, copy } = useCopyFeedback();
-  const baseUrl =
-    s.integration !== "third-party"
-      ? `https://${s.id}.mpp.tempo.xyz`
-      : (s.serviceUrl ?? s.url);
-  const docsUrl = s.docs?.homepage;
+  const baseUrl = s.serviceUrl ?? s.url;
+  const docsUrl = s.docs?.apiReference ?? s.docs?.llmsTxt ?? s.docs?.homepage;
   const websiteUrl = s.provider?.url;
   const mobileLinkStyle: React.CSSProperties = {
     display: "flex",
@@ -2013,7 +2008,7 @@ function PageStyles() {
         .search-mobile input { padding-top: 0.6rem !important; padding-bottom: 0.6rem !important; font-size: 15px !important; }
         .search-mobile select { font-size: 15px !important; padding-top: 0.55rem !important; padding-bottom: 0.55rem !important; }
         .filter-tags { justify-content: center !important; margin-bottom: 3.75rem !important; margin-left: 0 !important; margin-right: 0 !important; padding: 0 1.25rem !important; }
-        .filter-tags button { font-size: 14px !important; padding: 0.4rem 0.85rem !important; flex: 1 1 18% !important; justify-content: center !important; }
+        .filter-tags button { font-size: 14px !important; padding: 0.4rem 0.85rem !important; flex: 1 1 auto !important; justify-content: center !important; }
         .page-header { text-align: center !important; margin-bottom: 1.25rem !important; padding: 0 1.25rem !important; }
         .page-header p { max-width: 80% !important; margin-left: auto !important; margin-right: auto !important; }
         .pagination { padding: 0 1.25rem !important; }
@@ -2028,7 +2023,7 @@ function PageStyles() {
         .expanded-links { padding-left: 4rem !important; }
         .header-cards-grid > * > div > div:first-child { font-size: 17px !important; }
         .header-cards-grid > * > div > div:last-child { font-size: 15px !important; }
-        .filter-tags button { min-width: 0 !important; }
+        .filter-tags button { min-width: auto !important; }
       }
     `}</style>
   );

@@ -1,7 +1,7 @@
 import { Cards, Tabs, Tab } from 'vocs'
 import { OneTimePaymentsCard, ServerQuickstartCard, PrestoCliCard } from '../../components/cards'
-import * as Cli from '../../components/Cli'
-import { pathUsd } from '../../wagmi.config'
+import { PromptBlock } from '../../components/PromptBlock'
+import { TerminalGallery } from '../../components/TerminalGallery'
 
 # Accept pay-as-you-go payments [Session-based billing with payment channels]
 
@@ -16,26 +16,23 @@ use offchain vouchers for each subsequent request—vouchers are **not bottlenec
 
 ## Demo
 
-Try the live payment-gated photo gallery API running in this command line interface.
+Try the payment-gated photo gallery API. Click **Run demo** to create a wallet, fund it, and generate a gallery of paid photos.
 
-<Cli.Demo token={pathUsd} restartStep={1}>
-  <Cli.Startup />
-  <Cli.ConnectWallet />
-  <Cli.Faucet />
-  <Cli.Gallery />
-</Cli.Demo>
+<div style={{ height: 480 }}>
+  <TerminalGallery />
+</div>
 
 ## Prompt mode
 
-Paste this into your AI coding agent to build the entire guide in one shot:
+Paste this into your coding agent to build the entire guide in one shot:
 
-```txt
-Use https://mpp.dev/guides/pay-as-you-go.md as reference.
+<PromptBlock>
+{`Use https://mpp.dev/guides/pay-as-you-go.md as reference.
 Add mppx to my app with a payment-gated gallery endpoint
 that charges $0.01 per photo using the Tempo session payment method with
 PathUSD. When payment is verified, fetch a random photo from
-https://picsum.photos/200/200 and return the URL as JSON.
-```
+https://picsum.photos/200/200 and return the URL as JSON.`}
+</PromptBlock>
 
 ## Manual mode
 

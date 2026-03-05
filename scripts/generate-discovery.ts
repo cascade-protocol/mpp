@@ -18,6 +18,10 @@ import {
 const SCHEMAS_DIR = resolve(import.meta.dirname, "../schemas");
 const OUTPUT_FULL = resolve(SCHEMAS_DIR, "discovery.json");
 const OUTPUT_EXAMPLE = resolve(SCHEMAS_DIR, "discovery.example.json");
+const OUTPUT_LLMS_TXT = resolve(
+  import.meta.dirname,
+  "../public/services/llms.txt",
+);
 
 /** Services included in the slim example (covers fixed, dynamic, free, and mixed intents) */
 const EXAMPLE_IDS = new Set(["exa", "openrouter", "storage"]);
@@ -76,7 +80,6 @@ export function buildPayment(
     method: svc.payment.method,
     currency: svc.payment.currency,
     decimals: svc.payment.decimals,
-    recipient: svc.payment.recipient,
     description: ep.desc,
   };
 
@@ -208,6 +211,60 @@ function writeJson(path: string, data: unknown): void {
   writeFileSync(path, `${JSON.stringify(data, null, 2)}\n`);
 }
 
+function buildLlmsTxt(allBuilt: Record<string, unknown>[]): string {
+  const lines: string[] = [
+    "# MPP Services",
+    "",
+    "> MPP-enabled APIs your agent or application can seamlessly use.",
+    "> Docs: https://mpp.tempo.xyz/overview",
+    "> Full reference: https://mpp.tempo.xyz/llms-full.txt",
+    "",
+    "## Presto",
+    "",
+    "Presto is a command-line HTTP client with built-in MPP payment support.",
+    "",
+    "Install:",
+    "  $ curl -fsSL https://presto-binaries.tempo.xyz/install.sh | bash",
+    "",
+    "Log in (connects your Tempo wallet):",
+    "  $ presto login",
+    "",
+    "Make a request (payment handled automatically):",
+    "  $ presto https://openai.mpp.tempo.xyz/v1/chat/completions \\",
+    '    -X POST --json \'{"model":"gpt-4o","messages":[{"role":"user","content":"Hello"}]}\'',
+    "",
+    "Preview cost without paying:",
+    "  $ presto --dry-run https://openai.mpp.tempo.xyz/v1/chat/completions",
+    "",
+    "## API",
+    "",
+    "Programmatically discover services:",
+    "  GET https://mpp.tempo.xyz/api/services",
+    "",
+    "Returns JSON with all services, endpoints, and pricing.",
+    "",
+    "## Services",
+    "",
+    // Slim service list to keep token count low (~1k tokens vs ~23k for full
+    // discovery.json). Only includes fields needed for discovery; full endpoint
+    // details, pricing, and methods are available via GET /api/services.
+    "```json",
+    JSON.stringify(
+      allBuilt.map((s) => ({
+        id: s.id,
+        name: s.name,
+        serviceUrl: s.serviceUrl,
+        description: s.description,
+        categories: s.categories,
+      })),
+    ),
+    "```",
+    "",
+  ];
+
+  return lines.join("\n");
+}
+
 function generate(): void {
   validateServices(services);
 
@@ -221,6 +278,10 @@ function generate(): void {
     EXAMPLE_IDS.has(s.id as string),
   );
   writeJson(OUTPUT_EXAMPLE, { version: 1, services: exampleServices });
+
+  // llms.txt (served statically, overrides Vocs auto-generated version)
+  writeFileSync(OUTPUT_LLMS_TXT, buildLlmsTxt(allBuilt));
+  console.log(`Generated ${OUTPUT_LLMS_TXT} (${services.length} services)`);
 
   // Summary
   let totalEps = 0;

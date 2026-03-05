@@ -7,7 +7,6 @@
 
 // --- Shared constants ---
 export const USDC = "0x20c000000000000000000000b9537d11c60e8b50";
-export const TEMPO_RECIPIENT = "0xB48141c3Da5030deF992bDc686f0e9A8729206b6";
 export const MPP_REALM = "mpp.tempo.xyz";
 
 // --- Types ---
@@ -56,8 +55,6 @@ export interface PaymentDefaults {
   currency: string;
   /** Decimal places for the currency (e.g. 6 for USDC) */
   decimals: number;
-  /** Payment recipient address or identifier */
-  recipient: string;
 }
 
 /** Common payment defaults for Tempo USDC services */
@@ -65,7 +62,6 @@ export const TEMPO_PAYMENT: PaymentDefaults = {
   method: "tempo",
   currency: USDC,
   decimals: 6,
-  recipient: TEMPO_RECIPIENT,
 };
 
 export interface EndpointDef {
@@ -90,7 +86,7 @@ export interface ServiceDef {
   name: string;
   /** Upstream provider URL (e.g. "https://api.openai.com") */
   url: string;
-  /** MPP service URL — where this service is accessed through the proxy (e.g. "https://mpp.tempo.xyz/openai") */
+  /** MPP service URL — where this service is accessed through the proxy (e.g. "https://openai.mpp.tempo.xyz") */
   serviceUrl: string;
   description: string;
   icon?: string;
@@ -118,7 +114,7 @@ export const services: ServiceDef[] = [
     id: "agentmail",
     name: "AgentMail",
     url: "https://api.agentmail.to",
-    serviceUrl: `https://${MPP_REALM}/agentmail`,
+    serviceUrl: `https://agentmail.${MPP_REALM}`,
     description:
       "Email inboxes for AI agents — create, send, receive, and manage email programmatically.",
     categories: ["ai", "social"],
@@ -424,7 +420,7 @@ export const services: ServiceDef[] = [
     id: "alchemy",
     name: "Alchemy",
     url: "https://eth-mainnet.g.alchemy.com",
-    serviceUrl: `https://${MPP_REALM}/alchemy`,
+    serviceUrl: `https://alchemy.${MPP_REALM}`,
     description:
       "Blockchain data platform with JSON-RPC and NFT APIs across 80+ chains.",
     categories: ["blockchain", "data"],
@@ -463,7 +459,7 @@ export const services: ServiceDef[] = [
     id: "anthropic",
     name: "Anthropic",
     url: "https://api.anthropic.com",
-    serviceUrl: `https://${MPP_REALM}/anthropic`,
+    serviceUrl: `https://anthropic.${MPP_REALM}`,
     description:
       "Claude chat completions (Sonnet, Opus, Haiku) via native and OpenAI-compatible APIs.",
     categories: ["ai"],
@@ -497,7 +493,7 @@ export const services: ServiceDef[] = [
     id: "browserbase",
     name: "Browserbase",
     url: "https://api.browserbase.com",
-    serviceUrl: `https://${MPP_REALM}/browserbase`,
+    serviceUrl: `https://browserbase.${MPP_REALM}`,
     description: "Headless browser sessions for web scraping and automation.",
     categories: ["web", "compute"],
     integration: "third-party",
@@ -530,7 +526,7 @@ export const services: ServiceDef[] = [
     id: "codex",
     name: "Codex",
     url: "https://graph.codex.io",
-    serviceUrl: `https://${MPP_REALM}/codex`,
+    serviceUrl: `https://codex.${MPP_REALM}`,
     description:
       "GraphQL API for DeFi and blockchain data across 80+ networks.",
     categories: ["blockchain", "data"],
@@ -559,7 +555,7 @@ export const services: ServiceDef[] = [
     id: "digitalocean",
     name: "DigitalOcean",
     url: "https://api.digitalocean.com",
-    serviceUrl: `https://${MPP_REALM}/digitalocean`,
+    serviceUrl: `https://digitalocean.${MPP_REALM}`,
     description:
       "Cloud infrastructure for 1-click deploy of hosted MPP Agents on DigitalOcean Droplets.",
     categories: ["compute"],
@@ -603,7 +599,7 @@ export const services: ServiceDef[] = [
     id: "elevenlabs",
     name: "ElevenLabs",
     url: "https://api.elevenlabs.io",
-    serviceUrl: `https://${MPP_REALM}/elevenlabs`,
+    serviceUrl: `https://elevenlabs.${MPP_REALM}`,
     description: "Text-to-speech, speech-to-text, and voice cloning.",
     categories: ["ai", "media"],
     integration: "third-party",
@@ -647,7 +643,7 @@ export const services: ServiceDef[] = [
     id: "exa",
     name: "Exa",
     url: "https://api.exa.ai",
-    serviceUrl: `https://${MPP_REALM}/exa`,
+    serviceUrl: `https://exa.${MPP_REALM}`,
     description: "AI-powered web search, content retrieval, and answers.",
     categories: ["search", "ai"],
     integration: "third-party",
@@ -682,7 +678,7 @@ export const services: ServiceDef[] = [
     id: "fal",
     name: "fal.ai",
     url: "https://fal.run",
-    serviceUrl: `https://${MPP_REALM}/fal`,
+    serviceUrl: `https://fal.${MPP_REALM}`,
     description:
       "Image, video, and audio generation with 600+ models (Flux, SD, Recraft, Grok).",
     categories: ["ai", "media"],
@@ -786,7 +782,7 @@ export const services: ServiceDef[] = [
     id: "firecrawl",
     name: "Firecrawl",
     url: "https://api.firecrawl.dev",
-    serviceUrl: `https://${MPP_REALM}/firecrawl`,
+    serviceUrl: `https://firecrawl.${MPP_REALM}`,
     description:
       "Web scraping, crawling, and structured data extraction for LLMs.",
     categories: ["web", "data"],
@@ -819,7 +815,7 @@ export const services: ServiceDef[] = [
     id: "gemini",
     name: "Google Gemini",
     url: "https://generativelanguage.googleapis.com",
-    serviceUrl: `https://${MPP_REALM}/gemini`,
+    serviceUrl: `https://gemini.${MPP_REALM}`,
     description:
       "Gemini text generation, Veo video, and Nano Banana image generation with model-tier pricing.",
     categories: ["ai", "media"],
@@ -873,7 +869,7 @@ export const services: ServiceDef[] = [
     id: "modal",
     name: "Modal",
     url: "https://api.modal.com",
-    serviceUrl: `https://${MPP_REALM}/modal`,
+    serviceUrl: `https://modal.${MPP_REALM}`,
     description:
       "Serverless GPU compute for sandboxed code execution and AI/ML workloads.",
     categories: ["compute"],
@@ -905,7 +901,7 @@ export const services: ServiceDef[] = [
     id: "openai",
     name: "OpenAI",
     url: "https://api.openai.com",
-    serviceUrl: `https://${MPP_REALM}/openai`,
+    serviceUrl: `https://openai.${MPP_REALM}`,
     description:
       "Chat completions, embeddings, image generation, and audio with model-tier pricing.",
     icon: "https://mpp.tempo.xyz/icons/openai.svg",
@@ -963,7 +959,7 @@ export const services: ServiceDef[] = [
     id: "openrouter",
     name: "OpenRouter",
     url: "https://openrouter.ai/api",
-    serviceUrl: `https://${MPP_REALM}/openrouter`,
+    serviceUrl: `https://openrouter.${MPP_REALM}`,
     description: "Unified API for 100+ LLMs with live per-model pricing.",
     categories: ["ai"],
     integration: "third-party",
@@ -991,11 +987,11 @@ export const services: ServiceDef[] = [
     id: "parallel",
     name: "Parallel",
     url: "https://api.parallel.ai",
-    serviceUrl: `https://${MPP_REALM}/parallel`,
+    serviceUrl: `https://parallel.${MPP_REALM}`,
     description:
       "Web search, page extraction, and web-grounded chat completions.",
     categories: ["search", "ai"],
-    integration: "third-party",
+    integration: "first-party",
     tags: ["search", "web", "extraction", "chat"],
     docs: { llmsTxt: "https://parallel.ai/llms.txt" },
     provider: { name: "Parallel", url: "https://parallel.ai" },
@@ -1028,7 +1024,7 @@ export const services: ServiceDef[] = [
     id: "rpc",
     name: "Tempo RPC",
     url: "https://rpc.tempo.xyz",
-    serviceUrl: `https://${MPP_REALM}/rpc`,
+    serviceUrl: `https://rpc.${MPP_REALM}`,
     description: "Tempo blockchain JSON-RPC access (mainnet and testnet).",
     categories: ["blockchain"],
     integration: "first-party",
@@ -1056,7 +1052,7 @@ export const services: ServiceDef[] = [
     id: "storage",
     name: "Object Storage",
     url: "https://mpp.tempo.xyz/storage",
-    serviceUrl: `https://${MPP_REALM}/storage`,
+    serviceUrl: `https://storage.${MPP_REALM}`,
     description:
       "S3/R2-compatible object storage with dynamic per-size pricing.",
     categories: ["storage"],
@@ -1095,7 +1091,7 @@ export const services: ServiceDef[] = [
     id: "twitter",
     name: "Twitter/X",
     url: "https://api.x.com",
-    serviceUrl: `https://${MPP_REALM}/twitter`,
+    serviceUrl: `https://twitter.${MPP_REALM}`,
     description: "X API v2 for tweets, users, and search.",
     categories: ["social", "data"],
     integration: "third-party",
@@ -1134,6 +1130,1541 @@ export const services: ServiceDef[] = [
         desc: "Get user tweet timeline",
         amount: "5000",
       },
+    ],
+  },
+
+  // ── StableEmail ────────────────────────────────────────────────────────
+  {
+    id: "stableemail",
+    name: "StableEmail",
+    url: "https://stableemail.dev",
+    serviceUrl: "https://stableemail.dev",
+    description:
+      "Pay-per-send email delivery, forwarding inboxes, and custom subdomains — no API keys or accounts.",
+    categories: ["social"],
+    integration: "first-party",
+    tags: ["email", "send", "inbox", "forwarding", "subdomain"],
+    docs: {
+      homepage: "https://stableemail.dev",
+      llmsTxt: "https://stableemail.dev/llms.txt",
+    },
+    provider: { name: "Merit Systems", url: "https://stableemail.dev" },
+    realm: "stableemail.dev",
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      {
+        route: "POST /api/send",
+        desc: "Send email from relay address",
+        amount: "20000",
+      },
+      {
+        route: "POST /api/subdomain/buy",
+        desc: "Purchase a custom email subdomain",
+        amount: "5000000",
+      },
+      {
+        route: "POST /api/subdomain/send",
+        desc: "Send email from custom subdomain",
+        amount: "5000",
+      },
+      {
+        route: "POST /api/subdomain/signers",
+        desc: "Add or remove authorized wallet signers",
+      },
+      {
+        route: "POST /api/subdomain/update",
+        desc: "Update subdomain settings (catch-all forwarding)",
+      },
+      {
+        route: "GET /api/subdomain/status",
+        desc: "Check DNS/SES verification status",
+      },
+      {
+        route: "POST /api/subdomain/inbox/create",
+        desc: "Create inbox on subdomain",
+        amount: "250000",
+      },
+      {
+        route: "POST /api/subdomain/inbox/list",
+        desc: "List subdomain inboxes",
+      },
+      {
+        route: "POST /api/subdomain/inbox/update",
+        desc: "Update subdomain inbox settings",
+      },
+      {
+        route: "POST /api/subdomain/inbox/delete",
+        desc: "Delete inbox from subdomain",
+      },
+      {
+        route: "POST /api/subdomain/inbox/messages",
+        desc: "List subdomain inbox messages",
+        amount: "1000",
+      },
+      {
+        route: "POST /api/subdomain/inbox/messages/read",
+        desc: "Read a subdomain inbox message",
+        amount: "1000",
+      },
+      {
+        route: "POST /api/subdomain/inbox/messages/delete",
+        desc: "Delete a subdomain inbox message",
+      },
+      {
+        route: "POST /api/inbox/buy",
+        desc: "Buy a forwarding inbox (30 days)",
+        amount: "1000000",
+      },
+      {
+        route: "POST /api/inbox/topup",
+        desc: "Extend inbox 30 days",
+        amount: "1000000",
+      },
+      {
+        route: "POST /api/inbox/topup/quarter",
+        desc: "Extend inbox 90 days (save 17%)",
+        amount: "2500000",
+      },
+      {
+        route: "POST /api/inbox/topup/year",
+        desc: "Extend inbox 365 days (save 34%)",
+        amount: "8000000",
+      },
+      {
+        route: "POST /api/inbox/send",
+        desc: "Send email from inbox address",
+        amount: "5000",
+      },
+      { route: "GET /api/inbox/status", desc: "Check inbox status and expiry" },
+      { route: "POST /api/inbox/update", desc: "Update inbox settings" },
+      {
+        route: "POST /api/inbox/cancel",
+        desc: "Cancel inbox and get pro-rata refund",
+      },
+      {
+        route: "POST /api/inbox/messages",
+        desc: "List messages in inbox",
+        amount: "1000",
+      },
+      {
+        route: "POST /api/inbox/messages/read",
+        desc: "Read a single inbox message",
+        amount: "1000",
+      },
+      {
+        route: "POST /api/inbox/messages/delete",
+        desc: "Delete an inbox message",
+      },
+    ],
+  },
+
+  // ── StableEnrich ───────────────────────────────────────────────────────
+  {
+    id: "stableenrich",
+    name: "StableEnrich",
+    url: "https://stableenrich.dev",
+    serviceUrl: "https://stableenrich.dev",
+    description:
+      "Pay-per-request research APIs — people, companies, web search, scraping, places, social media, and contact enrichment.",
+    categories: ["data", "search", "social"],
+    integration: "first-party",
+    tags: [
+      "apollo",
+      "exa",
+      "firecrawl",
+      "google-maps",
+      "grok",
+      "linkedin",
+      "reddit",
+      "enrichment",
+      "research",
+    ],
+    docs: {
+      homepage: "https://stableenrich.dev",
+      llmsTxt: "https://stableenrich.dev/llms.txt",
+    },
+    provider: { name: "Merit Systems", url: "https://stableenrich.dev" },
+    realm: "stableenrich.dev",
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      // Apollo
+      {
+        route: "POST /api/apollo/people-search",
+        desc: "Find prospects by filters",
+        amount: "20000",
+      },
+      {
+        route: "POST /api/apollo/people-enrich",
+        desc: "Enrich single person by email/name/domain",
+        amount: "49500",
+      },
+      {
+        route: "POST /api/apollo/org-search",
+        desc: "Find companies by filters",
+        amount: "20000",
+      },
+      {
+        route: "POST /api/apollo/org-enrich",
+        desc: "Enrich single company by domain",
+        amount: "49500",
+      },
+      // Clado
+      {
+        route: "POST /api/clado/linkedin-scrape",
+        desc: "Scrape full LinkedIn profile data",
+        amount: "40000",
+      },
+      {
+        route: "POST /api/clado/contacts-enrich",
+        desc: "Enrich contact info from LinkedIn URL, email, or phone",
+        amount: "200000",
+      },
+      // Exa
+      {
+        route: "POST /api/exa/search",
+        desc: "Neural web search",
+        amount: "10000",
+      },
+      {
+        route: "POST /api/exa/find-similar",
+        desc: "Find pages similar to a URL",
+        amount: "10000",
+      },
+      {
+        route: "POST /api/exa/contents",
+        desc: "Extract content from URLs",
+        amount: "2000",
+      },
+      {
+        route: "POST /api/exa/answer",
+        desc: "AI-generated answers with citations",
+        amount: "10000",
+      },
+      // Firecrawl
+      {
+        route: "POST /api/firecrawl/scrape",
+        desc: "Scrape a URL with full JavaScript rendering",
+        amount: "12600",
+      },
+      {
+        route: "POST /api/firecrawl/search",
+        desc: "Search the web and get scraped results",
+        amount: "25200",
+      },
+      // Google Maps
+      {
+        route: "POST /api/google-maps/text-search/full",
+        desc: "Text search with full details",
+        amount: "80000",
+      },
+      {
+        route: "POST /api/google-maps/text-search/partial",
+        desc: "Text search with basic details",
+        amount: "20000",
+      },
+      {
+        route: "POST /api/google-maps/nearby-search/full",
+        desc: "Nearby search with full details",
+        amount: "80000",
+      },
+      {
+        route: "POST /api/google-maps/nearby-search/partial",
+        desc: "Nearby search with basic details",
+        amount: "20000",
+      },
+      {
+        route: "GET /api/google-maps/place-details/full",
+        desc: "Full place details by ID",
+        amount: "50000",
+      },
+      {
+        route: "GET /api/google-maps/place-details/partial",
+        desc: "Partial place details by ID",
+        amount: "20000",
+      },
+      // Grok (X/Twitter)
+      {
+        route: "POST /api/grok/x-search",
+        desc: "Search X/Twitter posts",
+        amount: "20000",
+      },
+      {
+        route: "POST /api/grok/user-search",
+        desc: "Search X/Twitter users",
+        amount: "20000",
+      },
+      {
+        route: "POST /api/grok/user-posts",
+        desc: "Get recent posts from an X user",
+        amount: "20000",
+      },
+      // Serper
+      {
+        route: "POST /api/serper/news",
+        desc: "Google News search",
+        amount: "40000",
+      },
+      {
+        route: "POST /api/serper/shopping",
+        desc: "Google Shopping search",
+        amount: "40000",
+      },
+      // Reddit
+      {
+        route: "POST /api/reddit/search",
+        desc: "Search Reddit posts",
+        amount: "20000",
+      },
+      {
+        route: "POST /api/reddit/post-comments",
+        desc: "Get post details and comments",
+        amount: "20000",
+      },
+      // Whitepages
+      {
+        route: "POST /api/whitepages/person-search",
+        desc: "Search for people by name, phone, or address",
+        amount: "440000",
+      },
+      {
+        route: "POST /api/whitepages/property-search",
+        desc: "Property ownership and resident details by address",
+        amount: "440000",
+      },
+      // Hunter
+      {
+        route: "POST /api/hunter/email-verifier",
+        desc: "Verify email deliverability",
+        amount: "30000",
+      },
+      // Influencer
+      {
+        route: "POST /api/influencer/enrich-by-email",
+        desc: "Find social profiles by email",
+        amount: "400000",
+      },
+      {
+        route: "POST /api/influencer/enrich-by-social",
+        desc: "Enrich social media profile with contact info",
+        amount: "400000",
+      },
+    ],
+  },
+
+  // ── StableTravel ─────────────────────────────────────────────────────
+  {
+    id: "stabletravel",
+    name: "StableTravel",
+    url: "https://stabletravel.dev",
+    serviceUrl: "https://stabletravel.dev",
+    description:
+      "Pay-per-request travel APIs — flights, hotels, activities, transfers, and real-time flight tracking. Powered by Amadeus and FlightAware.",
+    categories: ["data", "web"],
+    integration: "first-party",
+    tags: [
+      "amadeus",
+      "flightaware",
+      "flights",
+      "hotels",
+      "activities",
+      "transfers",
+      "travel",
+    ],
+    docs: {
+      homepage: "https://stabletravel.dev",
+      llmsTxt: "https://stabletravel.dev/llms.txt",
+    },
+    provider: { name: "Merit Systems", url: "https://stabletravel.dev" },
+    realm: "stabletravel.dev",
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      // Flights
+      {
+        route: "POST /api/flights/search",
+        desc: "Search flight offers (advanced multi-city)",
+        amount: "54000",
+      },
+      {
+        route: "POST /api/flights/price",
+        desc: "Confirm pricing for a flight offer",
+        amount: "32400",
+      },
+      {
+        route: "POST /api/flights/book",
+        desc: "Book a flight (create flight order)",
+        amount: "86400",
+      },
+      {
+        route: "GET /api/flights/orders",
+        desc: "Retrieve a flight order by ID",
+        amount: "5400",
+      },
+      {
+        route: "POST /api/flights/orders/cancel",
+        desc: "Cancel a flight order",
+        amount: "5400",
+      },
+      {
+        route: "POST /api/flights/seatmap",
+        desc: "Get seat maps for a flight",
+        amount: "32400",
+      },
+      {
+        route: "POST /api/flights/upsell",
+        desc: "Get upsell offers for a flight",
+        amount: "32400",
+      },
+      {
+        route: "POST /api/flights/availability",
+        desc: "Check flight availability",
+        amount: "32400",
+      },
+      {
+        route: "GET /api/flights/status",
+        desc: "Get flight status by carrier, number, and date",
+        amount: "5400",
+      },
+      {
+        route: "GET /api/flights/checkin-links",
+        desc: "Get airline check-in page URLs",
+        amount: "5400",
+      },
+      // Hotels
+      {
+        route: "GET /api/hotels/list",
+        desc: "List hotels by city code",
+        amount: "32400",
+      },
+      {
+        route: "GET /api/hotels/list/by-geocode",
+        desc: "List hotels by latitude/longitude",
+        amount: "32400",
+      },
+      {
+        route: "GET /api/hotels/search",
+        desc: "Search hotel offers by hotel IDs",
+        amount: "32400",
+      },
+      {
+        route: "GET /api/hotels/search/by-hotel",
+        desc: "Search offers for a specific hotel",
+        amount: "32400",
+      },
+      {
+        route: "GET /api/hotels/offer",
+        desc: "Get details for a specific hotel offer",
+        amount: "32400",
+      },
+      {
+        route: "POST /api/hotels/book",
+        desc: "Book a hotel offer",
+        amount: "2160",
+      },
+      {
+        route: "GET /api/hotels/autocomplete",
+        desc: "Autocomplete hotel names",
+        amount: "5400",
+      },
+      // Activities
+      {
+        route: "GET /api/activities/search",
+        desc: "Search tours & activities by lat/lng",
+        amount: "54000",
+      },
+      {
+        route: "GET /api/activities/by-square",
+        desc: "Search activities within a geographic square",
+        amount: "54000",
+      },
+      {
+        route: "GET /api/activities/details",
+        desc: "Get activity details by ID",
+        amount: "54000",
+      },
+      // Transfers
+      {
+        route: "POST /api/transfers/search",
+        desc: "Search airport transfer options",
+        amount: "3240",
+      },
+      {
+        route: "POST /api/transfers/book",
+        desc: "Book a transfer",
+        amount: "2160",
+      },
+      {
+        route: "POST /api/transfers/cancel",
+        desc: "Cancel a transfer booking",
+        amount: "2160",
+      },
+      // Reference Data
+      {
+        route: "GET /api/reference/locations",
+        desc: "Search locations (airports, cities) by keyword",
+        amount: "5400",
+      },
+      {
+        route: "GET /api/reference/airports",
+        desc: "Find nearby airports by latitude/longitude",
+        amount: "5400",
+      },
+      {
+        route: "GET /api/reference/airlines",
+        desc: "Look up airline by IATA code",
+        amount: "5400",
+      },
+      {
+        route: "GET /api/reference/airline-routes",
+        desc: "Get routes for an airline from an airport",
+        amount: "5400",
+      },
+      {
+        route: "GET /api/reference/airport-routes",
+        desc: "Get direct destinations from an airport",
+        amount: "5400",
+      },
+      {
+        route: "GET /api/reference/cities",
+        desc: "Search cities by keyword",
+        amount: "5400",
+      },
+      // FlightAware — Real-Time Flights
+      {
+        route: "GET /api/flightaware/flights/search",
+        desc: "Search flights by query string",
+        amount: "100000",
+      },
+      {
+        route: "GET /api/flightaware/flights/search/positions",
+        desc: "Search flights with position data",
+        amount: "100000",
+      },
+      {
+        route: "GET /api/flightaware/flights/search/count",
+        desc: "Get count of flights matching a search",
+        amount: "40000",
+      },
+      {
+        route: "GET /api/flightaware/flights/search/advanced",
+        desc: "Advanced flight search with complex query syntax",
+        amount: "100000",
+      },
+      {
+        route: "GET /api/flightaware/flights/:id",
+        desc: "Get flights by ident (flight number, registration)",
+        amount: "10000",
+      },
+      {
+        route: "GET /api/flightaware/flights/:id/canonical",
+        desc: "Get canonical ident for a flight",
+        amount: "2000",
+      },
+      {
+        route: "POST /api/flightaware/flights/:id/intents",
+        desc: "Set flight intent for push notifications",
+        amount: "1000",
+      },
+      {
+        route: "GET /api/flightaware/flights/:id/position",
+        desc: "Get latest position for a flight",
+        amount: "20000",
+      },
+      {
+        route: "GET /api/flightaware/flights/:id/track",
+        desc: "Get full track/positions for a flight",
+        amount: "24000",
+      },
+      {
+        route: "GET /api/flightaware/flights/:id/route-info",
+        desc: "Get route info (fixes, waypoints) for a flight",
+        amount: "20000",
+      },
+      {
+        route: "GET /api/flightaware/flights/:id/map",
+        desc: "Get flight track map image (PNG)",
+        amount: "60000",
+      },
+      // FlightAware — Airports
+      {
+        route: "GET /api/flightaware/airports",
+        desc: "List all airports",
+        amount: "10000",
+      },
+      {
+        route: "GET /api/flightaware/airports/nearby",
+        desc: "Find airports near a lat/lng",
+        amount: "8000",
+      },
+      {
+        route: "GET /api/flightaware/airports/delays",
+        desc: "Get all airport delay information",
+        amount: "100000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id",
+        desc: "Get airport info by code",
+        amount: "30000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/canonical",
+        desc: "Get canonical airport code",
+        amount: "2000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/nearby",
+        desc: "Find airports near a specific airport",
+        amount: "8000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/delays",
+        desc: "Get delays for a specific airport",
+        amount: "20000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/flights",
+        desc: "Get all flights at an airport",
+        amount: "40000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/flights/arrivals",
+        desc: "Get arrivals at an airport",
+        amount: "10000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/flights/departures",
+        desc: "Get departures from an airport",
+        amount: "10000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/flights/scheduled-departures",
+        desc: "Get scheduled departures",
+        amount: "10000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/flights/scheduled-arrivals",
+        desc: "Get scheduled arrivals",
+        amount: "10000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/flights/to/:dest_id",
+        desc: "Get flights between two airports",
+        amount: "100000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/flights/counts",
+        desc: "Get flight count statistics",
+        amount: "200000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/weather/observations",
+        desc: "Get METAR weather observations",
+        amount: "4000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/weather/forecast",
+        desc: "Get TAF weather forecast",
+        amount: "4000",
+      },
+      {
+        route: "GET /api/flightaware/airports/:id/routes/:dest_id",
+        desc: "Get route info between airports",
+        amount: "40000",
+      },
+      // FlightAware — Flight History
+      {
+        route: "GET /api/flightaware/history/flights/:id",
+        desc: "Get historical flights by ident",
+        amount: "40000",
+      },
+      {
+        route: "GET /api/flightaware/history/flights/:id/track",
+        desc: "Get historical flight track",
+        amount: "120000",
+      },
+      {
+        route: "GET /api/flightaware/history/flights/:id/map",
+        desc: "Get historical flight map image (PNG)",
+        amount: "280000",
+      },
+      {
+        route: "GET /api/flightaware/history/flights/:id/route-info",
+        desc: "Get historical flight route info",
+        amount: "80000",
+      },
+      {
+        route: "GET /api/flightaware/history/airports/:id/flights/arrivals",
+        desc: "Get historical arrivals at airport",
+        amount: "40000",
+      },
+      {
+        route: "GET /api/flightaware/history/airports/:id/flights/departures",
+        desc: "Get historical departures from airport",
+        amount: "40000",
+      },
+      {
+        route: "GET /api/flightaware/history/airports/:id/flights/to/:dest_id",
+        desc: "Get historical flights between airports",
+        amount: "240000",
+      },
+      {
+        route:
+          "GET /api/flightaware/history/aircraft/:registration/last-flight",
+        desc: "Get last flight for an aircraft",
+        amount: "400000",
+      },
+      {
+        route: "GET /api/flightaware/history/operators/:id/flights",
+        desc: "Get historical flights by operator",
+        amount: "40000",
+      },
+      // FlightAware — Disruption Counts
+      {
+        route: "GET /api/flightaware/disruption-counts/:entity_type",
+        desc: "Get disruption stats by entity type",
+        amount: "10000",
+      },
+      {
+        route: "GET /api/flightaware/disruption-counts/:entity_type/:id",
+        desc: "Get disruption stats for a specific entity",
+        amount: "10000",
+      },
+    ],
+  },
+
+  // ── StablePhone ────────────────────────────────────────────────────────
+  {
+    id: "stablephone",
+    name: "StablePhone",
+    url: "https://stablephone.dev",
+    serviceUrl: "https://stablephone.dev",
+    description:
+      "AI phone calls, dedicated phone numbers, and iMessage/FaceTime lookup — pay per request.",
+    categories: ["ai", "social"],
+    integration: "first-party",
+    tags: ["phone", "call", "voice", "ai-call", "imessage"],
+    docs: {
+      homepage: "https://stablephone.dev",
+      llmsTxt: "https://stablephone.dev/llms.txt",
+    },
+    provider: { name: "Merit Systems", url: "https://stablephone.dev" },
+    realm: "stablephone.dev",
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      {
+        route: "POST /api/call",
+        desc: "Make an AI phone call",
+        amount: "540000",
+      },
+      { route: "GET /api/call/:id", desc: "Get call status and transcript" },
+      {
+        route: "POST /api/number",
+        desc: "Buy a phone number (30 days)",
+        amount: "20000000",
+      },
+      {
+        route: "POST /api/number/topup",
+        desc: "Extend a phone number 30 days",
+        amount: "15000000",
+      },
+      { route: "GET /api/numbers", desc: "List your phone numbers" },
+      {
+        route: "POST /api/lookup",
+        desc: "iMessage/FaceTime lookup",
+        amount: "50000",
+      },
+      { route: "GET /api/lookup/status", desc: "Poll lookup results" },
+    ],
+  },
+
+  // ── StableSocial ───────────────────────────────────────────────────────
+  {
+    id: "stablesocial",
+    name: "StableSocial",
+    url: "https://stablesocial.dev",
+    serviceUrl: "https://stablesocial.dev",
+    description:
+      "Pay-per-request social media data from TikTok, Instagram, X/Twitter, Facebook, and Reddit.",
+    categories: ["social", "data"],
+    integration: "first-party",
+    tags: [
+      "tiktok",
+      "instagram",
+      "twitter",
+      "facebook",
+      "reddit",
+      "scraping",
+      "social",
+    ],
+    docs: {
+      homepage: "https://stablesocial.dev",
+      llmsTxt: "https://stablesocial.dev/llms.txt",
+    },
+    provider: { name: "Merit Systems", url: "https://stablesocial.dev" },
+    realm: "stablesocial.dev",
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      // TikTok
+      {
+        route: "POST /api/tiktok/profile",
+        desc: "Get TikTok user profile",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/tiktok/posts",
+        desc: "Get TikTok user posts",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/tiktok/post-comments",
+        desc: "Get TikTok video comments",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/tiktok/comment-replies",
+        desc: "Get TikTok comment replies",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/tiktok/followers",
+        desc: "Get TikTok followers",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/tiktok/following",
+        desc: "Get TikTok following",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/tiktok/search",
+        desc: "Search TikTok posts by keyword",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/tiktok/search-hashtag",
+        desc: "Search TikTok by hashtag",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/tiktok/search-profiles",
+        desc: "Search TikTok user profiles",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/tiktok/search-music",
+        desc: "Search TikTok posts by sound",
+        amount: "60000",
+      },
+      // Instagram
+      {
+        route: "POST /api/instagram/profile",
+        desc: "Get Instagram user profile",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/instagram/posts",
+        desc: "Get Instagram user posts",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/instagram/post-comments",
+        desc: "Get Instagram post comments",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/instagram/comment-replies",
+        desc: "Get Instagram comment replies",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/instagram/followers",
+        desc: "Get Instagram followers",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/instagram/following",
+        desc: "Get Instagram following",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/instagram/stories",
+        desc: "Get Instagram user stories",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/instagram/highlights",
+        desc: "Get Instagram user highlights",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/instagram/search",
+        desc: "Search Instagram posts by keyword",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/instagram/search-tags",
+        desc: "Search Instagram by tag",
+        amount: "60000",
+      },
+      // X/Twitter
+      {
+        route: "POST /api/x/profile",
+        desc: "Get X/Twitter user profile",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/x/posts",
+        desc: "Get X/Twitter user posts",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/x/post-replies",
+        desc: "Get X/Twitter post replies",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/x/post-retweets",
+        desc: "Get X/Twitter retweet profiles",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/x/post-quotes",
+        desc: "Get X/Twitter quote tweets",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/x/followers",
+        desc: "Get X/Twitter followers",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/x/following",
+        desc: "Get X/Twitter following",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/x/search",
+        desc: "Search X/Twitter posts by keyword",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/x/search-profiles",
+        desc: "Search X/Twitter user profiles",
+        amount: "60000",
+      },
+      // Facebook
+      {
+        route: "POST /api/facebook/profile",
+        desc: "Get Facebook page/user profile",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/facebook/posts",
+        desc: "Get Facebook page/user posts",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/facebook/post-comments",
+        desc: "Get Facebook post comments",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/facebook/comment-replies",
+        desc: "Get Facebook comment replies",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/facebook/followers",
+        desc: "Get Facebook followers",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/facebook/following",
+        desc: "Get Facebook following",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/facebook/search",
+        desc: "Search Facebook posts by keyword",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/facebook/search-people",
+        desc: "Search Facebook people profiles",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/facebook/search-pages",
+        desc: "Search Facebook page profiles",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/facebook/search-groups",
+        desc: "Search Facebook group profiles",
+        amount: "60000",
+      },
+      // Reddit
+      {
+        route: "POST /api/reddit/post",
+        desc: "Get Reddit post details",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/reddit/post-comments",
+        desc: "Get Reddit post comments",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/reddit/comment",
+        desc: "Get Reddit comment details",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/reddit/search",
+        desc: "Search Reddit posts by keyword",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/reddit/search-profiles",
+        desc: "Search Reddit user profiles",
+        amount: "60000",
+      },
+      {
+        route: "POST /api/reddit/subreddit",
+        desc: "Get subreddit posts",
+        amount: "60000",
+      },
+      // Polling
+      { route: "GET /api/jobs", desc: "Poll job status and retrieve results" },
+    ],
+  },
+
+  // ── StableStudio ───────────────────────────────────────────────────────
+  {
+    id: "stablestudio",
+    name: "StableStudio",
+    url: "https://stablestudio.dev",
+    serviceUrl: "https://stablestudio.dev",
+    description:
+      "Pay-per-generation AI image and video creation — Nano Banana, GPT Image, Grok, Flux, Sora, Veo, Seedance, and Wan.",
+    categories: ["ai", "media"],
+    integration: "first-party",
+    tags: [
+      "image",
+      "video",
+      "generation",
+      "nano-banana",
+      "gpt-image",
+      "grok",
+      "flux",
+      "sora",
+      "veo",
+      "seedance",
+      "wan",
+    ],
+    docs: {
+      homepage: "https://stablestudio.dev",
+      llmsTxt: "https://stablestudio.dev/llms.txt",
+    },
+    provider: { name: "Merit Systems", url: "https://stablestudio.dev" },
+    realm: "stablestudio.dev",
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      // Nano Banana
+      {
+        route: "POST /api/generate/nano-banana/generate",
+        desc: "Nano Banana image generation",
+        amount: "39000",
+      },
+      {
+        route: "POST /api/generate/nano-banana/edit",
+        desc: "Nano Banana image editing",
+        amount: "39000",
+      },
+      {
+        route: "POST /api/generate/nano-banana-pro/generate",
+        desc: "Nano Banana Pro image generation (up to 4K)",
+        dynamic: true,
+      },
+      {
+        route: "POST /api/generate/nano-banana-pro/edit",
+        desc: "Nano Banana Pro image editing (up to 4K)",
+        dynamic: true,
+      },
+      // Grok
+      {
+        route: "POST /api/generate/grok/generate",
+        desc: "Grok image generation",
+        amount: "70000",
+      },
+      {
+        route: "POST /api/generate/grok/edit",
+        desc: "Grok image editing",
+        amount: "22000",
+      },
+      {
+        route: "POST /api/generate/grok-video/generate",
+        desc: "Grok video generation",
+        dynamic: true,
+      },
+      // GPT Image
+      {
+        route: "POST /api/generate/gpt-image-1/generate",
+        desc: "GPT Image 1 generation",
+        dynamic: true,
+      },
+      {
+        route: "POST /api/generate/gpt-image-1/edit",
+        desc: "GPT Image 1 editing",
+        dynamic: true,
+      },
+      {
+        route: "POST /api/generate/gpt-image-1.5/generate",
+        desc: "GPT Image 1.5 generation",
+        dynamic: true,
+      },
+      {
+        route: "POST /api/generate/gpt-image-1.5/edit",
+        desc: "GPT Image 1.5 editing",
+        dynamic: true,
+      },
+      // Flux
+      {
+        route: "POST /api/generate/flux-2-pro/generate",
+        desc: "Flux 2 Pro image generation",
+        dynamic: true,
+      },
+      {
+        route: "POST /api/generate/flux-2-pro/edit",
+        desc: "Flux 2 Pro image editing",
+        dynamic: true,
+      },
+      // Seedance
+      {
+        route: "POST /api/generate/seedance/t2v",
+        desc: "Seedance text-to-video",
+        dynamic: true,
+      },
+      {
+        route: "POST /api/generate/seedance/i2v",
+        desc: "Seedance image-to-video",
+        dynamic: true,
+      },
+      {
+        route: "POST /api/generate/seedance-fast/t2v",
+        desc: "Seedance Fast text-to-video",
+        dynamic: true,
+      },
+      {
+        route: "POST /api/generate/seedance-fast/i2v",
+        desc: "Seedance Fast image-to-video",
+        dynamic: true,
+      },
+      // Wan
+      {
+        route: "POST /api/generate/wan-2.6/t2v",
+        desc: "Wan 2.6 text-to-video",
+        dynamic: true,
+      },
+      {
+        route: "POST /api/generate/wan-2.6/i2v",
+        desc: "Wan 2.6 image-to-video",
+        dynamic: true,
+      },
+      // Sora
+      {
+        route: "POST /api/generate/sora-2/generate",
+        desc: "Sora 2 video generation",
+        dynamic: true,
+      },
+      {
+        route: "POST /api/generate/sora-2-pro/generate",
+        desc: "Sora 2 Pro video generation",
+        dynamic: true,
+      },
+      // Veo
+      {
+        route: "POST /api/generate/veo-3.1/generate",
+        desc: "Veo 3.1 video generation",
+        dynamic: true,
+      },
+      {
+        route: "POST /api/generate/veo-3.1-fast/generate",
+        desc: "Veo 3.1 Fast video generation",
+        dynamic: true,
+      },
+      // Upload & Jobs
+      {
+        route: "POST /api/upload",
+        desc: "Upload image for editing or image-to-video",
+        amount: "10000",
+      },
+      { route: "POST /api/upload/confirm", desc: "Confirm uploaded file" },
+      {
+        route: "GET /api/jobs/:jobId",
+        desc: "Poll job status and retrieve results",
+      },
+      { route: "GET /api/jobs", desc: "List jobs" },
+      { route: "DELETE /api/jobs/:jobId", desc: "Delete a failed job" },
+    ],
+  },
+
+  // ── StableUpload ───────────────────────────────────────────────────────
+  {
+    id: "stableupload",
+    name: "StableUpload",
+    url: "https://stableupload.dev",
+    serviceUrl: "https://stableupload.dev",
+    description:
+      "Pay-per-upload file hosting and static site hosting with custom domains — 6 month TTL.",
+    categories: ["storage"],
+    integration: "first-party",
+    tags: ["upload", "files", "hosting", "static-site", "cdn"],
+    docs: {
+      homepage: "https://stableupload.dev",
+      llmsTxt: "https://stableupload.dev/llms.txt",
+    },
+    provider: { name: "Merit Systems", url: "https://stableupload.dev" },
+    realm: "stableupload.dev",
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      {
+        route: "POST /api/upload",
+        desc: "Buy an upload slot (10MB $0.02, 100MB $0.20, 1GB $2.00)",
+        dynamic: true,
+      },
+      {
+        route: "GET /api/uploads",
+        desc: "List uploads for authenticated wallet",
+      },
+      {
+        route: "GET /api/download/:uploadId",
+        desc: "Get upload details by ID",
+      },
+      {
+        route: "POST /api/site",
+        desc: "Buy a site upload slot for zip hosting",
+        dynamic: true,
+      },
+      {
+        route: "POST /api/site/activate",
+        desc: "Extract zip and make site live",
+      },
+      {
+        route: "POST /api/site/domain",
+        desc: "Connect a custom domain to a site",
+      },
+      {
+        route: "GET /api/site/domain/status",
+        desc: "Check TLS provisioning status",
+      },
+    ],
+  },
+
+  // ── AviationStack ──────────────────────────────────────────────────────
+  {
+    id: "aviationstack",
+    name: "AviationStack",
+    url: "https://api.aviationstack.com",
+    serviceUrl: `https://aviationstack.${MPP_REALM}`,
+    description:
+      "Real-time and historical flight tracking, airports, airlines, and schedules.",
+    categories: ["data"],
+    integration: "third-party",
+    tags: ["flights", "aviation", "tracking", "airports", "airlines"],
+    provider: { name: "AviationStack", url: "https://aviationstack.com" },
+    realm: MPP_REALM,
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      {
+        route: "GET /v1/aircraft_types",
+        desc: "Aircraft types lookup",
+        amount: "5000",
+      },
+      { route: "GET /v1/airlines", desc: "Airlines lookup", amount: "5000" },
+      { route: "GET /v1/airplanes", desc: "Airplanes lookup", amount: "5000" },
+      { route: "GET /v1/airports", desc: "Airports lookup", amount: "5000" },
+      { route: "GET /v1/cities", desc: "Cities lookup", amount: "5000" },
+      { route: "GET /v1/countries", desc: "Countries lookup", amount: "5000" },
+      { route: "GET /v1/flights", desc: "Real-time flights", amount: "5000" },
+      {
+        route: "GET /v1/flightsFuture",
+        desc: "Future flight schedules",
+        amount: "5000",
+      },
+      { route: "GET /v1/routes", desc: "Routes lookup", amount: "5000" },
+      { route: "GET /v1/taxes", desc: "Aviation taxes lookup", amount: "5000" },
+      { route: "GET /v1/timetable", desc: "Flight schedules", amount: "5000" },
+    ],
+  },
+
+  // ── Code Storage ───────────────────────────────────────────────────────
+  {
+    id: "codestorage",
+    name: "Code Storage",
+    url: "https://code.storage",
+    serviceUrl: `https://codestorage.${MPP_REALM}`,
+    description:
+      "Paid Git repository creation — create repos and get authenticated clone URLs.",
+    categories: ["storage"],
+    integration: "third-party",
+    tags: ["git", "repos", "code", "storage"],
+    docs: {
+      llmsTxt: "https://code.storage/docs/llms.txt",
+    },
+    provider: { name: "Code Storage", url: "https://code.storage" },
+    realm: MPP_REALM,
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      {
+        route: "GET /repos/:id",
+        desc: "Get clone URL for a repository",
+        amount: "10000",
+      },
+      {
+        route: "POST /repos",
+        desc: "Create a Git repository",
+        amount: "1000000",
+      },
+    ],
+  },
+
+  // ── FlightAPI ──────────────────────────────────────────────────────────
+  {
+    id: "flightapi",
+    name: "FlightAPI",
+    url: "https://api.flightapi.io",
+    serviceUrl: `https://flightapi.${MPP_REALM}`,
+    description:
+      "Real-time flight prices, tracking, and airport schedules from 700+ airlines.",
+    categories: ["data"],
+    integration: "third-party",
+    tags: ["flights", "prices", "tracking", "airports", "airlines"],
+    provider: { name: "FlightAPI", url: "https://flightapi.io" },
+    realm: MPP_REALM,
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      { route: "GET /airline/:rest*", desc: "Track a flight", amount: "2000" },
+      {
+        route: "GET /iata/:rest*",
+        desc: "Airline/airport code lookup",
+        amount: "2000",
+      },
+      {
+        route: "GET /multitrip/:rest*",
+        desc: "Multi-city flight price search",
+        amount: "8000",
+      },
+      {
+        route: "GET /onewaytrip/:rest*",
+        desc: "One-way flight price search",
+        amount: "3000",
+      },
+      {
+        route: "GET /roundtrip/:rest*",
+        desc: "Round-trip flight price search",
+        amount: "3000",
+      },
+      {
+        route: "GET /schedule/:rest*",
+        desc: "Airport schedule",
+        amount: "3000",
+      },
+      {
+        route: "GET /trackbyroute/:rest*",
+        desc: "Track flights between airports",
+        amount: "2000",
+      },
+    ],
+  },
+
+  // ── FlightAware AeroAPI ────────────────────────────────────────────────
+  {
+    id: "flightaware",
+    name: "FlightAware AeroAPI",
+    url: "https://aeroapi.flightaware.com",
+    serviceUrl: `https://flightaware.${MPP_REALM}`,
+    description:
+      "On-demand flight tracking, airport activity, and aviation data.",
+    categories: ["data"],
+    integration: "third-party",
+    tags: ["flights", "tracking", "airports", "aviation"],
+    provider: { name: "FlightAware", url: "https://www.flightaware.com" },
+    realm: MPP_REALM,
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      {
+        route: "GET /aeroapi/airports/:id",
+        desc: "Airport info",
+        amount: "10000",
+      },
+      {
+        route: "GET /aeroapi/airports/:id/flights",
+        desc: "Airport flights",
+        amount: "10000",
+      },
+      {
+        route: "GET /aeroapi/airports/:id/flights/arrivals",
+        desc: "Airport arrivals",
+        amount: "5000",
+      },
+      {
+        route: "GET /aeroapi/airports/:id/flights/departures",
+        desc: "Airport departures",
+        amount: "5000",
+      },
+      {
+        route: "GET /aeroapi/airports/:id/flights/scheduled_arrivals",
+        desc: "Scheduled arrivals",
+        amount: "5000",
+      },
+      {
+        route: "GET /aeroapi/airports/:id/flights/scheduled_departures",
+        desc: "Scheduled departures",
+        amount: "5000",
+      },
+      {
+        route: "GET /aeroapi/flights/:id/map",
+        desc: "Flight map image",
+        amount: "10000",
+      },
+      {
+        route: "GET /aeroapi/flights/:id/track",
+        desc: "Flight track positions",
+        amount: "30000",
+      },
+      {
+        route: "GET /aeroapi/flights/:ident",
+        desc: "Flight lookup by ident",
+        amount: "5000",
+      },
+      {
+        route: "GET /aeroapi/operators/:id",
+        desc: "Operator info",
+        amount: "15000",
+      },
+      {
+        route: "GET /aeroapi/operators/:id/flights",
+        desc: "Operator flights",
+        amount: "30000",
+      },
+      {
+        route: "GET /aeroapi/schedules/:start/:end",
+        desc: "Flight schedules",
+        amount: "20000",
+      },
+    ],
+  },
+
+  // ── GoFlightLabs ───────────────────────────────────────────────────────
+  {
+    id: "goflightlabs",
+    name: "GoFlightLabs",
+    url: "https://goflightlabs.com",
+    serviceUrl: `https://goflightlabs.${MPP_REALM}`,
+    description:
+      "Real-time flight tracking, prices, schedules, and airline data.",
+    categories: ["data"],
+    integration: "third-party",
+    tags: ["flights", "tracking", "prices", "airlines", "airports"],
+    provider: { name: "GoFlightLabs", url: "https://goflightlabs.com" },
+    realm: MPP_REALM,
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      {
+        route: "GET /airports-by-filters",
+        desc: "Airports by filter",
+        amount: "5000",
+      },
+      {
+        route: "GET /flight-data-by-date",
+        desc: "Flight data by date",
+        amount: "5000",
+      },
+      { route: "GET /flight-delay", desc: "Flight delay info", amount: "5000" },
+      {
+        route: "GET /flight-info-by-flight-number",
+        desc: "Flight info by number",
+        amount: "5000",
+      },
+      {
+        route: "GET /flight-prices",
+        desc: "Flight price search",
+        amount: "10000",
+      },
+      { route: "GET /flights", desc: "Real-time flights", amount: "5000" },
+      {
+        route: "GET /flights-airline",
+        desc: "Flights by airline",
+        amount: "5000",
+      },
+      {
+        route: "GET /flights-callsign",
+        desc: "Flights by callsign",
+        amount: "5000",
+      },
+      {
+        route: "GET /flights-history",
+        desc: "Historical flights",
+        amount: "5000",
+      },
+      {
+        route: "GET /flights-schedules",
+        desc: "Flight schedules",
+        amount: "5000",
+      },
+      {
+        route: "GET /future-flights",
+        desc: "Future flight predictions",
+        amount: "5000",
+      },
+      {
+        route: "GET /retrieve-airlines",
+        desc: "Retrieve airlines",
+        amount: "5000",
+      },
+      {
+        route: "GET /retrieve-airports",
+        desc: "Retrieve airports",
+        amount: "5000",
+      },
+      {
+        route: "GET /retrieve-countries",
+        desc: "Retrieve countries",
+        amount: "5000",
+      },
+      { route: "GET /retrieve-routes", desc: "Airline routes", amount: "5000" },
+    ],
+  },
+
+  // ── SerpApi ────────────────────────────────────────────────────────────
+  {
+    id: "serpapi",
+    name: "SerpApi",
+    url: "https://serpapi.com",
+    serviceUrl: `https://serpapi.${MPP_REALM}`,
+    description:
+      "Google Flights search — real-time prices, schedules, and booking options.",
+    categories: ["search", "data"],
+    integration: "third-party",
+    tags: ["search", "flights", "google", "prices"],
+    provider: { name: "SerpApi", url: "https://serpapi.com" },
+    realm: MPP_REALM,
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      { route: "GET /search", desc: "Google Flights search", amount: "15000" },
     ],
   },
 ];

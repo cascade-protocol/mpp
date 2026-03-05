@@ -7,15 +7,11 @@ import type { PathsForPages, GetConfigResponse } from 'waku/router';
 // prettier-ignore
 type Page =
 | { path: '/404'; render: 'static' }
-| { path: '/_cli'; render: 'static' }
 | { path: '/brand'; render: 'static' }
-| { path: '/demo'; render: 'static' }
 | { path: '/faq'; render: 'static' }
 | { path: '/'; render: 'static' }
 | { path: '/overview'; render: 'static' }
 | { path: '/services'; render: 'static' }
-| { path: '/tools/presto'; render: 'static' }
-| { path: '/tools/presto/examples'; render: 'static' }
 | { path: '/sdk'; render: 'static' }
 | { path: '/sdk/typescript/Method.from'; render: 'static' }
 | { path: '/sdk/typescript/cli'; render: 'static' }
@@ -72,9 +68,9 @@ type Page =
 | { path: '/sdk/python/core'; render: 'static' }
 | { path: '/sdk/python'; render: 'static' }
 | { path: '/sdk/python/server'; render: 'static' }
+| { path: '/quickstart/agent'; render: 'static' }
 | { path: '/quickstart/client'; render: 'static' }
 | { path: '/quickstart'; render: 'static' }
-| { path: '/quickstart/presto'; render: 'static' }
 | { path: '/quickstart/server'; render: 'static' }
 | { path: '/protocol/challenges'; render: 'static' }
 | { path: '/protocol/credentials'; render: 'static' }
