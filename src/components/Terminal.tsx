@@ -1897,6 +1897,12 @@ function Wizard({
               );
             })}
           </div>
+          {/* biome-ignore format: contains unicode ↑↓ */}
+          {!chosen && !waitingForUrl && (
+            <p style={{ color: "var(--term-gray5)" }}>
+              Use ↑↓ arrows and Enter to select
+            </p>
+          )}
           {waitingForUrl && (
             <p className="flex" style={{ color: "var(--term-gray6)" }}>
               <span className="shrink-0 whitespace-pre">
