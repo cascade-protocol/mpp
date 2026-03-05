@@ -135,6 +135,9 @@ html {
 [data-v-gutter-top] nav a[href="/services"] {
   position: relative;
 }
+[data-v-gutter-top] nav a[href="/services"][data-v-active="true"]::after {
+  display: none;
+}
 [data-v-gutter-top] nav a[href="/services"]::after {
   content: "";
   position: absolute;
