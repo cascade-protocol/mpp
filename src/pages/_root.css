@@ -141,8 +141,8 @@ html {
 [data-v-gutter-top] nav a[href="/services"]::after {
   content: "";
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 14px;
+  right: 2px;
   width: 7px;
   height: 7px;
   border-radius: 50%;
