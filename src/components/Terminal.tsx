@@ -1826,14 +1826,14 @@ function Wizard({
           <p style={{ color: "var(--term-gray10)" }}>
             What would you like to do?
           </p>
-          <div className="flex flex-col" style={{ paddingLeft: "1rem" }}>
+          <div className="flex flex-col term-wizard-list">
             {currentItems.map((item, i) => {
               const label = item === "quit" ? "Quit" : item.label;
               return (
                 <button
                   key={label}
                   type="button"
-                  className={`w-fit cursor-pointer text-left ${chosen || waitingForUrl ? "pointer-events-none" : ""}`}
+                  className={`term-wizard-btn w-fit cursor-pointer text-left ${chosen || waitingForUrl ? "pointer-events-none" : ""}`}
                   style={{
                     color:
                       selected === i
@@ -1867,7 +1867,10 @@ function Wizard({
           </div>
           {/* biome-ignore format: contains unicode ↑↓ */}
           {!chosen && !waitingForUrl && (
-            <p style={{ color: "var(--term-gray5)" }}>
+            <p
+              className="hidden md:block"
+              style={{ color: "var(--term-gray5)" }}
+            >
               Use ↑↓ arrows and Enter to select
             </p>
           )}
@@ -2293,7 +2296,7 @@ function GalleryStep({
               <button
                 key={item.label}
                 type="button"
-                className="w-fit cursor-pointer text-left block"
+                className="term-wizard-btn w-fit cursor-pointer text-left block"
                 style={{
                   color:
                     selected === i ? "var(--term-pink9)" : "var(--term-gray6)",
@@ -2320,7 +2323,7 @@ function GalleryStep({
             ))}
           </div>
           {/* biome-ignore format: contains unicode ↑↓ */}
-          <p style={{ color: "var(--term-gray5)" }}>
+          <p className="hidden md:block" style={{ color: "var(--term-gray5)" }}>
             Use ↑↓ arrows and Enter to select
           </p>
         </>
