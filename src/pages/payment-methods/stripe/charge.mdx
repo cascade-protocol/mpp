@@ -1,11 +1,11 @@
 import { Cards } from 'vocs'
 import { SpecCard } from '../../../components/SpecCard'
 
-# Stripe charge [One-time payments using Stripe Payment Tokens]
+# Stripe charge [One-time payments using Shared Payment Tokens]
 
 The Stripe implementation of the [charge](/intents/charge) intent.
 
-The client creates a [Stripe Payment Token (SPT)](https://docs.stripe.com/agentic-commerce/concepts/shared-payment-tokens) and sends it as a Credential. The server creates a Stripe `PaymentIntent` using the SPT, and settlement completes through Stripe's payment rails.
+The client creates a [Shared Payment Token (SPT)](https://docs.stripe.com/agentic-commerce/concepts/shared-payment-tokens) and sends it as a Credential. The server creates a Stripe `PaymentIntent` using the SPT, and settlement completes through Stripe's payment rails.
 
 Use this method for single API calls, content access, or one-off purchases where you want to accept cards, wallets, or other Stripe-supported payment methods.
 
@@ -13,15 +13,22 @@ Use this method for single API calls, content access, or one-off purchases where
 
 Use `stripe.charge` to require a one-time Stripe payment before returning a response. The method handles Challenge generation, Credential verification, PaymentIntent creation, and Receipt generation.
 
+You can provide either a `client` (a pre-configured Stripe SDK instance) or a raw `secretKey`. Using `client` is recommended — it lets you configure retries, API version, and other options on the Stripe instance you control.
+
+### With Stripe SDK client (recommended)
+
 ```ts twoslash
+import Stripe from 'stripe'
 import { Mppx, stripe } from 'mppx/server'
+
+const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 const mppx = Mppx.create({
   methods: [
     stripe.charge({
+      client: stripeClient, // [!code hl]
       networkId: 'internal',
       paymentMethodTypes: ['card'],
-      secretKey: process.env.STRIPE_SECRET_KEY!,
     }),
   ],
 })
@@ -40,9 +47,9 @@ export async function handler(request: Request) {
 }
 ```
 
-### With metadata
+### With secret key
 
-Include `metadata` in the `stripe.charge` configuration to forward key-value pairs to Stripe. The metadata appears in the Challenge and attaches to the Stripe `PaymentIntent`.
+If you don't need to customize the Stripe SDK instance, pass a `secretKey` directly and mppx will make raw API calls to Stripe.
 
 ```ts twoslash
 import { Mppx, stripe } from 'mppx/server'
@@ -50,10 +57,31 @@ import { Mppx, stripe } from 'mppx/server'
 const mppx = Mppx.create({
   methods: [
     stripe.charge({
+      secretKey: process.env.STRIPE_SECRET_KEY!, // [!code hl]
+      networkId: 'internal',
+      paymentMethodTypes: ['card'],
+    }),
+  ],
+})
+```
+
+### With metadata
+
+Include `metadata` in the `stripe.charge` configuration to forward key-value pairs to Stripe. The metadata appears in the Challenge and attaches to the Stripe `PaymentIntent`.
+
+```ts twoslash
+import Stripe from 'stripe'
+import { Mppx, stripe } from 'mppx/server'
+
+const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!)
+
+const mppx = Mppx.create({
+  methods: [
+    stripe.charge({
+      client: stripeClient,
       metadata: { plan: 'pro' }, // [!code hl]
       networkId: 'internal',
       paymentMethodTypes: ['card'],
-      secretKey: process.env.STRIPE_SECRET_KEY!,
     }),
   ],
 })
@@ -76,14 +104,17 @@ export async function handler(request: Request) {
 Allow multiple payment methods, like cards and Link, by specifying them in `paymentMethodTypes`.
 
 ```ts twoslash
+import Stripe from 'stripe'
 import { Mppx, stripe } from 'mppx/server'
+
+const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 const mppx = Mppx.create({
   methods: [
     stripe.charge({
+      client: stripeClient,
       networkId: 'internal',
       paymentMethodTypes: ['card', 'link'], // [!code hl]
-      secretKey: process.env.STRIPE_SECRET_KEY!,
     }),
   ],
 })
@@ -93,43 +124,114 @@ const mppx = Mppx.create({
 
 | Parameter | Type | Required | Description |
 | --- | --- | --- | --- |
+| `client` | `StripeClient` | One of `client` or `secretKey` | Pre-configured Stripe SDK instance (`new Stripe(...)`) |
+| `secretKey` | `string` | One of `client` or `secretKey` | Stripe secret API key (mppx makes raw API calls) |
 | `metadata` | `Record<string, string>` | Optional | Key-value pairs forwarded to Stripe |
 | `networkId` | `string` | Required | Stripe [Business Network](https://docs.stripe.com/get-started/account/profile) profile ID |
 | `paymentMethodTypes` | `string[]` | Required | Allowed Stripe payment method types |
-| `secretKey` | `string` | Required | Stripe secret API key |
 
 ## Client
 
 Use `stripe` with `Mppx.create` to automatically handle `402` responses. The client parses the Challenge, creates an SPT through the `createToken` callback, and retries with the Credential.
 
-SPT creation requires a Stripe secret key, so the client accepts a `createToken` callback that proxies through a server endpoint.
+SPT creation requires a Stripe secret key, so the client accepts a `createToken` callback that proxies through a server endpoint. You can optionally pass a `client` (a Stripe.js instance from `@stripe/stripe-js`) which is forwarded to the `createToken` callback for use with Elements.
+
+### Simple (known payment method)
+
+If you already have a payment method ID (e.g. a test card or a stored method), pass it as `paymentMethod` and mppx handles the full 402 → SPT → retry flow automatically.
 
 ```ts twoslash
+import { loadStripe } from '@stripe/stripe-js'
 import { Mppx, stripe } from 'mppx/client'
+
+const stripeJs = (await loadStripe('pk_test_...'))!
 
 Mppx.create({
   methods: [
     stripe({
+      client: stripeJs,
       createToken: async (params) => {
         const res = await fetch('/api/create-spt', {
-          body: JSON.stringify(params),
-          headers: { 'Content-Type': 'application/json' },
           method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(params),
         })
         if (!res.ok) throw new Error('Failed to create SPT')
         return (await res.json()).spt
       },
+      paymentMethod: 'pm_card_visa', // [!code hl]
     }),
   ],
 })
 
+// fetch() now handles 402 → credential → retry automatically
 const response = await fetch('https://api.example.com/resource')
 // @log: Response { status: 200, ... }
 ```
 
 ### With Stripe Elements
 
-Collect the payment method from the user using Stripe Elements, then pass it at credential-creation time through `context`.
+For interactive payment collection, use `onChallenge` to render Stripe Elements when a 402 is received. The user enters card details, you create a payment method, then pass it to `createCredential`.
+
+```ts twoslash
+import { loadStripe } from '@stripe/stripe-js'
+import { Receipt } from 'mppx'
+import { Mppx, stripe } from 'mppx/client'
+
+const stripeJs = (await loadStripe('pk_test_...'))!
+
+const mppx = Mppx.create({
+  methods: [
+    stripe.charge({
+      client: stripeJs,
+      createToken: async ({ amount, currency, expiresAt, metadata, networkId, paymentMethod }) => {
+        const response = await fetch('/api/create-spt', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ paymentMethod, amount, currency, networkId, expiresAt, metadata }),
+        })
+        if (!response.ok) throw new Error('Failed to create SPT')
+        return (await response.json()).spt
+      },
+    }),
+  ],
+  onChallenge: async (challenge, { createCredential }) => {
+    // Extract payment method types from the challenge
+    const methodDetails = challenge.request.methodDetails as
+      | { paymentMethodTypes?: string[] }
+      | undefined
+    const paymentMethodTypes = methodDetails?.paymentMethodTypes ?? ['card']
+
+    // Create Stripe Elements for payment collection
+    const elements = stripeJs.elements({
+      mode: 'payment',
+      amount: Number(challenge.request.amount),
+      currency: challenge.request.currency as string,
+      paymentMethodTypes,
+      paymentMethodCreation: 'manual',
+    })
+
+    // Mount the payment element (you'd mount this to a DOM container)
+    const paymentElement = elements.create('payment')
+    paymentElement.mount('#payment-element')
+
+    // After user submits the form:
+    await elements.submit()
+    const { paymentMethod } = await stripeJs.createPaymentMethod({ elements })
+
+    // Create credential with the collected payment method
+    return createCredential({ paymentMethod: paymentMethod!.id })
+  },
+  polyfill: false,
+})
+
+const response = await mppx.fetch('/api/resource')
+const receipt = Receipt.fromResponse(response)
+```
+
+### Manual flow (without Mppx.create)
+
+For full control over each step, use `stripe.charge()` directly with `Challenge.fromResponse`:
 
 ```ts twoslash
 import { Challenge } from 'mppx'
@@ -175,17 +277,21 @@ const paid = await fetch('/api/resource', {
 If you don't want to patch `globalThis.fetch`, use `mppx.fetch` directly:
 
 ```ts twoslash
+import { loadStripe } from '@stripe/stripe-js'
 import { Mppx, stripe } from 'mppx/client'
+
+const stripeJs = (await loadStripe('pk_test_...'))!
 
 const mppx = Mppx.create({
   polyfill: false,
   methods: [
     stripe({
+      client: stripeJs,
       createToken: async (params) => {
         const res = await fetch('/api/create-spt', {
-          body: JSON.stringify(params),
-          headers: { 'Content-Type': 'application/json' },
           method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(params),
         })
         return (await res.json()).spt
       },
@@ -196,10 +302,59 @@ const mppx = Mppx.create({
 const response = await mppx.fetch('https://api.example.com/resource')
 ```
 
+## SPT creation proxy endpoint
+
+The `createToken` callback proxies through your own server because SPT creation requires a Stripe secret key. Here's a minimal implementation:
+
+```ts
+export async function POST(request: Request) {
+  const { paymentMethod, amount, currency, expiresAt, networkId, metadata } =
+    await request.json()
+
+  const body = new URLSearchParams({
+    payment_method: paymentMethod,
+    'usage_limits[currency]': currency,
+    'usage_limits[max_amount]': amount,
+    'usage_limits[expires_at]': expiresAt.toString(),
+  })
+  if (networkId) body.set('seller_details[network_id]', networkId)
+  if (metadata) {
+    for (const [key, value] of Object.entries(metadata)) {
+      body.set(`metadata[${key}]`, value)
+    }
+  }
+
+  const response = await fetch(
+    'https://api.stripe.com/v1/test_helpers/shared_payment/granted_tokens',
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${btoa(`${process.env.STRIPE_SECRET_KEY}:`)}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body,
+    },
+  )
+
+  if (!response.ok) {
+    const error = await response.json()
+    return Response.json({ error: error.error.message }, { status: 400 })
+  }
+
+  const { id: spt } = await response.json()
+  return Response.json({ spt })
+}
+```
+
+:::info
+The `test_helpers/shared_payment/granted_tokens` endpoint is for testing. In production, SPTs are created through the agent-side `issued_tokens` API.
+:::
+
 ### Client parameters
 
 | Parameter | Type | Required | Description |
 | --- | --- | --- | --- |
+| `client` | `StripeJs` | Optional | Stripe.js instance from `@stripe/stripe-js` — forwarded to `createToken` for use with Elements |
 | `createToken` | `(params) => Promise<string>` | Required | Callback to create an SPT (proxied through a server endpoint) |
 | `externalId` | `string` | Optional | Client reference ID included in the Credential payload |
 | `paymentMethod` | `string` | Optional | Default Stripe payment method ID (overridden by `context.paymentMethod`) |
@@ -212,6 +367,7 @@ The `createToken` callback receives a single object with the following fields:
 | --- | --- | --- |
 | `amount` | `string` | Payment amount in smallest currency unit |
 | `challenge` | `Challenge` | The parsed Challenge from the server |
+| `client` | `StripeJs \| undefined` | Stripe.js instance, if provided to `stripe.charge()` |
 | `currency` | `string` | Three-letter ISO currency code |
 | `expiresAt` | `number` | SPT expiration as a Unix timestamp (seconds) |
 | `metadata` | `Record<string, string>` | Optional metadata from the Challenge |
@@ -241,7 +397,7 @@ The Credential payload contains the SPT and an optional client reference ID.
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `externalId` | `string` | Optional | Client reference ID |
-| `spt` | `string` | Required | Stripe Payment Token ID (starts with `spt_`) |
+| `spt` | `string` | Required | Shared Payment Token ID (starts with `spt_`) |
 
 ## Specification
 
