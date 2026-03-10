@@ -3,16 +3,42 @@ import { StripeChargeCard } from '../../../components/cards'
 
 # Stripe [Cards, wallets, and other Stripe supported payment methods]
 
-The Stripe payment method enables payments using [Stripe Payment Tokens (SPTs)](https://docs.stripe.com/agentic-commerce/concepts/shared-payment-tokens)—single-use tokens that represent payment authorization. SPTs abstract payment method details (cards, wallets) and provide a unified interface for payment acceptance.
+The Stripe payment method enables payments using [Shared Payment Tokens (SPTs)](https://docs.stripe.com/agentic-commerce/concepts/shared-payment-tokens)—single-use tokens that represent payment authorization. SPTs abstract payment method details (cards, wallets) and provide a unified interface for payment acceptance.
 
 Both the client and server need a Stripe account. The client creates an SPT using the Stripe API or Stripe.js, and the server consumes it to create a Stripe `PaymentIntent`.
 
 ## How it works
 
-1. **Server:** responds with `402` and a Challenge containing the amount, currency, and Stripe method details (Business Network profile, allowed payment method types).
-2. **Client:** creates an SPT with Stripe and sends a Credential containing the SPT.
-3. **Server:** creates a Stripe `PaymentIntent` using the SPT.
-4. **Server:** returns the resource with a Receipt referencing the `PaymentIntent`.
+```
+Client                           Server                          Stripe
+  │                                │                               │
+  │  GET /resource                 │                               │
+  ├──────────────────────────────> │                               │
+  │                                │                               │
+  │  402 + WWW-Authenticate        │                               │
+  │<────────────────────────────── │                               │
+  │                                │                               │
+  │  (create SPT from challenge)   │                               │
+  ├──────────────────────────────────────────────────────────────> │
+  │                       spt_...  │                               │
+  │<────────────────────────────────────────────────────────────── │
+  │                                │                               │
+  │  GET /resource                 │                               │
+  │  Authorization: Payment <cred> │                               │
+  ├──────────────────────────────> │                               │
+  │                                │  PaymentIntent (using SPT)    │
+  │                                ├─────────────────────────────> │
+  │                                │                   pi_...      │
+  │                                │<───────────────────────────── │
+  │  200 OK + Payment-Receipt      │                               │
+  │<────────────────────────────── │                               │
+```
+
+1. **Server** responds with `402` and a Challenge containing the amount, currency, and Stripe method details (Business Network profile, allowed payment method types).
+2. **Client** collects a payment method (via Stripe Elements or a stored method), then creates an SPT through the Stripe API with usage limits matching the Challenge.
+3. **Client** sends a Credential containing the SPT.
+4. **Server** creates a Stripe `PaymentIntent` using the SPT and confirms it.
+5. **Server** returns the resource with a Receipt referencing the `PaymentIntent`.
 
 ## Intents
 
