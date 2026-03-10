@@ -1,0 +1,57 @@
+# `Mppx.compose` [Present multiple payment options]
+
+Combines multiple method handlers into a single route handler that presents all methods to the client via multiple `WWW-Authenticate` headers.
+
+## Usage
+
+Present both stablecoin and card payment options for a single endpoint. The client picks whichever method it supports.
+
+```ts twoslash
+import { Mppx, stripe, tempo } from 'mppx/server'
+
+const pathUSD = '0x20c0000000000000000000000000000000000000'
+const USDC = '0x20C000000000000000000000b9537d11c60E8b50'
+const recipient = '0xa726a1CD723409074DF9108A2187cfA19899aCF8'
+
+const charge = tempo.charge({ recipient })
+const card = stripe.charge({
+  networkId: 'acct_1234',
+  paymentMethodTypes: ['card'],
+  secretKey: 'sk_live_...',
+})
+
+const mppx = Mppx.create({ methods: [charge, card] })
+
+export async function handler(request: Request) {
+  const result = await mppx.compose(
+    [charge, { amount: '1', currency: pathUSD }],
+    [charge, { amount: '1', currency: USDC }],
+    [card, { amount: '1', currency: 'usd' }],
+  )(request)
+
+  if (result.status === 402) return result.challenge
+  return result.withReceipt(Response.json({ data: '...' }))
+}
+```
+
+## Behavior
+
+- **No credential present:** Calls all handlers and merges their `402` challenges into a single response with multiple `WWW-Authenticate` headers.
+- **Credential present:** Dispatches to the handler matching the credential's `method` and `intent`.
+
+## Return type
+
+```ts
+type ReturnType = (input: Request) => Promise<
+  | { status: 402; challenge: Response }
+  | { status: 200; withReceipt: <T>(response: T) => T }
+>
+```
+
+## Parameters
+
+### ...entries
+
+- **Type:** `readonly [Method.Server | string, Options][]`
+
+Each entry is a tuple of a method reference (or string key like `"tempo/charge"`) and the request options for that method. Requires at least one entry.
