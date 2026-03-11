@@ -29,6 +29,7 @@ export interface EndpointPayment {
   amount?: string;
   currency?: string;
   decimals?: number;
+  recipient?: string;
   unitType?: string;
   description?: string;
   dynamic?: true;
@@ -83,18 +84,52 @@ async function fetchFromApi(): Promise<Service[]> {
 // Public API — cached, deduped, rate-limited
 // ---------------------------------------------------------------------------
 
+const SESSION_KEY = "mpp-services-cache";
+
+function readSessionCache(): Service[] | null {
+  if (typeof sessionStorage === "undefined") return null;
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    const { data, ts } = JSON.parse(raw);
+    if (Date.now() - ts < CACHE_TTL_MS) return data;
+  } catch {}
+  return null;
+}
+
+function writeSessionCache(data: Service[]) {
+  if (typeof sessionStorage === "undefined") return;
+  try {
+    sessionStorage.setItem(
+      SESSION_KEY,
+      JSON.stringify({ data, ts: Date.now() }),
+    );
+  } catch {}
+}
+
 export async function fetchServices(): Promise<Service[]> {
   if (cached && Date.now() - cached.ts < CACHE_TTL_MS) {
     return cached.data;
+  }
+
+  const fromSession = readSessionCache();
+  if (fromSession) {
+    cached = { data: fromSession, ts: Date.now() };
+    return fromSession;
   }
 
   if (inflight) return inflight;
 
   inflight = fetchFromApi()
     .then((services) => {
-      cached = { data: services, ts: Date.now() };
+      const cleaned = services.map((s) => ({
+        ...s,
+        name: s.name.replace(/ \(New\)$/i, ""),
+      }));
+      cached = { data: cleaned, ts: Date.now() };
+      writeSessionCache(cleaned);
       inflight = null;
-      return services;
+      return cleaned;
     })
     .catch((err) => {
       inflight = null;

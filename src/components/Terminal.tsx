@@ -96,42 +96,92 @@ function CssTriangle() {
   );
 }
 
-const SUMMARY_LABEL_WIDTH = "5.5em";
-
 function BlankLine() {
   return <div className="h-6" />;
 }
 
 function PhotoOutput({ url }: { url: string }) {
   const [loaded, setLoaded] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   return (
-    <div
-      className="block relative rounded overflow-hidden"
-      style={{
-        width: 200,
-        height: 200,
-        borderColor: "var(--term-gray4)",
-        borderWidth: 1,
-        borderStyle: "solid",
-      }}
-    >
-      {!loaded && (
-        <div
-          className="absolute inset-0"
-          style={{ backgroundColor: "var(--term-gray3)" }}
-        />
-      )}
-      <img
-        src={url}
-        alt="Generated"
-        onLoad={() => setLoaded(true)}
-        className="absolute inset-0 w-full h-full object-cover"
+    <div>
+      <div
+        className="block relative rounded overflow-hidden"
         style={{
-          transition: "opacity 0.5s",
-          opacity: loaded ? 1 : 0,
+          width: 200,
+          height: 200,
+          borderColor: "var(--term-gray4)",
+          borderWidth: 1,
+          borderStyle: "solid",
         }}
-      />
+      >
+        {!loaded && (
+          <div
+            className="absolute inset-0"
+            style={{ backgroundColor: "var(--term-gray3)" }}
+          />
+        )}
+        <img
+          src={url}
+          alt="Generated"
+          onLoad={() => setLoaded(true)}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{
+            transition: "opacity 0.5s",
+            opacity: loaded ? 1 : 0,
+          }}
+        />
+      </div>
+      <p style={{ color: "var(--term-gray5)", fontSize: 11, marginTop: 4 }}>
+        Simulated result
+      </p>
+      <div className="flex gap-3" style={{ marginTop: 2 }}>
+        <a
+          href={url}
+          download
+          className="cursor-pointer"
+          style={{
+            color: "#635BFF",
+            fontSize: 12,
+            fontFamily: "var(--font-mono)",
+            textDecoration: "none",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "var(--term-gray10)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "#635BFF";
+          }}
+        >
+          [⬇ Save]
+        </a>
+        <button
+          type="button"
+          className="cursor-pointer"
+          style={{
+            color: "#635BFF",
+            fontSize: 12,
+            fontFamily: "var(--font-mono)",
+            background: "none",
+            border: "none",
+            padding: 0,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "var(--term-gray10)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "#635BFF";
+          }}
+          onClick={() => {
+            navigator.clipboard.writeText(url);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+          }}
+        >
+          {copied ? "Copied!" : "[⬆ Share]"}
+        </button>
+      </div>
     </div>
   );
 }
@@ -204,24 +254,6 @@ function GalleryGrid({
         />
       )}
     </div>
-  );
-}
-
-function SummaryRow({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}) {
-  return (
-    <p style={{ color: "var(--term-gray6)" }}>
-      {"\u00a0\u00a0"}
-      <span style={{ display: "inline-block", width: SUMMARY_LABEL_WIDTH }}>
-        {label}
-      </span>
-      {children}
-    </p>
   );
 }
 
@@ -518,6 +550,7 @@ function AsyncSteps({
   onContentReceived,
   initialTxHash,
   onTxHash,
+  description,
 }: {
   endpoint: string;
   liveEndpoint?: string;
@@ -532,6 +565,7 @@ function AsyncSteps({
   onContentReceived?: (content: string[]) => void;
   initialTxHash?: string;
   onTxHash?: (hash: string) => void;
+  description?: string;
 }) {
   const { address, funded, setFunded } = walletState;
   const [txHash, setTxHash] = useState(() => initialTxHash ?? randomTxHash());
@@ -541,21 +575,27 @@ function AsyncSteps({
 
   const outputText = (output ?? []).join("\n");
 
+  const skipSetup = walletState.created && walletState.funded;
+
   const [steps] = useState(() => {
     const needsFunding = !funded || walletState.balance <= 0;
     const d = (ms: number) => (SKIP_ANIMATION ? 0 : ms);
     const s: { key: string; delay: number }[] = [];
-    s.push({ key: "wallet", delay: isRestart ? 0 : d(600) });
-    if (needsFunding || (completed && !isRestart))
-      s.push({ key: "fund", delay: demoClient ? 0 : d(1500) });
-    s.push({ key: "req402", delay: d(1200) });
+    if (!skipSetup) {
+      s.push({ key: "wallet", delay: isRestart ? 0 : d(600) });
+      if (needsFunding || (completed && !isRestart))
+        s.push({ key: "fund", delay: demoClient ? 0 : d(1500) });
+    }
+    s.push({ key: "req402", delay: d(500) });
     if (paymentChannel) {
-      s.push({ key: "channel", delay: d(1200) });
+      s.push({ key: "channel", delay: d(500) });
+      s.push({ key: "deposit", delay: d(500) });
+      s.push({ key: "req200", delay: d(500) });
       s.push({ key: "stream", delay: 0 });
-      s.push({ key: "closeChannel", delay: d(1000) });
+      s.push({ key: "closeChannel", delay: d(500) });
     } else {
-      s.push({ key: "pay", delay: d(1500) });
-      s.push({ key: "req200", delay: d(1000) });
+      s.push({ key: "pay", delay: d(500) });
+      s.push({ key: "req200", delay: d(500) });
     }
     return s;
   });
@@ -587,7 +627,7 @@ function AsyncSteps({
 
     (async () => {
       try {
-        // Wallet step
+        // Wallet step (only if not already set up)
         const walletIdx = steps.findIndex((s) => s.key === "wallet");
         if (walletIdx !== -1) {
           walletState.setCreated(true);
@@ -640,9 +680,19 @@ function AsyncSteps({
               setChannelTxHash(demoClient.session.channelId);
             }
 
-            // Move to stream step — channel is open
+            // Advance through deposit → req200 → stream
             setStep(payIdx + 1);
-            await new Promise((r) => setTimeout(r, 200));
+            await new Promise((r) => setTimeout(r, 400));
+            const depositIdx = steps.findIndex((s) => s.key === "deposit");
+            if (depositIdx !== -1) {
+              setStep(depositIdx + 1);
+              await new Promise((r) => setTimeout(r, 400));
+            }
+            const req200Idx = steps.findIndex((s) => s.key === "req200");
+            if (req200Idx !== -1) {
+              setStep(req200Idx + 1);
+              await new Promise((r) => setTimeout(r, 200));
+            }
 
             // Stream chunks in real-time as they arrive from the server
             let text = "";
@@ -703,7 +753,10 @@ function AsyncSteps({
         }
 
         // Remaining steps
-        for (let i = payIdx + 2; i <= steps.length; i++) {
+        const lastIdx = paymentChannel
+          ? steps.findIndex((s) => s.key === "stream")
+          : payIdx + 1;
+        for (let i = lastIdx + 1; i <= steps.length; i++) {
           setStep(i);
           if (i < steps.length) {
             await new Promise((r) => setTimeout(r, 600));
@@ -799,16 +852,24 @@ function AsyncSteps({
 
   return (
     <div className="flex flex-col">
-      <BlankLine />
+      {description && (
+        <>
+          <BlankLine />
+          <p style={{ color: "var(--term-gray5)" }}># {description}</p>
+        </>
+      )}
+      {!description && <BlankLine />}
       {atOrPast("wallet") && (
         <p style={{ color: "var(--term-gray6)" }}>
           <StepIcon spinning={atStep("wallet")} />{" "}
-          {isRestart ? "Using" : "Creating"} wallet{" "}
+          {isRestart ? "Using" : "Create a"} wallet{" "}
+          <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
           <a
             href={`https://explore.tempo.xyz/address/${address}`}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline"
+            style={{ color: "var(--term-blue9)" }}
           >
             <TruncatedHex hash={address}>{address}</TruncatedHex>
           </a>
@@ -816,137 +877,85 @@ function AsyncSteps({
       )}
       {atOrPast("fund") && (
         <p style={{ color: "var(--term-gray6)" }}>
-          <StepIcon spinning={atStep("fund")} /> Funding wallet with{" "}
+          <StepIcon spinning={atStep("fund")} /> Add test funds{" "}
+          <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
           <span style={{ color: "var(--term-amber9)" }}>100 USDC</span>
         </p>
       )}
       {/* biome-ignore format: contains unicode → */}
       {atOrPast("req402") && (
-        <>
-          <p style={{ color: "var(--term-gray6)" }}>
-            <StepIcon spinning={atStep("req402")} /> GET {endpoint}
-            {pastStep("req402") && (
-              <>
-                {" "}
-                →{" "}
-                <span style={{ color: "var(--term-amber9)" }}>
-                  402 Payment Required
-                </span>
-              </>
-            )}
-          </p>
+        <p style={{ color: "var(--term-gray6)" }}>
+          <StepIcon spinning={atStep("req402")} /> Call {endpoint}
           {pastStep("req402") && (
-            <p
-              style={{
-                color: "var(--term-gray6)",
-                paddingLeft: "2ch",
-              }}
-            >
-              WWW-Authenticate: Payment
-            </p>
+            <>
+              {" "}
+              → <span style={{ color: "var(--term-orange9)" }}>402</span>{" "}
+              <span style={{ color: "var(--term-gray6)" }}>
+                (payment required)
+              </span>
+            </>
           )}
-          {pastStep("req402") && serviceLabel(liveEndpoint ?? endpoint) && (
-            <p
-              style={{
-                color: "var(--term-gray6)",
-                paddingLeft: "2ch",
-              }}
-            >
-              via {renderText(serviceLabel(liveEndpoint ?? endpoint)!)}
-            </p>
-          )}
-        </>
+        </p>
       )}
       {atOrPast("channel") && (
-        <>
-          <p style={{ color: "var(--term-gray6)" }}>
-            <StepIcon spinning={atStep("channel")} /> Opening payment channel
-          </p>
+        <p style={{ color: "var(--term-gray6)" }}>
+          <StepIcon spinning={atStep("channel")} /> Open payment channel
           {pastStep("channel") && (
-            <p
-              style={{
-                color: "var(--term-gray6)",
-                paddingLeft: "2ch",
-              }}
-            >
-              channel{" "}
+            <>
+              {" "}
+              <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
               <a
                 href={`https://explore.tempo.xyz/receipt/${channelTxHash}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:underline"
+                style={{ color: "var(--term-blue9)" }}
               >
-                <TruncatedHex hash={channelTxHash}>
-                  {channelTxHash}
-                </TruncatedHex>
+                {channelTxHash.slice(0, 6)}…{channelTxHash.slice(-4)}
               </a>
-            </p>
+            </>
           )}
-          {pastStep("channel") && (
-            <p
-              style={{
-                color: "var(--term-gray6)",
-                paddingLeft: "2ch",
-              }}
-            >
-              deposit{" "}
-              <span style={{ color: "var(--term-amber9)" }}>5 USDC</span>
-            </p>
-          )}
-        </>
+        </p>
+      )}
+      {atOrPast("deposit") && (
+        <p style={{ color: "var(--term-gray6)" }}>
+          <StepIcon spinning={atStep("deposit")} /> Deposit funds{" "}
+          <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
+          <span style={{ color: "var(--term-green9)" }}>5 USDC</span>
+        </p>
       )}
       {atOrPast("pay") && (
-        <>
-          <p style={{ color: "var(--term-gray6)" }}>
-            <StepIcon spinning={atStep("pay")} /> Fulfilling payment
-          </p>
+        <p style={{ color: "var(--term-gray6)" }}>
+          <StepIcon spinning={atStep("pay")} /> Fulfill payment
           {pastStep("pay") && (
-            <p
-              style={{
-                color: "var(--term-gray6)",
-                paddingLeft: "2ch",
-              }}
-            >
-              tx{" "}
+            <>
+              {" "}
+              <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
               <a
                 href={`https://explore.tempo.xyz/receipt/${txHash}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:underline"
+                style={{ color: "var(--term-blue9)" }}
               >
-                <TruncatedHex hash={txHash}>{txHash}</TruncatedHex>
+                {txHash.slice(0, 6)}…{txHash.slice(-4)}
               </a>
-            </p>
+            </>
           )}
-          {pastStep("pay") && (
-            <p
-              style={{
-                color: "var(--term-gray6)",
-                paddingLeft: "2ch",
-              }}
-            >
-              amount{" "}
-              <span style={{ color: "var(--term-amber9)" }}>0.001 USDC</span>
-            </p>
-          )}
-        </>
+        </p>
       )}
       {/* biome-ignore format: contains unicode → */}
       {atOrPast("req200") && (
-        <>
-          <p style={{ color: "var(--term-gray6)" }}>
-            <StepIcon spinning={atStep("req200")} /> GET {endpoint}
-            {pastStep("req200") && (
-              <>
-                {" "}
-                → <span style={{ color: "var(--term-green9)" }}>200 OK</span>
-              </>
-            )}
-          </p>
-          <p style={{ color: "var(--term-gray6)" }}>
-            <span className="inline-block w-[1ch]" /> Authorization: Payment
-          </p>
-        </>
+        <p style={{ color: "var(--term-gray6)" }}>
+          <StepIcon spinning={atStep("req200")} /> Call {endpoint}
+          {pastStep("req200") && (
+            <>
+              {" "}
+              → <span style={{ color: "var(--term-orange9)" }}>200</span>{" "}
+              <span style={{ color: "var(--term-gray6)" }}>(success)</span>
+            </>
+          )}
+        </p>
       )}
       {!paymentChannel && pastStep("req200") && (
         <>
@@ -954,89 +963,159 @@ function AsyncSteps({
           {outputMode === "photo" && output.length > 0 ? (
             <PhotoOutput url={output[0]} />
           ) : (
-            <pre
-              className="whitespace-pre-wrap"
-              style={{ color: "var(--term-gray10)" }}
-            >
-              {renderText(outputText)}
-            </pre>
-          )}
-        </>
-      )}
-      {paymentChannel && atOrPast("stream") && (
-        <>
-          <BlankLine />
-          {outputMode === "gallery" ? (
-            <>
-              <GalleryGrid
-                urls={output.slice(0, tokenCount)}
-                loading={tokenCount < output.length}
-              />
-              {/* biome-ignore format: contains unicode ✔︎ */}
-              {tokenCount > 0 && (
-                <p style={{ color: "var(--term-gray6)", marginTop: "0.5em" }}>
-                  {tokenCount < output.length ? (
-                    <Spinner />
-                  ) : (
-                    <span style={{ color: "var(--term-green9)" }}>✔︎</span>
-                  )}{" "}
-                  {tokenCount} photos —{" "}
-                  <span style={{ color: "var(--term-amber9)" }}>
-                    {(tokenCount * 0.01).toFixed(2)} USDC
-                  </span>
-                </p>
-              )}
-            </>
-          ) : (
             <>
               <pre
                 className="whitespace-pre-wrap"
                 style={{ color: "var(--term-gray10)" }}
               >
-                {outputText.slice(0, streamChars)}
+                {renderText(outputText)}
               </pre>
-              {/* biome-ignore format: contains unicode ✔︎ */}
-              {tokenCount > 0 && (
-                <p style={{ color: "var(--term-gray6)" }}>
-                  {streamChars < outputText.length ? (
-                    <Spinner />
-                  ) : (
-                    <span style={{ color: "var(--term-green9)" }}>✔︎</span>
-                  )}{" "}
-                  {tokenCount} tokens streamed —{" "}
-                  <span style={{ color: "var(--term-amber9)" }}>
-                    {(tokenCount * COST_PER_TOKEN).toFixed(4)} USDC
-                  </span>
+              {!demoClient && (
+                <p
+                  style={{
+                    color: "var(--term-gray5)",
+                    fontSize: 11,
+                    marginTop: 8,
+                  }}
+                >
+                  Simulated result
                 </p>
               )}
             </>
           )}
+          <BlankLine />
         </>
       )}
-      {atOrPast("closeChannel") && (
-        <>
-          <p style={{ color: "var(--term-gray6)" }}>
-            <StepIcon spinning={atStep("closeChannel")} /> Closing payment
-            channel
-          </p>
-          {pastStep("closeChannel") && (
+      {paymentChannel &&
+        atOrPast("stream") &&
+        (outputMode === "gallery" ? (
+          <>
+            <BlankLine />
+            <GalleryGrid
+              urls={output.slice(0, tokenCount)}
+              loading={tokenCount < output.length}
+            />
+            {/* biome-ignore format: contains unicode ✔︎ */}
+            {tokenCount > 0 && (
+              <p style={{ color: "var(--term-gray6)", marginTop: "0.5em" }}>
+                {tokenCount < output.length ? (
+                  <Spinner />
+                ) : (
+                  <span style={{ color: "var(--term-green9)" }}>✔︎</span>
+                )}{" "}
+                {tokenCount} photos —{" "}
+                <span style={{ color: "var(--term-green9)" }}>
+                  {(tokenCount * 0.01).toFixed(2)} USDC
+                </span>
+              </p>
+            )}
+          </>
+        ) : (
+          <>
+            <BlankLine />
             <p
               style={{
-                color: "var(--term-gray6)",
-                paddingLeft: "2ch",
+                color: "var(--term-gray5)",
+                borderBottom: "1px solid var(--term-gray4)",
+                paddingBottom: "0.25rem",
+                marginBottom: "0.5rem",
               }}
             >
-              tx{" "}
-              <a
-                href={`https://explore.tempo.xyz/receipt/${txHash}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline"
+              {" "}
+            </p>
+            <BlankLine />
+            <div
+              style={{
+                color: "var(--term-gray5)",
+                fontSize: "inherit",
+                lineHeight: "1.5",
+              }}
+            >
+              <p>
+                Available:{" "}
+                <span style={{ color: "var(--term-green9)" }}>
+                  {(5 - tokenCount * COST_PER_TOKEN).toFixed(4)}
+                </span>{" "}
+                USDC in channel
+              </p>
+              <p>
+                Spent:{" "}
+                <span style={{ color: "var(--term-amber9)" }}>
+                  {(tokenCount * COST_PER_TOKEN).toFixed(4)}
+                </span>{" "}
+                USDC paid
+              </p>
+              <p>
+                Streamed:{" "}
+                <span style={{ color: "var(--term-gray10)" }}>
+                  {tokenCount}
+                </span>{" "}
+                tokens received
+              </p>
+            </div>
+            <BlankLine />
+            <pre
+              className="whitespace-pre-wrap"
+              style={{ color: "var(--term-gray10)" }}
+            >
+              {outputText.slice(0, streamChars)}
+            </pre>
+            {streamChars >= outputText.length && !demoClient && (
+              <p
+                style={{
+                  color: "var(--term-gray5)",
+                  fontSize: 11,
+                  marginTop: 8,
+                }}
               >
-                <TruncatedHex hash={txHash}>{txHash}</TruncatedHex>
-              </a>
+                Simulated result
+              </p>
+            )}
+            {streamChars >= outputText.length && (
+              <>
+                <BlankLine />
+                <p
+                  style={{
+                    color: "var(--term-gray5)",
+                    borderBottom: "1px solid var(--term-gray4)",
+                    paddingBottom: "0.25rem",
+                  }}
+                >
+                  {" "}
+                </p>
+              </>
+            )}
+          </>
+        ))}
+      {atOrPast("closeChannel") && (
+        <>
+          <BlankLine />
+          {/* biome-ignore format: contains unicode ✔︎ ⋅ */}
+          {pastStep("closeChannel") && tokenCount > 0 && (
+            <p style={{ color: "var(--term-gray6)" }}>
+              <span style={{ color: "var(--term-green9)" }}>✔︎</span>{" "}
+              {tokenCount} tokens streamed
             </p>
           )}
+          <p style={{ color: "var(--term-gray6)" }}>
+            <StepIcon spinning={atStep("closeChannel")} /> Closed payment
+            channel
+            {pastStep("closeChannel") && (
+              <>
+                {" "}
+                <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
+                <a
+                  href={`https://explore.tempo.xyz/receipt/${txHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                  style={{ color: "var(--term-blue9)" }}
+                >
+                  {txHash.slice(0, 6)}…{txHash.slice(-4)}
+                </a>
+              </>
+            )}
+          </p>
           {pastStep("closeChannel") &&
             (() => {
               const spent =
@@ -1045,25 +1124,17 @@ function AsyncSteps({
                   : tokenCount * COST_PER_TOKEN;
               return (
                 <>
-                  <p
-                    style={{
-                      color: "var(--term-gray6)",
-                      paddingLeft: "2ch",
-                    }}
-                  >
-                    spent{" "}
-                    <span style={{ color: "var(--term-amber9)" }}>
+                  {/* biome-ignore format: contains unicode ✔︎ */}
+                  <p style={{ color: "var(--term-gray6)" }}>
+                    <span style={{ color: "var(--term-green9)" }}>✔︎</span> Spent{" "}
+                    <span style={{ color: "var(--term-green9)" }}>
                       {spent.toFixed(outputMode === "gallery" ? 2 : 4)} USDC
                     </span>
                   </p>
-                  <p
-                    style={{
-                      color: "var(--term-gray6)",
-                      paddingLeft: "2ch",
-                    }}
-                  >
-                    refunded{" "}
-                    <span style={{ color: "var(--term-amber9)" }}>
+                  <p style={{ color: "var(--term-gray6)" }}>
+                    <span style={{ color: "var(--term-green9)" }}>✔︎</span>{" "}
+                    Refunded{" "}
+                    <span style={{ color: "var(--term-green9)" }}>
                       {(5 - spent).toFixed(outputMode === "gallery" ? 2 : 4)}{" "}
                       USDC
                     </span>
@@ -1131,6 +1202,13 @@ function CardForm({
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      if (field === "number" && !cardNumber.trim()) {
+        applyTestCard();
+      }
+      return;
+    }
     if (e.key !== "Enter") return;
     if (field === "number") {
       if (!cardNumber.trim()) {
@@ -1182,7 +1260,7 @@ function CardForm({
               className="cursor-pointer hover:underline"
               style={{ color: "#00D66F" }}
             >
-              [use link]
+              [Use Stripe Link]
             </button>{" "}
             <button
               type="button"
@@ -1259,6 +1337,7 @@ function StripeSteps({
   onCardSaved,
   demoClient,
   onContentReceived,
+  description,
 }: {
   endpoint: string;
   output: string[];
@@ -1269,6 +1348,7 @@ function StripeSteps({
   onCardSaved?: (card: SavedCard) => void;
   demoClient?: DemoClient | null;
   onContentReceived?: (content: string[]) => void;
+  description?: string;
 }) {
   const [piId, setPiId] = useState(() => randomStripeId("pi_"));
   const doneCalled = useRef(false);
@@ -1384,43 +1464,27 @@ function StripeSteps({
 
   return (
     <div className="flex flex-col">
-      <BlankLine />
+      {description && (
+        <>
+          <BlankLine />
+          <p style={{ color: "var(--term-gray5)" }}># {description}</p>
+        </>
+      )}
+      {!description && <BlankLine />}
       {/* biome-ignore format: contains unicode → */}
       {atOrPast("req402") && (
-        <>
-          <p style={{ color: "var(--term-gray6)" }}>
-            <StepIcon spinning={atStep("req402")} /> GET {endpoint}
-            {pastStep("req402") && (
-              <>
-                {" "}
-                →{" "}
-                <span style={{ color: "var(--term-amber9)" }}>
-                  402 Payment Required
-                </span>
-              </>
-            )}
-          </p>
+        <p style={{ color: "var(--term-gray6)" }}>
+          <StepIcon spinning={atStep("req402")} /> Call {endpoint}
           {pastStep("req402") && (
-            <p
-              style={{
-                color: "var(--term-gray6)",
-                paddingLeft: "2ch",
-              }}
-            >
-              WWW-Authenticate: Payment method=stripe intent=charge
-            </p>
+            <>
+              {" "}
+              → <span style={{ color: "var(--term-orange9)" }}>402</span>{" "}
+              <span style={{ color: "var(--term-gray6)" }}>
+                (payment required)
+              </span>
+            </>
           )}
-          {pastStep("req402") && serviceLabel(endpoint) && (
-            <p
-              style={{
-                color: "var(--term-gray6)",
-                paddingLeft: "2ch",
-              }}
-            >
-              via {renderText(serviceLabel(endpoint)!)}
-            </p>
-          )}
-        </>
+        </p>
       )}
       {atOrPast("cardInput") && (
         <CardForm
@@ -1448,7 +1512,7 @@ function StripeSteps({
                 paddingLeft: "2ch",
               }}
             >
-              id {piId}
+              ID {piId}
             </p>
           )}
           {pastStep("createPI") && (
@@ -1458,7 +1522,7 @@ function StripeSteps({
                 paddingLeft: "2ch",
               }}
             >
-              amount{" "}
+              Amount{" "}
               <span style={{ color: "var(--term-amber9)" }}>
                 ${LOOKUP_COST.toFixed(2)} USD
               </span>
@@ -1480,20 +1544,16 @@ function StripeSteps({
       )}
       {/* biome-ignore format: contains unicode → */}
       {atOrPast("req200") && (
-        <>
-          <p style={{ color: "var(--term-gray6)" }}>
-            <StepIcon spinning={atStep("req200")} /> GET {endpoint}
-            {pastStep("req200") && (
-              <>
-                {" "}
-                → <span style={{ color: "var(--term-green9)" }}>200 OK</span>
-              </>
-            )}
-          </p>
-          <p style={{ color: "var(--term-gray6)" }}>
-            <span className="inline-block w-[1ch]" /> Authorization: Payment
-          </p>
-        </>
+        <p style={{ color: "var(--term-gray6)" }}>
+          <StepIcon spinning={atStep("req200")} /> Call {endpoint}
+          {pastStep("req200") && (
+            <>
+              {" "}
+              → <span style={{ color: "var(--term-orange9)" }}>200</span>{" "}
+              <span style={{ color: "var(--term-gray6)" }}>(success)</span>
+            </>
+          )}
+        </p>
       )}
       {pastStep("req200") && output && output.length > 0 && (
         <>
@@ -1532,6 +1592,7 @@ function StripeSteps({
               })}
             </div>
           )}
+          <BlankLine />
         </>
       )}
     </div>
@@ -1581,7 +1642,6 @@ function scrollTerminalIntoView() {
 function Wizard({
   steps,
   demoClient,
-  onRestart,
   address,
   walletState,
   savedCard,
@@ -1589,7 +1649,6 @@ function Wizard({
 }: {
   steps: PaymentStepConfig[];
   demoClient?: DemoClient | null;
-  onRestart?: () => void;
   address: string;
   walletState: WalletState;
   savedCard: SavedCard | undefined;
@@ -1601,34 +1660,64 @@ function Wizard({
   const [waitingForUrl, setWaitingForUrl] = useState(false);
   const [urlInput, setUrlInput] = useState("");
   const [chosenUrl, setChosenUrl] = useState<string | undefined>();
+  const [urlError, setUrlError] = useState("");
   const urlRef = useRef<HTMLInputElement>(null);
   const currentTxHashRef = useRef<string | undefined>(undefined);
-  const [walletExistedAtMount] = useState(() => walletState.created);
-  const [quit, setQuit] = useState(false);
   const [runs, setRuns] = useState<Run[]>([]);
   const [runKey, setRunKey] = useState(0);
+  const [menuVisible, setMenuVisible] = useState(false);
+  const menuTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const currentItems: (PaymentStepConfig | "quit")[] =
-    runs.length > 0 ? [...steps, "quit"] : steps;
+  // Wallet setup phase — runs before menu is shown
+  const [walletSetupStep, setWalletSetupStep] = useState(() =>
+    walletState.created && walletState.funded ? 2 : 0,
+  );
+  const walletReady = walletSetupStep >= 2;
+
+  useEffect(() => {
+    if (walletState.created && walletState.funded) {
+      setWalletSetupStep(2);
+      return;
+    }
+    if (walletSetupStep === 0) {
+      const d = SKIP_ANIMATION ? 0 : 600;
+      const timer = setTimeout(() => {
+        walletState.setCreated(true);
+        setWalletSetupStep(1);
+      }, d);
+      return () => clearTimeout(timer);
+    }
+    if (walletSetupStep === 1) {
+      const d = demoClient ? 0 : SKIP_ANIMATION ? 0 : 1500;
+      const doFund = async () => {
+        if (demoClient) {
+          try {
+            await demoClient.fundWallet();
+          } catch (e) {
+            console.error("Live funding failed, continuing:", e);
+          }
+        }
+        walletState.setFunded(true);
+        walletState.setBalance(INITIAL_BALANCE);
+        setWalletSetupStep(2);
+      };
+      if (d === 0) {
+        doFund();
+      } else {
+        const timer = setTimeout(doFund, d);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [walletSetupStep, walletState, demoClient]);
+
+  const currentItems = steps;
 
   const handleContentReceived = (content: string[]) => {
     setChosenOutput(content);
   };
 
   const confirm = (index?: number) => {
-    const item = currentItems[index ?? selected];
-    if (item === "quit") {
-      const usdcSpent = runs
-        .filter((r) => r.step.type !== "stripe")
-        .reduce((sum, r) => sum + runCost(r), 0);
-      walletState.setBalance(INITIAL_BALANCE - usdcSpent);
-      setQuit(true);
-      document
-        .querySelector(".landing-ctas")
-        ?.scrollIntoView({ behavior: "smooth", block: "center" });
-      return;
-    }
-    const step = item;
+    const step = currentItems[index ?? selected];
     if (step.skipPrompt) {
       if (step.pickOutput) setChosenOutput(step.pickOutput());
       setChosenUrl(undefined);
@@ -1638,25 +1727,42 @@ function Wizard({
     }
     setWaitingForUrl(true);
     setUrlInput("");
-    setTimeout(() => urlRef.current?.focus(), 0);
+    setUrlError("");
+    requestAnimationFrame(() => urlRef.current?.focus());
   };
 
   const submitUrl = () => {
-    const step = currentItems[selected] as PaymentStepConfig;
+    const step = currentItems[selected];
     const defaultInput = step.prompt?.placeholder?.trim() ?? "";
     const resolvedInput = urlInput.trim() || defaultInput;
     if (!resolvedInput) return;
-    if (step.pickOutput) setChosenOutput(step.pickOutput());
     const prefix = step.prompt?.prefix ?? "";
-    setChosenUrl(
-      resolvedInput.startsWith(prefix)
-        ? resolvedInput
-        : `${prefix}${resolvedInput}`,
-    );
+    const fullUrl = resolvedInput.startsWith(prefix)
+      ? resolvedInput
+      : `${prefix}${resolvedInput}`;
+    if (fullUrl.startsWith("http://") || fullUrl.startsWith("https://")) {
+      try {
+        new URL(fullUrl);
+      } catch {
+        setUrlError("Enter a valid URL");
+        return;
+      }
+    }
+    setUrlError("");
+    if (step.pickOutput) setChosenOutput(step.pickOutput());
+    setChosenUrl(fullUrl);
     setWaitingForUrl(false);
     setChosen(step);
+    urlRef.current?.blur();
     scrollTerminalIntoView();
   };
+
+  // Show menu immediately on first load (once wallet ready)
+  useEffect(() => {
+    if (walletReady && runs.length === 0 && !menuVisible) {
+      setMenuVisible(true);
+    }
+  }, [walletReady, runs.length, menuVisible]);
 
   const handleDone = () => {
     setRuns((prev) => [
@@ -1673,20 +1779,21 @@ function Wizard({
     currentTxHashRef.current = undefined;
     setRunKey((k) => k + 1);
     setChosen(null);
-    setSelected(0);
+    setSelected((s) => (s + 1) % currentItems.length);
+    setMenuVisible(false);
+    const delay = SKIP_ANIMATION ? 0 : 5000;
+    menuTimerRef.current = setTimeout(() => setMenuVisible(true), delay);
   };
 
+  // Cleanup timer on unmount
   useEffect(() => {
-    if (!quit) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Enter") onRestart?.();
+    return () => {
+      if (menuTimerRef.current) clearTimeout(menuTimerRef.current);
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [quit, onRestart]);
+  }, []);
 
   useEffect(() => {
-    if (chosen || quit || waitingForUrl) return;
+    if (chosen || !menuVisible || waitingForUrl) return;
     const terminal = document.querySelector("[data-terminal]");
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowUp") {
@@ -1743,6 +1850,7 @@ function Wizard({
           onCardSaved={setSavedCard}
           demoClient={isActive ? demoClient : undefined}
           onContentReceived={isActive ? handleContentReceived : undefined}
+          description={stepConfig.description}
         />
       );
     }
@@ -1769,229 +1877,200 @@ function Wizard({
               }
             : undefined
         }
+        description={stepConfig.description}
       />
     );
   };
 
   return (
     <div className="flex flex-col">
-      {runs.map((run, runIndex) => {
-        const runItems: (PaymentStepConfig | "quit")[] =
-          runIndex > 0 ? [...steps, "quit"] : steps;
-        return (
-          <div key={run.key}>
-            <p style={{ color: "var(--term-gray10)" }}>
-              What would you like to do?
-            </p>
-            <div className="flex flex-col" style={{ paddingLeft: "1rem" }}>
-              {runItems.map((item) => {
-                const label = item === "quit" ? "Quit" : item.label;
-                const isChosen = item !== "quit" && item === run.step;
-                return (
-                  <p
-                    key={label}
-                    style={{
-                      color: isChosen
-                        ? "var(--term-pink9)"
-                        : "var(--term-gray6)",
-                    }}
-                  >
-                    {isChosen ? (
-                      <>
-                        <CssTriangle />{" "}
-                      </>
-                    ) : (
-                      "  "
-                    )}
-                    {label}
-                    {item !== "quit" && (
-                      <span className="ml-2">({item.methodLabel})</span>
-                    )}
-                  </p>
-                );
-              })}
-            </div>
-            {run.url && run.step.prompt && (
-              <p style={{ color: "var(--term-gray6)" }}>
-                {run.step.prompt.label}:{" "}
-                <span style={{ color: "var(--term-gray10)" }}>{run.url}</span>
-              </p>
-            )}
-            {renderPaymentSteps(run.step, run.output, run.key, {
-              isRestart: walletExistedAtMount || runIndex > 0,
-              completed: true,
-              url: run.url,
-              txHash: run.txHash,
-            })}
-            <BlankLine />
-          </div>
-        );
-      })}
+      {/* Wallet setup phase */}
+      <BlankLine />
+      {/* biome-ignore format: contains unicode ✔︎ ⋅ */}
+      <p style={{ color: "var(--term-gray6)" }}>
+        <StepIcon spinning={walletSetupStep < 1} /> Create a wallet{" "}
+        <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
+        <a
+          href={`https://explore.tempo.xyz/address/${address}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+          style={{ color: "var(--term-blue9)" }}
+        >
+          {address.slice(0, 6)}…{address.slice(-4)}
+        </a>
+      </p>
+      {walletSetupStep >= 1 && (
+        <p style={{ color: "var(--term-gray6)" }}>
+          <StepIcon spinning={walletSetupStep < 2} /> Add test funds{" "}
+          <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
+          <span style={{ color: "var(--term-amber9)" }}>100 USDC</span>
+        </p>
+      )}
 
-      {!quit && (
-        <div>
+      {/* Completed runs */}
+      {runs.map((run) => (
+        <div key={run.key}>
+          <BlankLine />
           <p style={{ color: "var(--term-gray10)" }}>
             What would you like to do?
           </p>
-          <div className="flex flex-col" style={{ paddingLeft: "1rem" }}>
-            {currentItems.map((item, i) => {
-              const label = item === "quit" ? "Quit" : item.label;
+          <BlankLine />
+          <div className="flex flex-col">
+            {steps.map((item) => {
+              const isChosen = item === run.step;
               return (
-                <button
-                  key={label}
-                  type="button"
-                  className={`w-fit cursor-pointer text-left ${chosen || waitingForUrl ? "pointer-events-none" : ""}`}
+                <p
+                  key={item.label}
                   style={{
-                    color:
-                      selected === i
-                        ? "var(--term-pink9)"
-                        : "var(--term-gray6)",
-                  }}
-                  onMouseEnter={() =>
-                    !chosen && !waitingForUrl && setSelected(i)
-                  }
-                  onClick={() => {
-                    if (!chosen && !waitingForUrl) {
-                      setSelected(i);
-                      confirm(i);
-                    }
+                    color: isChosen ? "var(--term-pink9)" : "var(--term-gray6)",
                   }}
                 >
-                  {selected === i ? (
+                  {isChosen ? (
                     <>
                       <CssTriangle />{" "}
                     </>
                   ) : (
                     "  "
                   )}
-                  {label}
-                  {item !== "quit" && (
-                    <span className="ml-2">({item.methodLabel})</span>
-                  )}
-                </button>
+                  {item.label}
+                  <span className="ml-2">({item.methodLabel})</span>
+                </p>
               );
             })}
           </div>
-          {/* biome-ignore format: contains unicode ↑↓ */}
+          {run.url && run.step.prompt && (
+            <p style={{ color: "var(--term-pink9)" }}>
+              {run.step.prompt.label}:{" "}
+              <span style={{ color: "var(--term-gray10)" }}>{run.url}</span>
+            </p>
+          )}
+          {renderPaymentSteps(run.step, run.output, run.key, {
+            isRestart: true,
+            completed: true,
+            url: run.url,
+            txHash: run.txHash,
+          })}
+          <BlankLine />
+        </div>
+      ))}
+
+      {/* Current wizard menu */}
+      {menuVisible && (
+        <div
+          style={{
+            animation: runs.length > 0 ? "fadeIn 0.5s ease-out" : undefined,
+          }}
+        >
+          <BlankLine />
+          <p style={{ color: "var(--term-gray10)" }}>
+            What would you like to do?
+          </p>
+          <BlankLine />
+          <div className="flex flex-col term-wizard-list">
+            {currentItems.map((item, i) => (
+              <button
+                key={item.label}
+                type="button"
+                className={`term-wizard-btn w-fit cursor-pointer text-left ${chosen || waitingForUrl ? "pointer-events-none" : ""}`}
+                style={{
+                  color:
+                    selected === i ? "var(--term-pink9)" : "var(--term-gray6)",
+                }}
+                onMouseEnter={() => !chosen && !waitingForUrl && setSelected(i)}
+                onClick={() => {
+                  if (!chosen && !waitingForUrl) {
+                    setSelected(i);
+                    confirm(i);
+                  }
+                }}
+              >
+                {selected === i ? (
+                  <>
+                    <CssTriangle />{" "}
+                  </>
+                ) : (
+                  "  "
+                )}
+                {item.label}
+                <span className="ml-2">({item.methodLabel})</span>
+              </button>
+            ))}
+          </div>
+          {/* biome-ignore format: contains unicode ↑↓⇥⏎ */}
           {!chosen && !waitingForUrl && (
-            <p style={{ color: "var(--term-gray5)" }}>
-              Use ↑↓ arrows and Tab or Enter to select
+            <p
+              className="hidden md:block"
+              style={{
+                color: "var(--term-gray5)",
+                marginTop: "auto",
+                paddingTop: "1rem",
+              }}
+            >
+              Use ↑↓ or ⇥ to select, and ⏎ to confirm.
             </p>
           )}
           {waitingForUrl && (
-            <p className="flex" style={{ color: "var(--term-gray6)" }}>
-              <span className="shrink-0 whitespace-pre">
-                {(currentItems[selected] as PaymentStepConfig).prompt?.label ??
-                  "Enter prompt"}
-                :{" "}
-              </span>
-              {(currentItems[selected] as PaymentStepConfig).prompt?.prefix && (
-                <span style={{ color: "var(--term-gray10)" }}>
-                  {(currentItems[selected] as PaymentStepConfig).prompt?.prefix}
+            <>
+              <BlankLine />
+              <BlankLine />
+              <p className="flex" style={{ color: "var(--term-pink9)" }}>
+                <span className="shrink-0 whitespace-pre">
+                  {currentItems[selected].prompt?.label ?? "Enter prompt"}:{" "}
                 </span>
+                {currentItems[selected].prompt?.prefix && (
+                  <span style={{ color: "var(--term-gray10)" }}>
+                    {currentItems[selected].prompt?.prefix}
+                  </span>
+                )}
+                <BlockCursorInput
+                  ref={urlRef}
+                  type="text"
+                  inputMode="url"
+                  enterKeyHint="go"
+                  autoFocus
+                  value={urlInput}
+                  onChange={(e) => {
+                    setUrlInput(e.target.value);
+                    if (urlError) setUrlError("");
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Tab") {
+                      e.preventDefault();
+                      const placeholder =
+                        currentItems[selected].prompt?.placeholder ?? "";
+                      if (!urlInput && placeholder) setUrlInput(placeholder);
+                    } else if (e.key === "Enter") {
+                      submitUrl();
+                    }
+                  }}
+                  className="term-url-input min-w-0 flex-1 bg-transparent outline-none"
+                  style={{ color: "var(--term-gray10)" }}
+                  placeholder={currentItems[selected].prompt?.placeholder ?? ""}
+                />
+              </p>
+              {urlError && (
+                <p style={{ color: "var(--term-red7)" }}>{urlError}</p>
               )}
-              <BlockCursorInput
-                ref={urlRef}
-                type="text"
-                value={urlInput}
-                onChange={(e) => setUrlInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Tab") {
-                    e.preventDefault();
-                    const placeholder =
-                      (currentItems[selected] as PaymentStepConfig).prompt
-                        ?.placeholder ?? "";
-                    if (!urlInput && placeholder) setUrlInput(placeholder);
-                  } else if (e.key === "Enter") {
-                    submitUrl();
-                  }
-                }}
-                className="term-url-input min-w-0 flex-1 bg-transparent outline-none"
-                style={{ color: "var(--term-gray10)" }}
-                placeholder={
-                  (currentItems[selected] as PaymentStepConfig).prompt
-                    ?.placeholder ?? ""
-                }
-              />
-            </p>
+            </>
           )}
           {chosen?.prompt && chosenUrl && (
-            <p style={{ color: "var(--term-gray6)" }}>
-              {chosen.prompt.label}:{" "}
-              <span style={{ color: "var(--term-gray10)" }}>{chosenUrl}</span>
-            </p>
+            <>
+              <BlankLine />
+              <p style={{ color: "var(--term-pink9)" }}>
+                {chosen.prompt.label}:{" "}
+                <span style={{ color: "var(--term-gray10)" }}>{chosenUrl}</span>
+              </p>
+            </>
           )}
           {chosen &&
             renderPaymentSteps(chosen, chosenOutput, runKey, {
-              isRestart: walletExistedAtMount || runs.length > 0,
+              isRestart: true,
               onDone: handleDone,
               url: chosenUrl,
             })}
         </div>
       )}
-
-      {quit &&
-        (() => {
-          const usdcSpent = runs
-            .filter((r) => r.step.type !== "stripe")
-            .reduce((sum, r) => sum + runCost(r), 0);
-          const usdSpent = runs
-            .filter((r) => r.step.type === "stripe")
-            .reduce((sum, r) => sum + runCost(r), 0);
-          const balance = INITIAL_BALANCE - usdcSpent;
-          return (
-            <div className="flex flex-col">
-              <p style={{ color: "var(--term-gray10)" }}>
-                <strong>Machine Payments Protocol</strong> — open, programmable,
-                Internet-native payments.
-              </p>
-              <p style={{ color: "var(--term-gray10)" }}>
-                {"\u00a0\u00a0"}Spent
-              </p>
-              <SummaryRow label="Total">
-                <span style={{ color: "var(--term-amber9)" }}>
-                  ${(usdcSpent + usdSpent).toFixed(4)}
-                </span>
-              </SummaryRow>
-              <SummaryRow label="Tempo">
-                <span style={{ color: "var(--term-amber9)" }}>
-                  {usdcSpent.toFixed(4)} USDC
-                </span>
-              </SummaryRow>
-              <SummaryRow label="Stripe">
-                <span style={{ color: "var(--term-amber9)" }}>
-                  {usdSpent.toFixed(2)} USD
-                </span>
-              </SummaryRow>
-              <p style={{ color: "var(--term-gray10)" }}>
-                {"\u00a0\u00a0"}Wallet
-              </p>
-              <SummaryRow label="Address">
-                <a
-                  href={`https://explore.tempo.xyz/address/${address}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline"
-                >
-                  <TruncatedHex hash={address}>{address}</TruncatedHex>
-                </a>
-              </SummaryRow>
-              <SummaryRow label="Balance">
-                <span style={{ color: "var(--term-amber9)" }}>
-                  {balance.toFixed(4)} USDC
-                </span>
-              </SummaryRow>
-              <button
-                type="button"
-                className="cursor-pointer text-left"
-                style={{ color: "var(--term-gray6)" }}
-                onClick={() => onRestart?.()}
-              >
-                [Exited — press Enter to restart]
-              </button>
-            </div>
-          );
-        })()}
     </div>
   );
 }
@@ -2212,60 +2291,70 @@ function GalleryStep({
     <div className="flex flex-col">
       {/* Setup steps */}
       <BlankLine />
+      {/* biome-ignore format: contains unicode ⋅ */}
       {setupAtOrPast("wallet") && (
         <p style={{ color: "var(--term-gray6)" }}>
-          <StepIcon spinning={setupAt("wallet")} /> Creating wallet{" "}
-          <TruncatedHex hash={walletState.address}>
-            {walletState.address}
-          </TruncatedHex>
+          <StepIcon spinning={setupAt("wallet")} /> Create a wallet{" "}
+          <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
+          <a
+            href={`https://explore.tempo.xyz/address/${walletState.address}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+            style={{ color: "var(--term-blue9)" }}
+          >
+            {walletState.address.slice(0, 6)}…{walletState.address.slice(-4)}
+          </a>
         </p>
       )}
       {setupAtOrPast("fund") && (
         <p style={{ color: "var(--term-gray6)" }}>
-          <StepIcon spinning={setupAt("fund")} /> Funding wallet with{" "}
+          <StepIcon spinning={setupAt("fund")} /> Add test funds{" "}
+          <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
           <span style={{ color: "var(--term-amber9)" }}>100 USDC</span>
         </p>
       )}
       {/* biome-ignore format: contains unicode → */}
       {setupAtOrPast("req402") && (
-        <>
-          <p style={{ color: "var(--term-gray6)" }}>
-            <StepIcon spinning={setupAt("req402")} /> GET {step.endpoint}
-            {setupPast("req402") && (
-              <>
-                {" "}
-                →{" "}
-                <span style={{ color: "var(--term-amber9)" }}>
-                  402 Payment Required
-                </span>
-              </>
-            )}
-          </p>
+        <p style={{ color: "var(--term-gray6)" }}>
+          <StepIcon spinning={setupAt("req402")} /> Call {step.endpoint}
           {setupPast("req402") && (
-            <p style={{ color: "var(--term-gray6)", paddingLeft: "2ch" }}>
-              WWW-Authenticate: Payment
-            </p>
+            <>
+              {" "}
+              → <span style={{ color: "var(--term-orange9)" }}>402</span>{" "}
+              <span style={{ color: "var(--term-gray6)" }}>
+                (payment required)
+              </span>
+            </>
           )}
-        </>
+        </p>
       )}
       {setupAtOrPast("channel") && (
-        <>
-          <p style={{ color: "var(--term-gray6)" }}>
-            <StepIcon spinning={setupAt("channel")} /> Opening payment channel
-          </p>
+        <p style={{ color: "var(--term-gray6)" }}>
+          <StepIcon spinning={setupAt("channel")} /> Open payment channel
           {setupPast("channel") && (
-            <p style={{ color: "var(--term-gray6)", paddingLeft: "2ch" }}>
-              channel{" "}
-              <TruncatedHex hash={channelTxHash}>{channelTxHash}</TruncatedHex>
-            </p>
+            <>
+              {" "}
+              <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
+              <a
+                href={`https://explore.tempo.xyz/receipt/${channelTxHash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+                style={{ color: "var(--term-blue9)" }}
+              >
+                {channelTxHash.slice(0, 6)}…{channelTxHash.slice(-4)}
+              </a>
+            </>
           )}
-          {setupPast("channel") && (
-            <p style={{ color: "var(--term-gray6)", paddingLeft: "2ch" }}>
-              deposit{" "}
-              <span style={{ color: "var(--term-amber9)" }}>5 USDC</span>
-            </p>
-          )}
-        </>
+        </p>
+      )}
+      {setupPast("channel") && (
+        <p style={{ color: "var(--term-gray6)" }}>
+          <StepIcon spinning={false} /> Deposit funds{" "}
+          <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
+          <span style={{ color: "var(--term-amber9)" }}>5 USDC</span>
+        </p>
       )}
 
       {/* Past runs */}
@@ -2299,8 +2388,8 @@ function GalleryStep({
           <GalleryGrid urls={run.urls} animate={false} />
           {/* biome-ignore format: contains unicode ✔︎ */}
           <p style={{ color: "var(--term-gray6)", marginTop: "0.5em" }}>
-            <span style={{ color: "var(--term-green9)" }}>✔︎</span>{" "}
-            {run.count} photos —{" "}
+            <span style={{ color: "var(--term-green9)" }}>✔︎</span> {run.count}{" "}
+            photos —{" "}
             <span style={{ color: "var(--term-amber9)" }}>
               {(run.count * GALLERY_COST).toFixed(2)} USDC
             </span>
@@ -2318,7 +2407,7 @@ function GalleryStep({
               <button
                 key={item.label}
                 type="button"
-                className="w-fit cursor-pointer text-left block"
+                className="term-wizard-btn w-fit cursor-pointer text-left block"
                 style={{
                   color:
                     selected === i ? "var(--term-pink9)" : "var(--term-gray6)",
@@ -2344,9 +2433,12 @@ function GalleryStep({
               </button>
             ))}
           </div>
-          {/* biome-ignore format: contains unicode ↑↓ */}
-          <p style={{ color: "var(--term-gray5)" }}>
-            Use ↑↓ arrows and Tab or Enter to select
+          {/* biome-ignore format: contains unicode ↑↓⇥⏎ */}
+          <p
+            className="hidden md:block"
+            style={{ color: "var(--term-gray5)", marginTop: "1rem" }}
+          >
+            Use ↑↓ or ⇥ to select, and ⏎ to confirm.
           </p>
         </>
       )}
@@ -2431,23 +2523,39 @@ function GalleryStep({
             ))}
           </div>
           <BlankLine />
+          {/* biome-ignore format: contains unicode ✔︎ ⋅ */}
+          {phase === "restart" && (
+            <p style={{ color: "var(--term-gray6)" }}>
+              <span style={{ color: "var(--term-green9)" }}>✔︎</span> Spent{" "}
+              <span style={{ color: "var(--term-green9)" }}>
+                {spent.toFixed(2)} USDC
+              </span>
+            </p>
+          )}
           <p style={{ color: "var(--term-gray6)" }}>
-            <StepIcon spinning={phase === "closing"} /> Closing payment channel
+            <StepIcon spinning={phase === "closing"} /> Closed payment channel
+            {phase === "restart" && (
+              <>
+                {" "}
+                <span style={{ color: "var(--term-gray5)" }}>⋅</span>{" "}
+                <a
+                  href={`https://explore.tempo.xyz/receipt/${closeTxHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                  style={{ color: "var(--term-blue9)" }}
+                >
+                  {closeTxHash.slice(0, 6)}…{closeTxHash.slice(-4)}
+                </a>
+              </>
+            )}
           </p>
           {phase === "restart" && (
             <>
-              <p style={{ color: "var(--term-gray6)", paddingLeft: "2ch" }}>
-                tx <TruncatedHex hash={closeTxHash}>{closeTxHash}</TruncatedHex>
-              </p>
-              <p style={{ color: "var(--term-gray6)", paddingLeft: "2ch" }}>
-                spent{" "}
-                <span style={{ color: "var(--term-amber9)" }}>
-                  {spent.toFixed(2)} USDC
-                </span>
-              </p>
-              <p style={{ color: "var(--term-gray6)", paddingLeft: "2ch" }}>
-                refunded{" "}
-                <span style={{ color: "var(--term-amber9)" }}>
+              {/* biome-ignore format: contains unicode ✔︎ */}
+              <p style={{ color: "var(--term-gray6)" }}>
+                <span style={{ color: "var(--term-green9)" }}>✔︎</span> Refunded{" "}
+                <span style={{ color: "var(--term-green9)" }}>
                   {(5 - spent).toFixed(2)} USDC
                 </span>
               </p>
@@ -2613,6 +2721,33 @@ function TerminalComponent({
   const [created, setCreated] = useState(false);
   const [funded, setFunded] = useState(false);
   const [savedCard, setSavedCard] = useState<SavedCard | undefined>();
+  const [liveTime] = useState(() => {
+    const fmt = (d: Date) => {
+      const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      return `${months[d.getMonth()]} ${String(d.getDate()).padStart(2, "0")} ${d.getFullYear()} ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}:${String(d.getSeconds()).padStart(2, "0")}`;
+    };
+    const key = "mpp-terminal-last-visit";
+    const stored =
+      typeof localStorage !== "undefined" ? localStorage.getItem(key) : null;
+    const now = new Date();
+    if (typeof localStorage !== "undefined")
+      localStorage.setItem(key, now.toISOString());
+    if (stored) return fmt(new Date(stored));
+    return fmt(now);
+  });
   const walletState: WalletState = {
     address,
     balance,
@@ -2632,6 +2767,7 @@ function TerminalComponent({
   const scrollRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const autoScrollRef = useRef(true);
+  const [showTopFade, setShowTopFade] = useState(false);
 
   useEffect(() => {
     const scrollEl = scrollRef.current;
@@ -2642,11 +2778,14 @@ function TerminalComponent({
         const distanceFromBottom =
           scrollEl.scrollHeight - scrollEl.clientHeight - scrollEl.scrollTop;
         autoScrollRef.current = distanceFromBottom < LINE_HEIGHT;
+        setShowTopFade(scrollEl.scrollTop > 10);
       });
     };
+    scrollEl.addEventListener("scroll", checkScroll, { passive: true });
     scrollEl.addEventListener("wheel", checkScroll, { passive: true });
     scrollEl.addEventListener("touchmove", checkScroll, { passive: true });
     return () => {
+      scrollEl.removeEventListener("scroll", checkScroll);
       scrollEl.removeEventListener("wheel", checkScroll);
       scrollEl.removeEventListener("touchmove", checkScroll);
     };
@@ -2658,7 +2797,10 @@ function TerminalComponent({
     if (!scrollEl || !contentEl) return;
     const observer = new ResizeObserver(() => {
       if (!autoScrollRef.current) return;
-      scrollEl.scrollTop = scrollEl.scrollHeight - scrollEl.clientHeight;
+      scrollEl.scrollTo({
+        top: scrollEl.scrollHeight - scrollEl.clientHeight,
+        behavior: "smooth",
+      });
     });
     observer.observe(contentEl);
     return () => observer.disconnect();
@@ -2690,21 +2832,110 @@ function TerminalComponent({
         {/* Title bar */}
         <div
           className="flex items-center gap-2 px-4 py-3"
-          style={{ backgroundColor: "var(--term-bg2)" }}
+          style={{
+            backgroundColor: "var(--term-bg2)",
+            borderBottom: "1px solid var(--term-gray4)",
+          }}
         >
           <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: "var(--term-gray4)" }}
+            className="rounded-full"
+            style={{
+              width: 14,
+              height: 14,
+              backgroundColor: "var(--term-gray4)",
+            }}
           />
           <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: "var(--term-gray4)" }}
+            className="rounded-full"
+            style={{
+              width: 14,
+              height: 14,
+              backgroundColor: "var(--term-gray4)",
+            }}
           />
           <span
-            className="size-3 rounded-full"
-            style={{ backgroundColor: "var(--term-gray4)" }}
+            className="rounded-full"
+            style={{
+              width: 14,
+              height: 14,
+              backgroundColor: "var(--term-gray4)",
+            }}
           />
+          <span
+            style={{
+              flex: 1,
+              textAlign: "center",
+              fontSize: "0.9375rem",
+              color: "var(--term-gray6)",
+            }}
+          >
+            demo.sh
+          </span>
+          <button
+            type="button"
+            onClick={() => {
+              setWizardKey((k) => k + 1);
+              setCreated(false);
+              setFunded(false);
+              setBalance(0);
+              setSavedCard(undefined);
+            }}
+            style={{
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+              color: "var(--term-gray5)",
+              padding: 2,
+              borderRadius: 4,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "color 0.15s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "var(--term-gray10)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "var(--term-gray5)";
+            }}
+            aria-label="Restart demo"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-label="Restart"
+            >
+              <title>Restart</title>
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+              <path d="M21 3v5h-5" />
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+              <path d="M8 16H3v5" />
+            </svg>
+          </button>
         </div>
+
+        {/* Top gradient fade */}
+        {showTopFade && (
+          <div
+            style={{
+              position: "absolute",
+              top: 43,
+              left: 0,
+              right: 0,
+              height: 24,
+              background:
+                "linear-gradient(to bottom, var(--term-bg2), transparent)",
+              zIndex: 2,
+              pointerEvents: "none",
+            }}
+          />
+        )}
 
         {/* Terminal body */}
         <div
@@ -2727,6 +2958,31 @@ function TerminalComponent({
               ✔︎▸↑↓→
             </span>
             <div className="h-2" />
+            {/* ASCII logo temporarily disabled
+            <div
+              style={{
+                position: "relative",
+                overflow: "hidden",
+                height: 72,
+                marginBottom: "0.25rem",
+              }}
+            >
+              <pre
+                style={{
+                  color: "var(--term-gray5)",
+                  fontSize: "3.2px",
+                  lineHeight: 1.15,
+                  margin: 0,
+                  letterSpacing: "0.5px",
+                  transformOrigin: "top left",
+                  whiteSpace: "pre",
+                  fontFamily: "var(--font-mono)",
+                }}
+              >
+                {ASCII_MPP.trimStart()}
+              </pre>
+            </div>
+            */}
             <p style={{ color: "var(--term-gray6)" }}>
               mpp.dev@{__COMMIT_SHA__.slice(0, 7)} (released{" "}
               {timeAgo(__COMMIT_TIMESTAMP__)})
@@ -2736,21 +2992,24 @@ function TerminalComponent({
                 className="hidden md:block"
                 style={{ color: "var(--term-gray6)" }}
               >
-                Last login: Wed Oct 29 22:30:00 1969 on ttys000
+                Last visit: {liveTime} on ttys000
               </p>
             )}
             {showPrompt && !started && (
-              <p style={{ color: "var(--term-gray6)" }}>
-                <span style={{ color: "var(--term-gray10)" }}>$ ~ </span>
-                <span
-                  className="ml-0.5 inline-block h-[1.1em] w-[0.6em] align-text-bottom"
-                  style={{
-                    backgroundColor: "var(--term-pink9)",
-                    transform: "translateY(-2px)",
-                    animation: "blink 1.4s step-end infinite",
-                  }}
-                />
-              </p>
+              <>
+                <BlankLine />
+                <p style={{ color: "var(--term-gray6)" }}>
+                  <span style={{ color: "var(--term-gray6)" }}>{"$"} </span>
+                  <span
+                    className="ml-0.5 inline-block h-[1.1em] w-[0.6em] align-text-bottom"
+                    style={{
+                      backgroundColor: "var(--term-pink9)",
+                      transform: "translateY(-2px)",
+                      animation: "blink 1.4s step-end infinite",
+                    }}
+                  />
+                </p>
+              </>
             )}
             {started &&
               commands.map((line, i) => {
@@ -2766,34 +3025,24 @@ function TerminalComponent({
                 return (
                   // biome-ignore lint/suspicious/noArrayIndexKey: static lines never reorder
                   <Fragment key={i}>
+                    {i === 0 && <BlankLine />}
                     <p
                       style={{
                         color: "var(--term-gray6)",
                         visibility: i <= lineIndex ? "visible" : "hidden",
                       }}
                     >
-                      <span style={{ color: "var(--term-gray10)" }}>$ ~ </span>
-                      {isCommand
-                        ? (() => {
-                            const spaceIdx = visible.indexOf(" ");
-                            if (spaceIdx === -1)
-                              return (
-                                <span style={{ color: "var(--term-blue9)" }}>
-                                  {renderText(visible)}
-                                </span>
-                              );
-                            return (
-                              <>
-                                <span style={{ color: "var(--term-blue9)" }}>
-                                  {visible.slice(0, spaceIdx)}
-                                </span>
-                                <span style={{ color: "var(--term-gray10)" }}>
-                                  {renderText(visible.slice(spaceIdx))}
-                                </span>
-                              </>
-                            );
-                          })()
-                        : renderText(visible)}
+                      <span style={{ color: "var(--term-gray6)" }}>{"$"} </span>
+                      <span
+                        style={{
+                          color:
+                            i === 0 && isCommand
+                              ? "var(--term-green9)"
+                              : "var(--term-gray10)",
+                        }}
+                      >
+                        {renderText(visible)}
+                      </span>
                       <span
                         className="ml-0.5 inline-block h-[1.1em] w-[0.6em] align-text-bottom"
                         style={{
@@ -2823,7 +3072,6 @@ function TerminalComponent({
                       walletState={walletState}
                       savedCard={savedCard}
                       setSavedCard={setSavedCard}
-                      onRestart={() => setWizardKey((k) => k + 1)}
                     />
                   );
                 }

@@ -65,11 +65,41 @@ export const CHAT_RESPONSES = [
 ];
 
 export const IMAGE_RESULTS = [
-  ["https://picsum.photos/seed/mpp-image-0/400/400"],
-  ["https://picsum.photos/seed/mpp-image-1/400/400"],
-  ["https://picsum.photos/seed/mpp-image-2/400/400"],
-  ["https://picsum.photos/seed/mpp-image-3/400/400"],
-  ["https://picsum.photos/seed/mpp-image-4/400/400"],
+  [
+    "  model       flux-schnell",
+    '  prompt      "a neon cityscape at night with flying cars"',
+    "  url         https://fal.ai/outputs/a7b3c9d2e1f0.png",
+    "  size        1024x1024",
+    "  cost        $0.003",
+  ],
+  [
+    "  model       flux-schnell",
+    '  prompt      "an isometric server room with glowing racks"',
+    "  url         https://fal.ai/outputs/f4e8d2c1b5a9.png",
+    "  size        1024x1024",
+    "  cost        $0.003",
+  ],
+  [
+    "  model       flux-schnell",
+    '  prompt      "a robot hand holding a golden coin, macro shot"',
+    "  url         https://fal.ai/outputs/c2d9e7f3a1b8.png",
+    "  size        1024x1024",
+    "  cost        $0.003",
+  ],
+  [
+    "  model       flux-schnell",
+    '  prompt      "abstract visualization of blockchain data flow"',
+    "  url         https://fal.ai/outputs/b8a1c3d5e9f2.png",
+    "  size        1024x1024",
+    "  cost        $0.003",
+  ],
+  [
+    "  model       flux-schnell",
+    '  prompt      "a minimalist wallet icon on gradient background"',
+    "  url         https://fal.ai/outputs/d5e2f8a4c7b1.png",
+    "  size        1024x1024",
+    "  cost        $0.003",
+  ],
 ];
 
 export const POEM_RESULTS = [
@@ -161,6 +191,8 @@ export const POEM_RESULTS = [
 
 export const SEARCH_RESULTS = [
   [
+    "  (Simulated results — connect a live API key for real search)",
+    "",
     "  1. HTTP 402 Payment Required — MDN Web Docs",
     "     https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402",
     "     The 402 status code is reserved for future use in digital payment",
