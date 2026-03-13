@@ -740,7 +740,7 @@ function HighlightedCmd({ children }: { children: string }) {
           {tok}
         </span>,
       );
-    } else if (/^(presto|tempo)$/.test(tok)) {
+    } else if (/^(tempo)$/.test(tok)) {
       parts.push(
         <span key={key} style={{ color: CMD_GREEN }}>
           {tok}
@@ -809,7 +809,7 @@ export function ServicesPage() {
   );
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const [page, setPage] = useState(0);
-  const [prestoOpen, setPrestoOpen] = useState(false);
+  const [walletOpen, setWalletOpen] = useState(false);
   const [showAddServiceModal, setShowAddServiceModal] = useState(false);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -1183,8 +1183,8 @@ export function ServicesPage() {
           style={{ display: "none", marginBottom: "1.5rem" }}
         >
           <HeaderCards
-            prestoOpen={prestoOpen}
-            onPrestoToggle={() => setPrestoOpen(!prestoOpen)}
+            walletOpen={walletOpen}
+            onWalletToggle={() => setWalletOpen(!walletOpen)}
           />
         </div>
 
@@ -1875,7 +1875,7 @@ export function ServicesPage() {
               alignSelf: "flex-start",
             }}
           >
-            <PrestoCardFull />
+            <WalletCardFull />
             <SidebarInfoCards />
           </div>
         </div>
@@ -2211,10 +2211,10 @@ export function AddServiceModal({ onClose }: { onClose: () => void }) {
 }
 
 // ---------------------------------------------------------------------------
-// Presto cards
+// Wallet cards
 // ---------------------------------------------------------------------------
 
-function PrestoCardFull() {
+function WalletCardFull() {
   return (
     <div
       style={{
@@ -2245,17 +2245,17 @@ function PrestoCardFull() {
         Install Tempo CLI and its wallet to fund your agents use of MPP
         services.
       </p>
-      <PrestoSteps />
+      <WalletSteps />
     </div>
   );
 }
 
 function HeaderCards({
-  prestoOpen,
-  onPrestoToggle,
+  walletOpen,
+  onWalletToggle,
 }: {
-  prestoOpen: boolean;
-  onPrestoToggle: () => void;
+  walletOpen: boolean;
+  onWalletToggle: () => void;
 }) {
   const cs: React.CSSProperties = {
     padding: "0.65rem 0.85rem",
@@ -2294,7 +2294,7 @@ function HeaderCards({
       >
         <button
           type="button"
-          onClick={onPrestoToggle}
+          onClick={onWalletToggle}
           className="info-card-link"
           style={{
             ...cs,
@@ -2392,7 +2392,7 @@ function HeaderCards({
           </div>
         </div>
       </div>
-      {prestoOpen && (
+      {walletOpen && (
         <div
           style={{
             marginTop: "0.5rem",
@@ -2402,7 +2402,7 @@ function HeaderCards({
             padding: "1rem",
           }}
         >
-          <PrestoSteps />
+          <WalletSteps />
         </div>
       )}
     </>
@@ -2528,16 +2528,14 @@ function SidebarInfoCards() {
         />
         <div>
           <div style={titleStyle}>First-party services</div>
-          <div style={descStyle}>
-            Services with direct MPP integration — no wrapper or proxy needed.
-          </div>
+          <div style={descStyle}>Services with direct MPP integration</div>
         </div>
       </div>
     </div>
   );
 }
 
-function PrestoSteps() {
+function WalletSteps() {
   return (
     <div
       style={{
@@ -2551,13 +2549,13 @@ function PrestoSteps() {
         label="Install Tempo tools"
         desc="Install the CLI. You will be asked to sign in or create a passkey-based wallet in your browser."
       >
-        curl -L https://tempo.xyz/install | bash && tempo add wallet
+        curl -L https://tempo.xyz/install | bash
       </CliSnippet>
       <CliSnippet
         label="Prompt your agent"
         desc="Tell Claude (or Codex, Amp, etc) to use a Tempo service."
       >
-        {`claude "Summarize https://stripe.com/docs using Exa search via Tempo"`}
+        {`claude "Summarize https://stripe.com/docs using parallel.ai search via Tempo"`}
       </CliSnippet>
       <div
         style={{

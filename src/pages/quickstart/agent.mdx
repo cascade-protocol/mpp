@@ -15,7 +15,7 @@ Paste this into your agent to set up Tempo Wallet:
 
 
 ```
-Read and follow https://wallet.tempo.xyz/SKILL.md
+Read https://wallet.tempo.xyz/SKILL.md and set up tempo
 ```
 
 </Tab>
@@ -43,13 +43,13 @@ tempo wallet whoami
 #### List available services
 
 ```bash
-tempo mpp services
+tempo wallet services
 ```
 
 #### Make a paid request
 
 ```bash
-tempo mpp -X POST \
+tempo request -X POST \
   --json '{"prompt": "a sunset over the ocean"}' \
   https://fal.mpp.tempo.xyz/fal-ai/flux/dev
 ```
