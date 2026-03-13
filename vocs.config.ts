@@ -487,6 +487,10 @@ export default defineConfig({
           },
         ],
       },
+      {
+        text: "Resources",
+        items: [{ text: "Brand", link: "/brand" }],
+      },
     ],
   },
   socials: [
