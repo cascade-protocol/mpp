@@ -106,6 +106,10 @@ export default defineConfig({
             text: "Accept streamed payments",
             link: "/guides/streamed-payments",
           },
+          {
+            text: "Accept multiple payment methods",
+            link: "/guides/multiple-payment-methods",
+          },
         ],
       },
       {
