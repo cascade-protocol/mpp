@@ -77,6 +77,17 @@ export function PayAsYouGoCard() {
   );
 }
 
+export function PaymentLinksCard() {
+  return (
+    <Card
+      description="Create a link. Get paid."
+      icon="lucide:link"
+      title="Create a payment link"
+      to="/guides/payment-links"
+    />
+  );
+}
+
 export function ProxyExistingServiceCard() {
   return (
     <Card
