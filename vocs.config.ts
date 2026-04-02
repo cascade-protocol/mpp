@@ -4,7 +4,7 @@ const baseUrl = (() => {
   if (process.env.VERCEL_ENV === "production")
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  if (process.env.NODE_ENV !== "production") return "http://localhost:5173";
+  if (process.env.NODE_ENV !== "production") return "https://localhost:5173";
   return "";
 })();
 
@@ -311,6 +311,10 @@ export default defineConfig({
             text: "Accept multiple payment methods",
             link: "/guides/multiple-payment-methods",
           },
+          // {
+          //   text: "Create a payment link",
+          //   link: "/guides/payment-links",
+          // },
           {
             text: "Proxy an existing service",
             link: "/guides/proxy-existing-service",

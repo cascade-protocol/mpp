@@ -812,6 +812,37 @@ export const services: ServiceDef[] = [
     ],
   },
 
+  // ── Doma ────────────────────────────────────────────────────────────────
+  {
+    id: "doma",
+    name: "Doma",
+    url: "https://doma.xyz",
+    serviceUrl: "https://mpp.doma.xyz",
+    description:
+      "Domain registration on the Doma blockchain. Instantly register .com, .xyz, .ai, .io, and .net domains.",
+    categories: ["web", "blockchain"],
+    integration: "first-party",
+    tags: ["domains", "dns"],
+    status: "active",
+    docs: {
+      homepage: "https://docs.doma.xyz",
+      llmsTxt: "https://mpp.doma.xyz/SKILL.md",
+    },
+    provider: { name: "Doma", url: "https://doma.xyz" },
+    realm: "mpp.doma.xyz",
+    intent: "charge",
+    payment: TEMPO_PAYMENT,
+    endpoints: [
+      {
+        route: "POST /register",
+        desc: "Register a domain — price varies by TLD and domain name",
+        dynamic: true,
+        amountHint: "Varies by TLD",
+        unitType: "request",
+      },
+    ],
+  },
+
   // ── Dune ────────────────────────────────────────────────────────────────
   {
     id: "dune",
@@ -6271,6 +6302,7 @@ export const services: ServiceDef[] = [
       homepage: "https://papercut.lol",
       llmsTxt: "https://papercut.lol/llms.txt",
     },
+    provider: { name: "Papercut", url: "https://papercut.lol" },
     realm: "papercut.lol",
     intent: "charge",
     payment: TEMPO_PAYMENT,
