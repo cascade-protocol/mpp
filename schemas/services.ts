@@ -6267,7 +6267,10 @@ export const services: ServiceDef[] = [
     categories: ["ai", "social"],
     integration: "first-party",
     tags: ["postcards", "roast", "github", "ai-art"],
-    docs: { homepage: "https://papercut.lol", llmsTxt: "https://papercut.lol/llms.txt" },
+    docs: {
+      homepage: "https://papercut.lol",
+      llmsTxt: "https://papercut.lol/llms.txt",
+    },
     realm: "papercut.lol",
     intent: "charge",
     payment: TEMPO_PAYMENT,
@@ -6311,15 +6314,51 @@ export const services: ServiceDef[] = [
     intent: "charge",
     payment: TEMPO_PAYMENT,
     endpoints: [
-      { route: "POST /api/v1/twitter/search", desc: "Search tweets with advanced operators", amount: "5000" },
-      { route: "POST /api/v1/twitter/tweet", desc: "Fetch tweet with full thread context", amount: "5000" },
-      { route: "POST /api/v1/twitter/user", desc: "Fetch user profile with recent tweets", amount: "5000" },
-      { route: "POST /api/v1/reddit/search", desc: "Search Reddit posts", amount: "5000" },
-      { route: "POST /api/v1/reddit/post", desc: "Fetch post with comments", amount: "5000" },
-      { route: "POST /api/v1/reddit/subreddit", desc: "Subreddit info and top posts", amount: "5000" },
-      { route: "POST /api/v1/reddit/user", desc: "User profile with recent activity", amount: "5000" },
-      { route: "POST /api/v1/web/search", desc: "AI-powered web search", amount: "10000" },
-      { route: "POST /api/v1/web/crawl", desc: "Crawl URL to markdown or HTML", amount: "2000" },
+      {
+        route: "POST /api/v1/twitter/search",
+        desc: "Search tweets with advanced operators",
+        amount: "5000",
+      },
+      {
+        route: "POST /api/v1/twitter/tweet",
+        desc: "Fetch tweet with full thread context",
+        amount: "5000",
+      },
+      {
+        route: "POST /api/v1/twitter/user",
+        desc: "Fetch user profile with recent tweets",
+        amount: "5000",
+      },
+      {
+        route: "POST /api/v1/reddit/search",
+        desc: "Search Reddit posts",
+        amount: "5000",
+      },
+      {
+        route: "POST /api/v1/reddit/post",
+        desc: "Fetch post with comments",
+        amount: "5000",
+      },
+      {
+        route: "POST /api/v1/reddit/subreddit",
+        desc: "Subreddit info and top posts",
+        amount: "5000",
+      },
+      {
+        route: "POST /api/v1/reddit/user",
+        desc: "User profile with recent activity",
+        amount: "5000",
+      },
+      {
+        route: "POST /api/v1/web/search",
+        desc: "AI-powered web search",
+        amount: "10000",
+      },
+      {
+        route: "POST /api/v1/web/crawl",
+        desc: "Crawl URL to markdown or HTML",
+        amount: "2000",
+      },
       {
         route: "POST /api/v1/inference/v1/chat/completions",
         desc: "Chat completions with 15 models - price varies by model and tokens",
@@ -6334,7 +6373,10 @@ export const services: ServiceDef[] = [
         amountHint: "$0.001 - $25.00 per 1M tokens",
         intent: "session",
       },
-      { route: "GET /api/v1/inference/v1/models", desc: "List available models" },
+      {
+        route: "GET /api/v1/inference/v1/models",
+        desc: "List available models",
+      },
     ],
   },
 ];
